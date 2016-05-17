@@ -7,7 +7,7 @@ using SQLite;
 
 namespace mvvm1.Model
 {
-    class User
+    public class User
     {
         //Id，主键，自增
         [PrimaryKey]

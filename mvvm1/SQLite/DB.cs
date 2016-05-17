@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace mvvm1.Model
 {
-    class DB
+    public class DB
     {
         private static string DbFileName = "Sqlite.db";
         public static string DbFilePath;
@@ -22,7 +22,7 @@ namespace mvvm1.Model
         }
         public static SQLiteConnection GetDbConnection()
         {
-            SQLiteConnection con = new SQLiteConnection(DbFilePath);
+            var con = new SQLiteConnection(DbFilePath);
             return con;
         }
     }

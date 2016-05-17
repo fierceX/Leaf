@@ -40,12 +40,18 @@ namespace mvvm1.ViewModel
         public ICommand RegisterCommand { get; set; }
         private void Register()
         {
-            User model = new User();
-            MD5 md5 = new MD5();
+            if (Username == null || Password == null || Username.Trim() == "" || Password.Trim() == "")
+            {
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("请填写用户名或密码", "RegisterNo");
+                return;
+            }
+
+            var model = new User();
+            var md5 = new Md5();
             model.Username = Username;
-            model.Password = md5.MMD5(Password);
-            DbService db = new DbService();
-            int i=db.InserUser(model);
+            model.Password = md5.ToMd5(Password);
+            var db = new DbService();
+            var i=db.InserUser(model);
             if (i>0)
             {
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();

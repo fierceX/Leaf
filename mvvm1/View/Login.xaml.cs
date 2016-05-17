@@ -34,5 +34,10 @@ namespace mvvm1.View
         {
             await new MessageDialog(msg).ShowAsync();
         }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<string>(this, "LoginNo", MessageBox);
+        }
     }
 }

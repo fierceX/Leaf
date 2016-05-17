@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,6 +29,7 @@ namespace mvvm1.View
         public register()
         {
             this.InitializeComponent();
+           
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "RegisterNo", MessageBox);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "RegisterYes", ToLogin);
         }
@@ -38,9 +40,15 @@ namespace mvvm1.View
         }
         private async void ToLogin(string msg)
         {
-            await new MessageDialog(msg).ShowAsync();
+            var ret = await new MessageDialog(msg).ShowAsync();
             var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
             navigation.NavigateTo("Login");
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<string>(this, "RegisterYes", ToLogin);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<string>(this, "RegisterNo", MessageBox);
         }
     }
 }

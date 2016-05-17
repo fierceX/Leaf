@@ -9,19 +9,19 @@ using Windows.Storage.Streams;
 
 namespace mvvm1.Model
 {
-    class MD5
+    public class Md5
     {
-        string strAlgName = HashAlgorithmNames.Md5;
-        HashAlgorithmProvider objAlgProv = null;
-        CryptographicHash objHash = null;
-        public string MMD5(string value)
+        private readonly string _strAlgName = HashAlgorithmNames.Md5;
+        private HashAlgorithmProvider _objAlgProv = null;
+        private CryptographicHash _objHash = null;
+        public string ToMd5(string value)
         {
-            objAlgProv = HashAlgorithmProvider.OpenAlgorithm(strAlgName);
-            objHash = objAlgProv.CreateHash();
-            IBuffer buffMsg = CryptographicBuffer.ConvertStringToBinary(value, BinaryStringEncoding.Utf16BE);
-            objHash.Append(buffMsg);
-            IBuffer buffHash = objHash.GetValueAndReset();
-            string strHash = CryptographicBuffer.EncodeToBase64String(buffHash);
+            _objAlgProv = HashAlgorithmProvider.OpenAlgorithm(_strAlgName);
+            _objHash = _objAlgProv.CreateHash();
+            var buffMsg = CryptographicBuffer.ConvertStringToBinary(value, BinaryStringEncoding.Utf16BE);
+            _objHash.Append(buffMsg);
+            var buffHash = _objHash.GetValueAndReset();
+            var strHash = CryptographicBuffer.EncodeToBase64String(buffHash);
             return strHash;
         }
     }

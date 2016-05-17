@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using mvvm1.Model;
+using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Views;
+using GalaSoft.MvvmLight.Command;
 
 namespace mvvm1.ViewModel
 {
@@ -35,6 +39,46 @@ namespace mvvm1.ViewModel
             }
         }
         public ICommand LoginCommand { get; set; }
+        private void Login()
+        {
+            User model = new User();
+            if(Username == null || Password == null)
+            {
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("用户名或密码为空", "LoginNo");
+            }
+            else
+            {
+                model.Username = Username;
+                model.Password = Password;
+                if (true == server.authenticate(model))
+                {
+                    var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                    navigation.NavigateTo("Main", model);
+                    ViewModelLocator.Main.User = model;
+                }
+                else
+                {
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("用户名或密码错误", "LoginNo");
+                }
+            }
+            
+        }
 
+
+        public ICommand ToRegister { get; set; }
+        private void Register()
+        {
+            User model = new User();
+            model.Username = Username;
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("Register", model);
+        }
+
+
+        public LoginModle()
+        {
+            LoginCommand = new RelayCommand(Login);
+            ToRegister = new RelayCommand(Register);
+        }
     }
 }

@@ -9,8 +9,21 @@ using System.Threading.Tasks;
 
 namespace mvvm1.SQLite
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class DbUserService : DbService
     {
+        public override int InsertOrIgnore(object item)
+        {
+            int result = 0;
+            using (var db = DB.GetDbConnection())
+            {
+                    result = db.Insert(item, "OR IGNORE", item.GetType());
+            }
+            return result;
+        }
+
         public override int Insert(object item)
         {
             int result = 0;
@@ -46,17 +59,28 @@ namespace mvvm1.SQLite
             return 0;
         }
 
+        //        public int QueryNum()
+        //        {
+        //            int result = 0;
+        //            string sqlstring = "select * from User where Id=1";
+        //            using (var db = DB.GetDbConnection())
+        //            {
+        //                var usernum = db.Query<User>(sqlstring);
+        //                if (usernum.Count > 0)
+        //                    result = 1;
+        //            }
+        //            return result;
+        //        }
+
         public int QueryNum()
         {
-            int result = 0;
-            string sqlstring = "select * from User where Id=1";
+            var result = 0;
+            const string sqlString = "select count(*) from User where Id=1";
             using (var db = DB.GetDbConnection())
             {
-                var usernum = db.Query<User>(sqlstring);
-                if (usernum.Count > 0)
-                    result = 1;
+                var usernum = db.ExecuteScalar<int>(sqlString);
+                result = usernum > 0 ? 1 :  0;
             }
-
             return result;
         }
     }

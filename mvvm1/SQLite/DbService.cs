@@ -11,6 +11,12 @@ namespace mvvm1.Model
     public abstract class DbService
     {
         public abstract int Insert(object item);
+        /// <summary>
+        /// 插入语句 如果已有则忽略
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public abstract int InsertOrIgnore(object item);
         public abstract object Query(string value);
         public abstract int Delete(object item);
     }

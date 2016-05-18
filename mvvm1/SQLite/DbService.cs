@@ -8,38 +8,10 @@ using System.Threading.Tasks;
 
 namespace mvvm1.Model
 {
-    public class DbService
+    public abstract class DbService
     {
-        public int InserUser(object item)
-        {
-            int result = 0;
-            using (var db = DB.GetDbConnection())
-            {
-                try
-                {
-                      result = db.Insert(item);
-                }
-                catch (SQLite.SQLiteException exception)
-                {
-                    // 捕获重复插入异常
-                    Debug.WriteLine(exception);
-                }
-            }
-            return result;
-        }
-
-        public User Query(string name)
-        {
-            User model = null;
-            using (var db = DB.GetDbConnection())
-            {
-                string sqlstring = "select * from user where username=\"" + name+"\"";
-                List<User> queryobject = db.Query<User>(sqlstring);
-                if(queryobject != null)
-                    model = queryobject[0];
-            }
-            return model;
-        }
-
+        public abstract int Insert(object item);
+        public abstract object Query(string value);
+        public abstract int Delete(object item);
     }
 }

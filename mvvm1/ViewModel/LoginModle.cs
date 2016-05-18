@@ -42,7 +42,7 @@ namespace mvvm1.ViewModel
         private void Login()
         {
             User model = new User();
-            if(Username == null || Password == null)
+            if(Username == null || Password == null || Username.Trim() == "" || Password.Trim() == "")
             {
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("用户名或密码为空", "LoginNo");
             }

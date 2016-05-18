@@ -102,9 +102,12 @@
     <Compile Include="Model\SingleChoice.cs" />
     <Compile Include="Model\MD5.cs" />
     <Compile Include="SQLite\DB.cs" />
+    <Compile Include="SQLite\DbGapService.cs" />
     <Compile Include="SQLite\DbService.cs" />
     <Compile Include="Model\server.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="SQLite\DbSingleService.cs" />
+    <Compile Include="SQLite\DbUserService.cs" />
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />

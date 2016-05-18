@@ -21,5 +21,9 @@ namespace mvvm1.Model
         //密码，不为空
         [NotNull]
         public string Password { get; set; }
+
+        //管理员标识
+        [NotNull]
+        public int Admin { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Command;
 using Windows.Security.Cryptography.Core;
 using System.Text;
 using SQLite;
+using mvvm1.SQLite;
 
 namespace mvvm1.ViewModel
 {
@@ -50,8 +51,10 @@ namespace mvvm1.ViewModel
             var md5 = new Md5();
             model.Username = Username;
             model.Password = md5.ToMd5(Password);
-            var db = new DbService();
-            var i=db.InserUser(model);
+            var db = new DbUserService();
+            if (db.QueryNum() == 0)
+                model.Admin = 1;
+            var i=db.Insert(model);
             if (i>0)
             {
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();

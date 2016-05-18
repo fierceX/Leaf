@@ -57,6 +57,8 @@ namespace mvvm1.ViewModel
             var i=db.Insert(model);
             if (i>0)
             {
+                Username = "";
+                Password = "";
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                 navigation.NavigateTo("Login");
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("注册成功","RegisterYes");

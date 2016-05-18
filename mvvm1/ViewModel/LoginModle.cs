@@ -52,6 +52,7 @@ namespace mvvm1.ViewModel
                 model.Password = Password;
                 if (true == server.authenticate(model))
                 {
+                    Password = "";
                     var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                     navigation.NavigateTo("Main", model);
                     ViewModelLocator.Main.User = model;
@@ -68,10 +69,9 @@ namespace mvvm1.ViewModel
         public ICommand ToRegister { get; set; }
         private void Register()
         {
-            User model = new User();
-            model.Username = Username;
             var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-            navigation.NavigateTo("Register", model);
+            navigation.NavigateTo("Register");
+            ViewModelLocator.Register.Username = Username;
         }
 
 

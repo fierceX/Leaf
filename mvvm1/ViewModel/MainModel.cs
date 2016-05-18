@@ -38,7 +38,6 @@ namespace mvvm1.ViewModel
         }
         public MainModel()
         {
-            Username = "CQ";
             LogoffCommand = new RelayCommand(Logoff);
         }
     }

@@ -18,6 +18,8 @@ namespace mvvm1.Model
             using (var db = GetDbConnection())
             {
                 db.CreateTable<User>();
+                db.CreateTable<SingleChoice>();
+                db.CreateTable<GapFilling>();
             }
         }
         public static SQLiteConnection GetDbConnection()

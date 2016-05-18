@@ -59,23 +59,10 @@ namespace mvvm1.SQLite
             return 0;
         }
 
-        //        public int QueryNum()
-        //        {
-        //            int result = 0;
-        //            string sqlstring = "select * from User where Id=1";
-        //            using (var db = DB.GetDbConnection())
-        //            {
-        //                var usernum = db.Query<User>(sqlstring);
-        //                if (usernum.Count > 0)
-        //                    result = 1;
-        //            }
-        //            return result;
-        //        }
-
         public int QueryNum()
         {
             var result = 0;
-            const string sqlString = "select count(*) from User where Id=1";
+            const string sqlString = "select count(*) from User";
             using (var db = DB.GetDbConnection())
             {
                 var usernum = db.ExecuteScalar<int>(sqlString);

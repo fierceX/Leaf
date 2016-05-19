@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace mvvm1.Model
+namespace Leaf.Model
 {
     public class User
     {

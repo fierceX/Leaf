@@ -17,7 +17,7 @@ using Windows.UI.Popups;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
-namespace mvvm1.View
+namespace Leaf.View
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。

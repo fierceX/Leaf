@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using mvvm1.Model;
+using Leaf.Model;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 
-namespace mvvm1.ViewModel
+namespace Leaf.ViewModel
 {
     class MainModel:ViewModelBase
     {

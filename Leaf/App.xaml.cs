@@ -14,10 +14,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using mvvm1.View;
-using mvvm1.Model;
+using Leaf.View;
+using Leaf.Model;
 
-namespace mvvm1
+namespace Leaf
 {
     /// <summary>
     /// 提供特定于应用程序的行为，以补充默认的应用程序类。

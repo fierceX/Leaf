@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mvvm1.Model
+namespace Leaf.Model
 {
     public abstract class DbService
     {

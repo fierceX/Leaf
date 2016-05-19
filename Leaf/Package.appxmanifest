@@ -3,7 +3,7 @@
   <Identity Name="dcdbf923-ac40-40af-9758-20100a124e99" Publisher="CN=fiercex" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="dcdbf923-ac40-40af-9758-20100a124e99" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>mvvm1</DisplayName>
+    <DisplayName>Leaf</DisplayName>
     <PublisherDisplayName>fiercex</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="mvvm1.App">
-      <uap:VisualElements DisplayName="mvvm1" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="mvvm1" BackgroundColor="transparent">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Leaf.App">
+      <uap:VisualElements DisplayName="Leaf" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Leaf" BackgroundColor="transparent">
         <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png" />
         <uap:DefaultTile Square310x310Logo="Assets\Square310x310Logo.png" Wide310x150Logo="Assets\Wide310x150Logo.png">
           <uap:ShowNameOnTiles>

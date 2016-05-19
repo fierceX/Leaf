@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mvvm1.SQLite
+namespace Leaf.SQLite
 {
-    class DbSingleService
+    class DbGapService
     {
     }
 }

@@ -1,4 +1,4 @@
-﻿using mvvm1.Model;
+﻿using Leaf.Model;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mvvm1.SQLite
+namespace Leaf.SQLite
 {
     /// <summary>
     /// 

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using mvvm1.Model;
+using Leaf.Model;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Command;
 
-namespace mvvm1.ViewModel
+namespace Leaf.ViewModel
 {
     class LoginModle:ViewModelBase
     {

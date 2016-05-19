@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using mvvm1.ViewModel;
-using mvvm1.View;
+using Leaf.ViewModel;
+using Leaf.View;
 using GalaSoft.MvvmLight.Views;
 
-namespace mvvm1
+namespace Leaf
 {
     class ViewModelLocator
     {

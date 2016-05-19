@@ -1,15 +1,15 @@
 ﻿using GalaSoft.MvvmLight;
 using System.Windows.Input;
-using mvvm1.Model;
+using Leaf.Model;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Command;
 using Windows.Security.Cryptography.Core;
 using System.Text;
 using SQLite;
-using mvvm1.SQLite;
+using Leaf.SQLite;
 
-namespace mvvm1.ViewModel
+namespace Leaf.ViewModel
 {
     class RegisterModel: ViewModelBase
     {

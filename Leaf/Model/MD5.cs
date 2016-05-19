@@ -7,7 +7,7 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
-namespace mvvm1.Model
+namespace Leaf.Model
 {
     public class Md5
     {

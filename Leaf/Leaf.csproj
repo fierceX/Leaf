@@ -111,7 +111,6 @@
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />
-    <Compile Include="ViewModel\SingleModel.cs" />
     <Compile Include="View\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
@@ -122,9 +121,6 @@
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="View\register.xaml.cs">
       <DependentUpon>register.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SinglePapers.xaml.cs">
-      <DependentUpon>SinglePapers.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -158,10 +154,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\register.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SinglePapers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

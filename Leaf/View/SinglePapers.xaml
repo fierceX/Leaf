@@ -9,11 +9,23 @@
     <Page.DataContext>
         <Binding Path="SinglePaper" Source="{StaticResource Locator}"></Binding>
     </Page.DataContext>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBlock
                 Height="100"
-                Text="{Binding stem,Mode=TwoWay}" />
+                Text="{Binding Stem,Mode=TwoWay}" />
             <RadioButton Name="Choice1" 
                             GroupName="Single" 
                             Content="{Binding ChoiceText1,Mode=TwoWay}" 
@@ -31,6 +43,11 @@
                             Content="{Binding ChoiceText4,Mode=TwoWay}" 
                              IsChecked="{Binding Choice4}"/>
         </StackPanel>
-        <Button Content="确定" Command="{Binding ContinueCommand}" />
+        
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+            <Button Content="确定"   Margin="20,20,20,0" Command="{Binding ContinueCommand}" />
+            <Button Content="Reset" Margin="20,20,20,0" Command="{Binding ResetCommand}" />
+        </StackPanel>
+     
     </Grid>
 </Page>

@@ -3,10 +3,12 @@ using GalaSoft.MvvmLight.Command;
 using Leaf.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Leaf.SQLite;
 
 namespace Leaf.ViewModel
 {
@@ -100,18 +102,40 @@ namespace Leaf.ViewModel
          public ICommand ContinueCommand { get; set; } 
          private void Continue()
          {
-            Result.Add(GetAnswer(answernum));
+             if (Result.Count <= max)
+             {
+                Result.Add(GetAnswer(answernum));
+            }
             if (num < max)
-            { Init(); }
+             {
+                 Init(); 
+             }
             else
             {
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "SingleEnd");
             }
-        } 
- 
+        }
+        public ICommand ResetCommand { get; set; }
+
+        private void ResetTest()
+        {
+            max = 0;
+            num = 0;
+            Result.Clear();
+            SingleList.Clear();
+            InsertTestData();   // TODO 测试用函数
+            ReadTestData();     // TODO 测试用函数
+            max = SingleList.Count;
+            Init();
+        }
+
         //初始化
         private void Init()
         {
+            if (num >= SingleList.Count)
+            {
+                return;
+            }
             array = GetRandom(4);
             string[] choicearray = new string[4];
             choicearray[array[0]] = SingleList[num].Answer;
@@ -130,9 +154,52 @@ namespace Leaf.ViewModel
 
         //构造函数
         public SingleModel()
-        { 
-            ContinueCommand = new RelayCommand(Continue);
+        {
+            ResetTest();
+
+             ContinueCommand = new RelayCommand(Continue);
+            ResetCommand = new RelayCommand(ResetTest);
             max = SingleList.Count;
+        }
+
+        /// <summary>
+        /// 测试用读取
+        /// </summary>
+        private void ReadTestData()
+        {
+            if (SingleList == null || SingleList.Count == 0)
+            {
+                var db = new DbSingleService();
+                var newStr = new[] { "a", "1" };
+                SingleList = (List<SingleChoice>)db.Query(newStr);
+            }
+        }
+        /// <summary>
+        /// 测试用插入
+        /// </summary>
+        private void InsertTestData()
+        {
+            var db = new DbSingleService();
+            if (db.QueryNum() >10)
+            {
+                return;
+            }
+            var answers = new[] {0,2,1,0,2,1,1,1,0,2};
+            foreach (int t in answers)
+            {
+                var stem = "以下习题的正确答案是" + t;
+                var choices = "这个是对的";
+//                var c4 = "这个是对的";
+                var answer = t.ToString();
+                var level = 1;
+                var type = "a";
+                var model = new SingleChoice {Answer = answer,Choices1 = choices ,Choices2 = choices,Choices3 = choices, Level = level, Stems = stem, Type = type};
+                var i = db.Insert(model);
+                if (i>0)
+                {
+                    Debug.WriteLine("yooooo, 加入成功了");
+                }
+            }
         }
 
         //生成随机化数列

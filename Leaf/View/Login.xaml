@@ -24,10 +24,13 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <TextBox Grid.Row="1"  Grid.Column="1"  Header="用户名" MinWidth="300" Text="{Binding Username,Mode=TwoWay}" />
         <PasswordBox Grid.Row="2" Grid.Column="1"  Header="密码" Password="{Binding Password,Mode=TwoWay}" />
         <Button Grid.Row="3" Grid.Column="1" Margin="0,20,0,0" HorizontalAlignment="Stretch" Content="登陆" Command="{Binding LoginCommand}" />
-        <Button Grid.Row="4" Grid.Column="1" Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="注册" Command="{Binding ToRegister}" />
+        <StackPanel Grid.Row="4" Grid.Column="1" Margin="0,10,0,0" Orientation="Vertical">
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="注册" Command="{Binding ToRegister}" />
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试习题" Command="{Binding ToSingle}" />
+        </StackPanel>
     </Grid>
 </Page>

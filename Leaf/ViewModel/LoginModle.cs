@@ -74,11 +74,20 @@ namespace Leaf.ViewModel
             ViewModelLocator.Register.Username = Username;
         }
 
+        public  ICommand ToSingle { get; set; }
+
+        private void Single()
+        {
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("Single");
+        }
+
 
         public LoginModle()
         {
             LoginCommand = new RelayCommand(Login);
             ToRegister = new RelayCommand(Register);
+            ToSingle = new RelayCommand(Single);
         }
     }
 }

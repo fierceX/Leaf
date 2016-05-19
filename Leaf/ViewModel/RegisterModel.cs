@@ -69,9 +69,18 @@ namespace Leaf.ViewModel
             }
         }
 
+        public ICommand ToLogin { get; set; }
+        private void Login()
+        {
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("Login");
+            ViewModelLocator.Login.Username = Username;
+        }
+
         public RegisterModel()
         {
             RegisterCommand = new RelayCommand(Register);
+            ToLogin = new RelayCommand(Login);
         }
     }
 }

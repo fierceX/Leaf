@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="dcdbf923-ac40-40af-9758-20100a124e99" Publisher="CN=fiercex" Version="1.0.0.0" />
+  <Identity Name="dcdbf923-ac40-40af-9758-20100a124e95" Publisher="CN=fiercex" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="dcdbf923-ac40-40af-9758-20100a124e99" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Leaf</DisplayName>

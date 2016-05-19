@@ -42,12 +42,12 @@ namespace Leaf.SQLite
             return result;
         }
 
-        public override object Query(string value)
+        public override object Query(params string[] value)
         {
             User model = null;
             using (var db = DB.GetDbConnection())
             {
-                string sqlstring = "select * from user where username=\"" + value + "\"";
+                string sqlstring = "select * from user where username=\"" + value[0] + "\"";
                 List<User> queryobject = db.Query<User>(sqlstring);
                 if (queryobject.Count > 0)
                     model = queryobject[0];

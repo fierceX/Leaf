@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Leaf.Model;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Leaf.Model
+namespace Leaf.SQLite
 {
     public class DB
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Leaf.Model
+namespace Leaf.SQLite
 {
     public abstract class DbService
     {

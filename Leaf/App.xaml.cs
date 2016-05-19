@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Leaf.View;
 using Leaf.Model;
+using Leaf.SQLite;
 
 namespace Leaf
 {

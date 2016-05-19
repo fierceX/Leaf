@@ -19,6 +19,7 @@ namespace Leaf
             SimpleIoc.Default.Register<LoginModle>();
             SimpleIoc.Default.Register<MainModel>();
             SimpleIoc.Default.Register<RegisterModel>();
+            SimpleIoc.Default.Register<SingleModel>();
 
             var navigationService = this.InitNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
@@ -30,6 +31,7 @@ namespace Leaf
             navigationService.Configure("Login", typeof(Login));
             navigationService.Configure("Main", typeof(Main));
             navigationService.Configure("Register", typeof(register));
+            navigationService.Configure("Single", typeof(SinglePapers));
             return navigationService;
         }
         private static LoginModle _login;
@@ -62,6 +64,17 @@ namespace Leaf
                 if (_register == null)
                     _register = ServiceLocator.Current.GetInstance<RegisterModel>();
                 return _register;
+            }
+        }
+
+        private static SingleModel _singlepaper;
+        public static SingleModel SinglePaper
+        {
+            get
+            {
+                if (_singlepaper == null)
+                    _singlepaper = ServiceLocator.Current.GetInstance<SingleModel>();
+                return _singlepaper;
             }
         }
 

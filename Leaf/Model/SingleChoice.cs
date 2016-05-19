@@ -33,5 +33,13 @@ namespace Leaf.Model
         //答案，不为空
         [NotNull]
         public string Answer { get; set; }
+
+        //难度，不为空
+        [NotNull]
+        public int Level { get; set; }
+
+        //类型，不为空
+        [NotNull]
+        public string Type { get; set; }
     }
 }

@@ -29,19 +29,19 @@
             <RadioButton Name="Choice1" 
                             GroupName="Single" 
                             Content="{Binding ChoiceText1,Mode=TwoWay}" 
-                            IsChecked="{Binding Choice1}"/>
+                            IsChecked="{Binding Choice1,Mode=TwoWay}"/>
             <RadioButton Name="Choice2" 
                             GroupName="Single" 
                             Content="{Binding ChoiceText2,Mode=TwoWay}" 
-                             IsChecked="{Binding Choice2}"/>
+                             IsChecked="{Binding Choice2,Mode=TwoWay}"/>
             <RadioButton Name="Choice3" 
                             GroupName="Single" 
                             Content="{Binding ChoiceText3,Mode=TwoWay}" 
-                             IsChecked="{Binding Choice3}"/>
+                             IsChecked="{Binding Choice3,Mode=TwoWay}"/>
             <RadioButton Name="Choice4" 
                             GroupName="Single" 
                             Content="{Binding ChoiceText4,Mode=TwoWay}" 
-                             IsChecked="{Binding Choice4}"/>
+                             IsChecked="{Binding Choice4,Mode=TwoWay}"/>
         </StackPanel>
         
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">

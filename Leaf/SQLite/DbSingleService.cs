@@ -53,8 +53,8 @@ namespace Leaf.SQLite
             const string sqlString = "select count(*) from SingleChoice";
             using (var db = DB.GetDbConnection())
             {
-                var usernum = db.ExecuteScalar<int>(sqlString);
-                result = usernum;
+                var singlenum = db.ExecuteScalar<int>(sqlString);
+                result = singlenum;
             }
             return result;
         }

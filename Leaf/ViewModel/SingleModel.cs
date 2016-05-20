@@ -22,8 +22,6 @@ namespace Leaf.ViewModel
         private int answernum = 0;
         //题目列表
         private List<SingleChoice> SingleList = new List<SingleChoice>();
-        //随机数列
-        private int[] array = new int[4];
         //成绩单
         private List<bool> Result = new List<bool>();
 
@@ -108,7 +106,11 @@ namespace Leaf.ViewModel
             }
             if (num < max)
              {
-                 Init(); 
+                 Init();
+                Choice1 = false;
+                Choice2 = false;
+                Choice3 = false;
+                Choice4 = false;
              }
             else
             {
@@ -136,7 +138,7 @@ namespace Leaf.ViewModel
             {
                 return;
             }
-            array = GetRandom(4);
+            int[] array = GetRandom(4);
             string[] choicearray = new string[4];
             choicearray[array[0]] = SingleList[num].Answer;
             choicearray[array[1]] = SingleList[num].Choices1;
@@ -188,8 +190,7 @@ namespace Leaf.ViewModel
             foreach (int t in answers)
             {
                 var stem = "以下习题的正确答案是" + t;
-                var choices = "这个是对的";
-//                var c4 = "这个是对的";
+                var choices = "选项"+t+1;
                 var answer = t.ToString();
                 var level = 1;
                 var type = "a";
@@ -226,11 +227,10 @@ namespace Leaf.ViewModel
         private bool GetAnswer(int num)
         {
             bool[] choicebool = new bool[4];
-            choicebool[array[0]] = Choice1;
-            choicebool[array[1]] = Choice2;
-            choicebool[array[2]] = Choice3;
-            choicebool[array[3]] = Choice4;
-
+            choicebool[0] = Choice1;
+            choicebool[1] = Choice2;
+            choicebool[2] = Choice3;
+            choicebool[3] = Choice4;
             return choicebool[num];
         }
     }

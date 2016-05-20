@@ -82,12 +82,21 @@ namespace Leaf.ViewModel
             navigation.NavigateTo("Single");
         }
 
+        public ICommand ToGap { get; set; }
+
+        private void Gap()
+        {
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("Gap");
+        }
+
 
         public LoginModle()
         {
             LoginCommand = new RelayCommand(Login);
             ToRegister = new RelayCommand(Register);
             ToSingle = new RelayCommand(Single);
+            ToGap = new RelayCommand(Gap);
         }
     }
 }

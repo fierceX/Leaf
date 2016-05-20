@@ -30,7 +30,8 @@
         <Button Grid.Row="3" Grid.Column="1" Margin="0,20,0,0" HorizontalAlignment="Stretch" Content="登陆" Command="{Binding LoginCommand}" />
         <StackPanel Grid.Row="4" Grid.Column="1" Margin="0,10,0,0" Orientation="Vertical">
             <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="注册" Command="{Binding ToRegister}" />
-            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试习题" Command="{Binding ToSingle}" />
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试单选题" Command="{Binding ToSingle}" />
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试填空题" Command="{Binding ToGap}" />
         </StackPanel>
     </Grid>
 </Page>

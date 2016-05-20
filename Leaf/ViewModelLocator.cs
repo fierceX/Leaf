@@ -20,6 +20,7 @@ namespace Leaf
             SimpleIoc.Default.Register<MainModel>();
             SimpleIoc.Default.Register<RegisterModel>();
             SimpleIoc.Default.Register<SingleModel>();
+            SimpleIoc.Default.Register<GapModel>();
 
             var navigationService = this.InitNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
@@ -32,6 +33,7 @@ namespace Leaf
             navigationService.Configure("Main", typeof(Main));
             navigationService.Configure("Register", typeof(register));
             navigationService.Configure("Single", typeof(SinglePapers));
+            navigationService.Configure("Gap", typeof(GapPapers));
             return navigationService;
         }
         private static LoginModle _login;
@@ -75,6 +77,17 @@ namespace Leaf
                 if (_singlepaper == null)
                     _singlepaper = ServiceLocator.Current.GetInstance<SingleModel>();
                 return _singlepaper;
+            }
+        }
+
+        private static GapModel _gappaper;
+        public static GapModel GapPaper
+        {
+            get
+            {
+                if (_gappaper == null)
+                    _gappaper = ServiceLocator.Current.GetInstance<GapModel>();
+                return _gappaper;
             }
         }
 

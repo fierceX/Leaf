@@ -108,10 +108,14 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="SQLite\DbSingleService.cs" />
     <Compile Include="SQLite\DbUserService.cs" />
+    <Compile Include="ViewModel\GapModel.cs" />
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />
     <Compile Include="ViewModel\SingleModel.cs" />
+    <Compile Include="View\GapPapers.xaml.cs">
+      <DependentUpon>GapPapers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
@@ -149,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\GapPapers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

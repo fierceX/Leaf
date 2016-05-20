@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -80,11 +81,48 @@ namespace Leaf
                     // 并通过将所需信息作为导航参数传入来配置
                     // 参数
                     rootFrame.Navigate(typeof(Login), e.Arguments);
+
+                    // 注册标题栏返回按钮
+                    rootFrame.Navigated += OnNavigated;
+                    SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(rootFrame);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
             }
         }
+
+
+        private AppViewBackButtonVisibility getVisibilityStatus(Frame sender)
+        {
+            return sender.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;;
+        }
+
+        /// <summary>
+        /// 后退请求
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBackRequseted(object sender, BackRequestedEventArgs e)
+        {
+            var rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null && rootFrame.CanGoBack)
+            {
+                e.Handled = true;
+                rootFrame.GoBack();
+            }
+        }
+
+        /// <summary>
+        /// 导航到特定页时调用
+        /// </summary>
+        /// <param name="sender">导航到的框架</param>
+        /// <param name="e">有关导航的详细信息</param>
+        private void OnNavigated(object sender, NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus((Frame)sender);
+        }
+
 
         /// <summary>
         /// 导航到特定页失败时调用
@@ -109,5 +147,6 @@ namespace Leaf
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
         }
+
     }
 }

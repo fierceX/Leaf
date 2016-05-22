@@ -10,6 +10,8 @@ using Leaf.Model;
 using Newtonsoft.Json.Linq;
 using GalaSoft.MvvmLight.Command;
 using Leaf.SQLite;
+using Windows.Storage.Pickers;
+using Windows.Storage;
 
 namespace Leaf.ViewModel
 {
@@ -27,6 +29,8 @@ namespace Leaf.ViewModel
         public ICommand InsertCommand { get; set; }
         private void Insert()
         {
+            if (Json == null)
+                return;
             JObject _jsonobject = JObject.Parse(Json);
             JArray _singlearray = JArray.Parse(_jsonobject["Single"].ToString());
             foreach(var token in _singlearray)
@@ -63,9 +67,22 @@ namespace Leaf.ViewModel
 
         }
 
+        public ICommand OpenCommand { get; set; }
+        private async void openfile()
+        {
+            var _openFile = new FileOpenPicker();
+            _openFile.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            _openFile.ViewMode = PickerViewMode.List;
+            _openFile.FileTypeFilter.Add(".json");
+            _openFile.FileTypeFilter.Add(".txt");
+            StorageFile file = await _openFile.PickSingleFileAsync();
+            Json = await FileIO.ReadTextAsync(file);
+        }
+
         public InsertModel()
         {
             InsertCommand = new RelayCommand(Insert);
+            OpenCommand = new RelayCommand(openfile);
         }
     }
 }

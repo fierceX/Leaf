@@ -98,6 +98,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\FileService.cs" />
     <Compile Include="Model\GapFilling.cs" />
     <Compile Include="Model\SingleChoice.cs" />
     <Compile Include="Model\MD5.cs" />
@@ -109,12 +110,17 @@
     <Compile Include="SQLite\DbSingleService.cs" />
     <Compile Include="SQLite\DbUserService.cs" />
     <Compile Include="ViewModel\GapModel.cs" />
+    <Compile Include="ViewModel\InsertModel.cs" />
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />
     <Compile Include="ViewModel\SingleModel.cs" />
+    <Compile Include="ViewModel\TestModel.cs" />
     <Compile Include="View\GapPapers.xaml.cs">
       <DependentUpon>GapPapers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InsertData.xaml.cs">
+      <DependentUpon>InsertData.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
@@ -129,6 +135,9 @@
     </Compile>
     <Compile Include="View\SinglePapers.xaml.cs">
       <DependentUpon>SinglePapers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +166,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\InsertData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SinglePapers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

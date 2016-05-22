@@ -74,20 +74,11 @@ namespace Leaf.ViewModel
             ViewModelLocator.Register.Username = Username;
         }
 
-        public  ICommand ToSingle { get; set; }
-
-        private void Single()
+        public ICommand ToTest { get; set; }
+        private void test()
         {
             var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-            navigation.NavigateTo("Single");
-        }
-
-        public ICommand ToGap { get; set; }
-
-        private void Gap()
-        {
-            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-            navigation.NavigateTo("Gap");
+            navigation.NavigateTo("Test");
         }
 
 
@@ -95,8 +86,7 @@ namespace Leaf.ViewModel
         {
             LoginCommand = new RelayCommand(Login);
             ToRegister = new RelayCommand(Register);
-            ToSingle = new RelayCommand(Single);
-            ToGap = new RelayCommand(Gap);
+            ToTest = new RelayCommand(test);
         }
     }
 }

@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="Leaf.View.InsertData"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Leaf.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <Binding Path="InsterData" Source="{StaticResource Locator}"></Binding>
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBox Height="500" TextWrapping="Wrap"  Text="{Binding Json,Mode=TwoWay}" />
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="插入" Command="{Binding InsertCommand}" />
+        </StackPanel>
+    </Grid>
+</Page>

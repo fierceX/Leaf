@@ -14,6 +14,7 @@
             <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试单选题" Command="{Binding ToSingle}" />
             <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试填空题" Command="{Binding ToGap}" />
             <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试解析JSON" Command="{Binding ToJson}" />
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="试卷管理" Command="{Binding ToTest}" />
         </StackPanel>
     </Grid>
 </Page>

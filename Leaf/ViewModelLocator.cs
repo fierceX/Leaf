@@ -23,6 +23,7 @@ namespace Leaf
             SimpleIoc.Default.Register<GapModel>();
             SimpleIoc.Default.Register<TestModel>();
             SimpleIoc.Default.Register<InsertModel>();
+            SimpleIoc.Default.Register<TestPaperModel>();
 
             var navigationService = this.InitNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
@@ -38,6 +39,7 @@ namespace Leaf
             navigationService.Configure("Gap", typeof(GapPapers));
             navigationService.Configure("Test", typeof(View.test));
             navigationService.Configure("Insert", typeof(InsertData));
+            navigationService.Configure("TestPaper", typeof(TestPaperManage));
             return navigationService;
         }
         private static LoginModle _login;
@@ -114,6 +116,18 @@ namespace Leaf
                 if (_insterdata == null)
                     _insterdata = ServiceLocator.Current.GetInstance<InsertModel>();
                 return _insterdata;
+            }
+        }
+
+
+        private static TestPaperModel _testpaper;
+        public static TestPaperModel TestPaper
+        {
+            get
+            {
+                if (_testpaper == null)
+                    _testpaper = ServiceLocator.Current.GetInstance<TestPaperModel>();
+                return _testpaper;
             }
         }
 

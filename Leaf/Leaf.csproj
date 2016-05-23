@@ -102,12 +102,14 @@
     <Compile Include="Model\GapFilling.cs" />
     <Compile Include="Model\SingleChoice.cs" />
     <Compile Include="Model\MD5.cs" />
+    <Compile Include="Model\TestPaper.cs" />
     <Compile Include="SQLite\DB.cs" />
     <Compile Include="SQLite\DbGapService.cs" />
     <Compile Include="SQLite\DbService.cs" />
     <Compile Include="Model\server.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="SQLite\DbSingleService.cs" />
+    <Compile Include="SQLite\DbTestService.cs" />
     <Compile Include="SQLite\DbUserService.cs" />
     <Compile Include="ViewModel\GapModel.cs" />
     <Compile Include="ViewModel\InsertModel.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="ViewModel\RegisterModel.cs" />
     <Compile Include="ViewModel\SingleModel.cs" />
     <Compile Include="ViewModel\TestModel.cs" />
+    <Compile Include="ViewModel\TestPaperModel.cs" />
     <Compile Include="View\GapPapers.xaml.cs">
       <DependentUpon>GapPapers.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,9 @@
     </Compile>
     <Compile Include="View\test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestPaperManage.xaml.cs">
+      <DependentUpon>TestPaperManage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TestPaperManage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

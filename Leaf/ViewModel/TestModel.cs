@@ -37,11 +37,20 @@ namespace Leaf.ViewModel
             navigation.NavigateTo("Insert");
         }
 
+        public ICommand ToTest { get; set; }
+
+        private void test()
+        {
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("TestPaper");
+        }
+
         public TestModel()
         {
             ToGap = new RelayCommand(Gap);
             ToJson = new RelayCommand(json);
             ToSingle = new RelayCommand(Single);
+            ToTest = new RelayCommand(test);
         }
     }
 }

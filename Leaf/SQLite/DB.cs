@@ -21,6 +21,7 @@ namespace Leaf.SQLite
                 db.CreateTable<User>();
                 db.CreateTable<SingleChoice>();
                 db.CreateTable<GapFilling>();
+                db.CreateTable<TestPaper>();
             }
         }
         public static SQLiteConnection GetDbConnection()

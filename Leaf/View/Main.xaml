@@ -30,7 +30,7 @@
         </StackPanel>
         <Button Content="注销" HorizontalAlignment="Stretch" Command="{Binding LogoffCommand}" />
 
-        <SplitView x:Name="mainSplitView" OpenPaneLength="150" CompactPaneLength="45" PaneBackground="LightGray" DisplayMode="CompactOverlay" IsPaneOpen="{Binding IsPaneOpen,Mode=TwoWay}">
+        <SplitView x:Name="MainSplitView" OpenPaneLength="150" CompactPaneLength="45" PaneBackground="LightGray" DisplayMode="CompactOverlay" IsPaneOpen="{Binding IsPaneOpen,Mode=TwoWay}">
             <SplitView.Pane>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -38,13 +38,13 @@
                         <RowDefinition  Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
-                        <Button x:Name="hamburgButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="24" Command="{Binding HamburgCommand}" />
+                        <Button x:Name="HamburgButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="24" Command="{Binding HamburgCommand}" />
                         <TextBlock Margin="10,10,0,0" Text="{Binding HamburgTitle}" />
                     </StackPanel>
-                    <ListView Grid.Row="1" x:Name="mainListView" ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemDataTemplate}" />
+                    <ListView  Grid.Row="1" x:Name="MainListView" ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemDataTemplate}" SelectionChanged="MainListView_OnSelectionChanged"/>
                 </Grid>
             </SplitView.Pane>
-            <Frame>
+            <Frame Name="MainFrame" x:FieldModifier="public">
 
             </Frame>
         </SplitView>

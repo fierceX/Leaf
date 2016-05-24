@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -16,6 +18,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Windows.UI.Popups;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Views;
+using Leaf.ViewModel;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -29,8 +32,45 @@ namespace Leaf.View
         public Main()
         {
             this.InitializeComponent();
+            this.InitData();
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<object>(this, true, LogoffMessage);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string[]>(this, "NavigateTo", NavigateTo);
+        }
 
+        public Dictionary<string, Frame> FrameDictionary;
+        public Dictionary<string, Type> PageDictionary;
+        public void InitData()
+        {
+            if (PageDictionary != null) return;
+            Debug.WriteLine("进行了初始化,之后需要单独拿出", "information");
+            PageDictionary = new Dictionary<string, Type>
+            {
+                {"login", typeof (Login)},
+                {"Main", typeof (Main)},
+                {"Register", typeof (register)},
+                {"Single", typeof (SinglePapers)},
+                {"Gap", typeof (GapPapers)},
+                {"Test", typeof (View.test)},
+                {"Insert", typeof (InsertData)},
+                {"TestPaper", typeof (TestPaperManage)}
+            };
+
+            FrameDictionary = new Dictionary<string, Frame>
+            {
+                 {"MainFrame", MainFrame},
+            };
+        }
+
+        public void NavigateTo(string[] data)
+        {
+            var frameName = data[0];
+            var pageName = data[1];
+            NavigateTo(frameName, pageName);
+        }
+
+        public void NavigateTo(string frameName, string pageName)
+        {
+            FrameDictionary[frameName].Navigate(PageDictionary[pageName]);
         }
         public async void LogoffMessage(object msg)
         {
@@ -52,9 +92,36 @@ namespace Leaf.View
             }
         }
 
-        private void MainListView_OnItemClick(object sender, ItemClickEventArgs e)
+        private void MainListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine("yahouooooooooooooooooooooo");
+            var listView = (ListView)sender;
+            switch (listView.SelectedIndex)
+            {
+                case 0:
+                {
+                       NavigateTo("MainFrame","login");
+                        break;
+                    }
+                case 1:
+                    {
+                        NavigateTo("MainFrame", "Register");
+                        break;
+                    }
+                case 2:
+                    {
+                        NavigateTo("MainFrame", "Test");
+                        break;
+                    }
+                case 3:
+                    {
+                        NavigateTo("MainFrame", "login");
+                        break;
+                    }
+
+                default:
+                    break;
+            }
         }
     }
 }

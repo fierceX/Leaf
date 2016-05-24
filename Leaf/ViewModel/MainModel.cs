@@ -53,36 +53,6 @@ namespace Leaf.ViewModel
         }
 
 
-        public ICommand NavCommand { get; set; }
-
-        private void NavLinksList_ItemClick(object sender, object e)
-        {
-            Debug.WriteLine("yahouooooooooooooooooooooo");
-//            switch ((e.ClickedItem as NavLink).Text)
-//            {
-//                case "个性化":
-////                    this.Frame.Navigate(typeof(PersonalSettings));
-//                    break;
-//                case "地图":
-////                    this.Frame.Navigate(typeof(Map));
-//                    break;
-//                case "联系我":
-////                    conTool.SendEmail("cncmn@sina.cn", "反馈", "紧急求助反馈", "");
-//                    break;
-//                case "使用帮助":
-////                    this.Frame.Navigate(typeof(UserGuide));
-//                    break;
-//                case "Settings":
-////                    this.Frame.Navigate(typeof(Settings));
-//                    break;
-//                default:
-//                    break;
-//            }
-        }
-
-
-
-
 
 
         private string _username;

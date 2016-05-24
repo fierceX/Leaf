@@ -14,7 +14,7 @@ namespace Leaf.Model
             var db = new DbUserService();
             Md5 md5 = new Md5();
             string mobelpassword = md5.ToMd5(mobel.Password);
-            User q = (User)db.Query(mobel.Username);
+            User q = (User)db.QueryObject(mobel.Username);
             if (q == null)
                 return false;
             if (q.Password == mobelpassword)

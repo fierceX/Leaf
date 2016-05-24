@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,42 @@ namespace Leaf
             navigationService.Configure("TestPaper", typeof(TestPaperManage));
             return navigationService;
         }
+
+        public static void Navigate(string pageName, string frameName)
+        {
+            if (pageName == null || pageName.Trim() == "" || frameName == null || frameName.Trim() =="")
+            {
+                Debug.WriteLine("ViewModelLocator.Navigate err : pageName isNull or frameName isNull", "error");
+                return;
+            }
+
+
+            Navigate(pageName);
+        }
+
+        public static void Navigate(string pageName)
+        {
+            if (pageName == null || pageName.Trim() == "")
+            {
+                Debug.WriteLine("ViewModelLocator.Navigate err : pageName isNull", "error");
+                return;
+            }
+
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo(pageName);
+        }
+
+        public static void Navigate(string pageName, object data)
+        {
+            if (pageName == null || pageName.Trim() == "" || data == null)
+            {
+                Debug.WriteLine("ViewModelLocator.Navigate err : pageName isNull or data isNull", "error");
+                return;
+            }
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo(pageName, data);
+        }
+
         private static LoginModle _login;
         public static LoginModle Login
         {

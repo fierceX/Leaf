@@ -76,7 +76,10 @@ namespace Leaf.ViewModel
             _openFile.FileTypeFilter.Add(".json");
             _openFile.FileTypeFilter.Add(".txt");
             StorageFile file = await _openFile.PickSingleFileAsync();
-            Json = await FileIO.ReadTextAsync(file);
+            if (file != null)
+            {
+                Json = await FileIO.ReadTextAsync(file);
+            }
         }
 
         public InsertModel()

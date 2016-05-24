@@ -51,5 +51,10 @@ namespace Leaf.View
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<object>(this, LogoffMessage);
             }
         }
+
+        private void MainListView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

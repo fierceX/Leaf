@@ -42,7 +42,7 @@ namespace Leaf.SQLite
             return result;
         }
 
-        public override object Query(params string[] value)
+        public override object QueryObject(params string[] value)
         {
             User model = null;
             using (var db = DB.GetDbConnection())
@@ -59,7 +59,7 @@ namespace Leaf.SQLite
             return 0;
         }
 
-        public int QueryNum()
+        public override object Query( params string[] value)
         {
             var result = 0;
             const string sqlString = "select count(*) from User";

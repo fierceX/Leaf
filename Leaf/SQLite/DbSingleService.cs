@@ -36,21 +36,59 @@ namespace Leaf.SQLite
         {
             throw new NotImplementedException();
         }
-        public override object Query(params string[] value)
+        public override object QueryObject(params string[] value)
         {
-            string sqlstring = "select * from SingleChoice where Type=\"" + value[0] + "\" and Level=" + value[1];
+            string sqlstring = "select " + value[0] + " from SingleChoice";
+            if (value.Length >= 2)
+                sqlstring = sqlstring + " where Type=\"" + value[1] + "\"";
+            if (value.Length >= 3)
+                sqlstring = sqlstring + " and Level=" + value[2];
+            if (value.Length == 4)
+                sqlstring = sqlstring + " ORDER BY RANDOM() limit " + value[3];
             List<SingleChoice> Singlelist = new List<SingleChoice>();
             using (var db = DB.GetDbConnection())
             {
-                Singlelist = db.Query<SingleChoice>(sqlstring);
+                try
+                {
+                    Singlelist = db.Query<SingleChoice>(sqlstring);
+                }
+                catch (Exception exception)
+                {
+                    // 捕获重复插入异常
+                    Debug.WriteLine(exception);
+                }
             }
             return Singlelist;
         }
 
-        public int QueryNum()
+        public object Querysql(params string[] value)
         {
+            string sqlstring = "select " + value[0] + " from SingleChoice " + value[1];
+            List<SingleChoice> Singlelist = new List<SingleChoice>();
+            using (var db = DB.GetDbConnection())
+            {
+                try
+                {
+                    Singlelist = db.Query<SingleChoice>(sqlstring);
+                }
+                catch (Exception exception)
+                {
+                    // 捕获重复插入异常
+                    Debug.WriteLine(exception);
+                }
+            }
+            return Singlelist;
+        }
+
+        public override object Query(params string[] value)
+        {
+
+            string sqlString = "select count(*) from SingleChoice";
+            if (value.Length >= 1)
+                sqlString = sqlString + " where Type=\"" + value[0] + "\"";
+            if (value.Length == 2)
+                sqlString = sqlString + " and Level=" + value[1];
             var result = 0;
-            const string sqlString = "select count(*) from SingleChoice";
             using (var db = DB.GetDbConnection())
             {
                 var singlenum = db.ExecuteScalar<int>(sqlString);

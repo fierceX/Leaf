@@ -15,6 +15,11 @@ namespace Leaf.Model
         [AutoIncrement]
         public int Id { get; set; }
 
+        //试卷名称
+        //不为空
+        [NotNull]
+        public string Name { get; set; }
+
         //单选内容Id号
         //不为空
         [NotNull]

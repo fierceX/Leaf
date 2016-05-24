@@ -36,25 +36,64 @@ namespace Leaf.SQLite
         {
             throw new NotImplementedException();
         }
-        public override object Query(params string[] value)
+        public override object QueryObject(params string[] value)
         {
-            string sqlstring = "select * from GapFilling where Type=\"" + value[0] + "\" and Level=" + value[1];
+            string sqlstring = "select " + value[0] + " from GapFilling";
+            if (value.Length >= 2)
+                sqlstring = sqlstring + " where Type=\"" + value[1] + "\"";
+            if (value.Length >= 3)
+                sqlstring = sqlstring + " and Level=" + value[2];
+            if (value.Length == 4)
+                sqlstring = sqlstring + " ORDER BY RANDOM() limit " + value[3];
             List<GapFilling> Gaplist = new List<GapFilling>();
             using (var db = DB.GetDbConnection())
             {
-                Gaplist = db.Query<GapFilling>(sqlstring);
+                try
+                {
+                    Gaplist = db.Query<GapFilling>(sqlstring);
+                }
+                catch (Exception exception)
+                {
+                    // 捕获重复插入异常
+                    Debug.WriteLine(exception);
+                }
+                
             }
             return Gaplist;
         }
 
-        public int QueryNum()
+        public object QuerySql(params string[] value)
         {
-            var result = 0;
-            const string sqlString = "select count(*) from GapFilling";
+            string sqlstring = "select " + value[0] + " from GapFilling "+value[1];
+            List<GapFilling> Gaplist = new List<GapFilling>();
             using (var db = DB.GetDbConnection())
             {
-                var singlenum = db.ExecuteScalar<int>(sqlString);
-                result = singlenum;
+                try
+                {
+                    Gaplist = db.Query<GapFilling>(sqlstring);
+                }
+                catch (Exception exception)
+                {
+                    // 捕获重复插入异常
+                    Debug.WriteLine(exception);
+                }
+
+            }
+            return Gaplist;
+        }
+
+
+        public override object Query(params string[] value)
+        {
+            var result = 0;
+            string sqlString = "select count(*) from GapFilling";
+            if (value.Length >= 1)
+                sqlString = sqlString + " where Type=\"" + value[0] + "\"";
+            if (value.Length == 2)
+                sqlString = sqlString + " and Level=" + value[1];
+            using (var db = DB.GetDbConnection())
+            {
+                result = db.ExecuteScalar<int>(sqlString);
             }
             return result;
         }

@@ -125,7 +125,7 @@ namespace Leaf.ViewModel
             num = 0;
             Result.Clear();
             SingleList.Clear();
-            InsertTestData();   // TODO 测试用函数
+            //InsertTestData();   // TODO 测试用函数
             ReadTestData();     // TODO 测试用函数
             max = SingleList.Count;
             Init();
@@ -172,36 +172,36 @@ namespace Leaf.ViewModel
             if (SingleList == null || SingleList.Count == 0)
             {
                 var db = new DbSingleService();
-                var newStr = new[] { "a", "1" };
-                SingleList = (List<SingleChoice>)db.Query(newStr);
+                var newStr = new[] { "a", "2","10" };
+                SingleList = (List<SingleChoice>)db.QueryObject(newStr);
             }
         }
         /// <summary>
         /// 测试用插入
         /// </summary>
-        private void InsertTestData()
-        {
-            var db = new DbSingleService();
-            if (db.QueryNum() >10)
-            {
-                return;
-            }
-            var answers = new[] {0,2,1,0,2,1,1,1,0,2};
-            foreach (int t in answers)
-            {
-                var stem = "以下习题的正确答案是" + t;
-                var choices = "选项"+t+1;
-                var answer = t.ToString();
-                var level = 1;
-                var type = "a";
-                var model = new SingleChoice {Answer = answer,Choices1 = choices ,Choices2 = choices,Choices3 = choices, Level = level, Stems = stem, Type = type};
-                var i = db.Insert(model);
-                if (i>0)
-                {
-                    Debug.WriteLine("yooooo, 加入成功了");
-                }
-            }
-        }
+        //private void InsertTestData()
+        //{
+        //    var db = new DbSingleService();
+        //    if (db.QueryNum() >10)
+        //    {
+        //        return;
+        //    }
+        //    var answers = new[] {0,2,1,0,2,1,1,1,0,2};
+        //    foreach (int t in answers)
+        //    {
+        //        var stem = "以下习题的正确答案是" + t;
+        //        var choices = "选项"+t+1;
+        //        var answer = t.ToString();
+        //        var level = 1;
+        //        var type = "a";
+        //        var model = new SingleChoice {Answer = answer,Choices1 = choices ,Choices2 = choices,Choices3 = choices, Level = level, Stems = stem, Type = type};
+        //        var i = db.Insert(model);
+        //        if (i>0)
+        //        {
+        //            Debug.WriteLine("yooooo, 加入成功了");
+        //        }
+        //    }
+        //}
 
         //生成随机化数列
         private  int[] GetRandom(int total)

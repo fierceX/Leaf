@@ -52,7 +52,7 @@ namespace Leaf.ViewModel
             model.Username = Username;
             model.Password = md5.ToMd5(Password);
             var db = new DbUserService();
-            if (db.QueryNum() == 0)
+            if ((int)db.Query() == 0)
                 model.Admin = 1;
             var i=db.Insert(model);
             if (i>0)

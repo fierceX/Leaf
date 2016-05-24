@@ -63,6 +63,8 @@ namespace Leaf.ViewModel
                     gapnum += i;
             }
             int[] num = new int[2] { singlenum, gapnum };
+            singlenum = 0;
+            gapnum = 0;
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<int[]>(num, "InsertYes");
 
         }

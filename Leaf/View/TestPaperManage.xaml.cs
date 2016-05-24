@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,13 @@ namespace Leaf.View
         public TestPaperManage()
         {
             this.InitializeComponent();
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "AddNo", MessageBox);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "AddYes", MessageBox);
+        }
+
+        private async void MessageBox(string msg)
+        {
+            await new MessageDialog(msg).ShowAsync();
         }
     }
 }

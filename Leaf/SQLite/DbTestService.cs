@@ -27,9 +27,9 @@ namespace Leaf.SQLite
             }
             return result;
         }
-        public override object Query(params string[] value)
+        public override object QueryObject(params string[] value)
         {
-            string sqlstring = "select * from TestPaper where Level=" + value[0];
+            string sqlstring = "select * from TestPaper";
             List<TestPaper> Testlist = new List<TestPaper>();
             using (var db = DB.GetDbConnection())
             {
@@ -45,7 +45,7 @@ namespace Leaf.SQLite
         {
             throw new NotImplementedException();
         }
-        public int QueryNum()
+        public override object Query(params string[] value)
         {
             var result = 0;
             const string sqlString = "select count(*) from TestPaper";

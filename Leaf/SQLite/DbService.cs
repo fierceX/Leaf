@@ -17,7 +17,8 @@ namespace Leaf.SQLite
         /// <param name="item"></param>
         /// <returns></returns>
         public abstract int InsertOrIgnore(object item);
-        public abstract object Query(params  string[] value);
+        public abstract object QueryObject(params  string[] value);
+        public abstract object Query(params string[] value);
         public abstract int Delete(object item);
     }
 }

@@ -94,7 +94,7 @@ namespace Leaf.ViewModel
             num = 0;
             Result.Clear();
             GapList.Clear();
-            InsertTestData();   // TODO 测试用函数
+            //InsertTestData();   // TODO 测试用函数
             ReadTestData();     // TODO 测试用函数
             max = GapList.Count;
             Init();
@@ -109,36 +109,36 @@ namespace Leaf.ViewModel
             if (GapList == null || GapList.Count == 0)
             {
                 var db = new DbGapService();
-                var newStr = new[] { "a", "1" };
-                GapList = (List<GapFilling>)db.Query(newStr);
+                var newStr = new[] { "a", "2", "10"};
+                GapList = (List<GapFilling>)db.QueryObject(newStr);
             }
         }
 
         /// <summary>
         /// 测试用插入
         /// </summary>
-        private void InsertTestData()
-        {
-            var db = new DbGapService();
-            if (db.QueryNum() > 10)
-            {
-                return;
-            }
-            var answers = new[] { 0, 2, 1, 0, 2, 1, 1, 1, 0, 2 };
-            foreach (int t in answers)
-            {
-                var stem = "此习题所要填的内容为（  ）（答案为 "+t+")";
-                var answer = t.ToString();
-                var level = 1;
-                var type = "a";
-                var model = new GapFilling { Answer = answer, Level = level, Stems = stem, Type = type };
-                var i = db.Insert(model);
-                if (i > 0)
-                {
-                    Debug.WriteLine("yooooo, 加入成功了");
-                }
-            }
-        }
+        //private void InsertTestData()
+        //{
+        //    var db = new DbGapService();
+        //    if (db.QueryNum() > 10)
+        //    {
+        //        return;
+        //    }
+        //    var answers = new[] { 0, 2, 1, 0, 2, 1, 1, 1, 0, 2 };
+        //    foreach (int t in answers)
+        //    {
+        //        var stem = "此习题所要填的内容为（  ）（答案为 "+t+")";
+        //        var answer = t.ToString();
+        //        var level = 1;
+        //        var type = "a";
+        //        var model = new GapFilling { Answer = answer, Level = level, Stems = stem, Type = type };
+        //        var i = db.Insert(model);
+        //        if (i > 0)
+        //        {
+        //            Debug.WriteLine("yooooo, 加入成功了");
+        //        }
+        //    }
+        //}
 
         //获取答案
         private bool GetAnswer()

@@ -1,7 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using Leaf.Model;
 using Leaf.SQLite;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,20 +17,43 @@ namespace Leaf.ViewModel
 {
     class TestPaperModel : ViewModelBase
     {
-
-        private List<int> num = new List<int>();
+        /// <summary>
+        /// 选择题最大题量
+        /// </summary>
         private int SingleMax;
+
+        /// <summary>
+        /// 填空题最大题量
+        /// </summary>
         private int GapMax;
 
+        /// <summary>
+        /// 添加按钮状态
+        /// </summary>
+        public bool IsEnabled
+        {
+            get
+            {
+                if (ViewModelLocator.User.Admin == 1)
+                    return true;
+                else
+                    return false;
+            }
+        }
 
-        //试卷名称
+        /// <summary>
+        /// 试卷名称
+        /// </summary>
         private string _testname;
         public string TestName
         {
             get { return _testname; }
             set { Set(ref _testname, value); }
         }
-        //选择题类型
+
+        /// <summary>
+        /// 选择题类型
+        /// </summary>
         private List<string> _singleTypeList = new List<string>();
         public List<string> SingleTypeList
         {
@@ -36,7 +61,9 @@ namespace Leaf.ViewModel
             set { Set(ref _singleTypeList, value); }
         }
 
-        //选择题难度
+        /// <summary>
+        /// 选择题难度
+        /// </summary>
         private List<string> _singleLevel = new List<string>();
         public List<string> SingleLevel
         {
@@ -44,7 +71,9 @@ namespace Leaf.ViewModel
             set { Set(ref _singleLevel, value); }
         }
 
-        //选择题数量
+        /// <summary>
+        /// 选择题数量
+        /// </summary>
         private int _singleNum;
         public int SingleNum
         {
@@ -52,7 +81,9 @@ namespace Leaf.ViewModel
             set { Set(ref _singleNum, value); }
         }
 
-        //选择题类型索引
+        /// <summary>
+        /// 选择题类型索引
+        /// </summary>
         private int _singleTypeNum;
         public int SingleTypeNum
         {
@@ -60,11 +91,12 @@ namespace Leaf.ViewModel
             set
             {
                 Set(ref _singleTypeNum, value);
-                //有bug的代码
-                //GetQuestLevel();
             }
         }
-        //选择题难度索引
+
+        /// <summary>
+        /// 选择题难度索引
+        /// </summary>
         private int _singleLevelNum;
         public int SingleLevelNum
         {
@@ -72,8 +104,9 @@ namespace Leaf.ViewModel
             set { Set(ref _singleLevelNum, value); }
         }
 
-
-        //填空题类型
+        /// <summary>
+        /// 填空题类型
+        /// </summary>
         private List<string> _gapTypeList = new List<string>();
         public List<string> GapTypeList
         {
@@ -81,7 +114,9 @@ namespace Leaf.ViewModel
             set { Set(ref _gapTypeList, value); }
         }
 
-        //填空题难度
+        /// <summary>
+        /// 填空题难度
+        /// </summary>
         private List<string> _gapLevel = new List<string>();
         public List<string> GapLevel
         {
@@ -89,7 +124,9 @@ namespace Leaf.ViewModel
             set { Set(ref _gapLevel, value); }
         }
 
-        //填空题数量
+        /// <summary>
+        /// 填空题数量
+        /// </summary>
         private int _gapNum;
         public int GapNum
         {
@@ -97,7 +134,9 @@ namespace Leaf.ViewModel
             set { Set(ref _gapNum, value); }
         }
 
-        //填空题类型索引
+        /// <summary>
+        /// 填空题类型索引
+        /// </summary>
         private int _gapTypeNum;
         public int GapTypeNum
         {
@@ -105,11 +144,12 @@ namespace Leaf.ViewModel
             set
             {
                 Set(ref _gapTypeNum, value);
-                //有bug的代码
-                //GetQuestLevel();
             }
         }
-        //填空题难度索引
+
+        /// <summary>
+        /// 填空题难度索引
+        /// </summary>
         private int _gapLevelNum;
         public int GapLevelNum
         {
@@ -117,7 +157,9 @@ namespace Leaf.ViewModel
             set { Set(ref _gapLevelNum, value); }
         }
 
-        //弹出菜单状态
+        /// <summary>
+        /// 弹出菜单状态
+        /// </summary>
         private bool _paneopen;
         public bool PaneOpen
         {
@@ -125,7 +167,9 @@ namespace Leaf.ViewModel
             set { Set(ref _paneopen, value); }
         }
 
-        //试卷列表索引
+        /// <summary>
+        /// 试卷列表索引
+        /// </summary>
         private int _test;
         public int Test
         {
@@ -133,7 +177,9 @@ namespace Leaf.ViewModel
             set { Set(ref _test, value); }
         }
 
-        //试卷列表
+        /// <summary>
+        /// 试卷列表
+        /// </summary>
         private List<TestPaper> _testpapaerlist;
         public List<TestPaper> TestList
         {
@@ -141,23 +187,44 @@ namespace Leaf.ViewModel
             set { Set(ref _testpapaerlist, value); }
         }
 
-        //开始答题
+        /// <summary>
+        /// 开始答题
+        /// </summary>
         public ICommand RunCommand { get; set; }
         private void run()
         {
-            //num.Add(1);
-            //num.Add(2);
-            //string a = JsonConvert.SerializeObject(num);
+            var sdb = new DbSingleService();
+            string _singlequest = TestList[Test].SingleQuestionNum;
+            string _gapquest = TestList[Test].GapQuestionNum;
+            string _singlesql = " where Id in (" + _singlequest.Substring(1, _singlequest.Length - 2) + ")";
+            List<SingleChoice> _SingleList = (List<SingleChoice>)sdb.Querysql("*", _singlesql);
+
+            var gdb = new DbGapService();
+            string _gapsql = " where Id in (" + _gapquest.Substring(1, _gapquest.Length - 2) + ")";
+            List<GapFilling> _GapList = (List<GapFilling>)gdb.QuerySql("*", _gapsql);
+
+            ViewModelLocator.SinglePaper.SingleList = _SingleList;
+            ViewModelLocator.SinglePaper.Mode = 1;
+            ViewModelLocator.SinglePaper.Init();
+            ViewModelLocator.GapPaper.GapList = _GapList;
+            ViewModelLocator.GapPaper.Mode = 1;
+            ViewModelLocator.GapPaper.Init();
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("Single");
         }
 
-        //打开弹出菜单
+        /// <summary>
+        /// 打开弹出菜单
+        /// </summary>
         public ICommand OpenCommand { get; set; }
         private void Open()
         {
             PaneOpen = !PaneOpen;
         }
 
-        //添加新试卷
+        /// <summary>
+        /// 添加新试卷
+        /// </summary>
         public ICommand AddCommand { get; set; }
         private void Add()
         {
@@ -203,7 +270,7 @@ namespace Leaf.ViewModel
                     int n = db.Insert(model);
                     if(n>0)
                     {
-                        ReadTestData();
+                        ReadData();
                         GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("试卷添加成功", "AddYes");
                     }
                     else
@@ -218,16 +285,19 @@ namespace Leaf.ViewModel
             }
         }
 
-        //初始化
+        /// <summary>
+        /// 初始化
+        /// </summary>
         private void Init()
         {
-            //InsertTestData();
-            ReadTestData();
+            ReadData();
             GetQuestType();
             GetQuestLevel();
         }
 
-        //构造函数
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public TestPaperModel()
         {
             Init();
@@ -237,14 +307,18 @@ namespace Leaf.ViewModel
         }
 
 
-        //测试读取
-        private void ReadTestData()
+        /// <summary>
+        /// 读取数据
+        /// </summary>
+        private void ReadData()
         {
             var db = new DbTestService();
             TestList = (List<TestPaper>)db.QueryObject();
         }
 
-        //获取题目类型
+        /// <summary>
+        /// 获取题目类型
+        /// </summary>
         private void GetQuestType()
         {
             if (GapTypeList == null || GapTypeList.Count == 0)
@@ -270,7 +344,10 @@ namespace Leaf.ViewModel
 
 
         }
-        //获取题目难度
+
+        /// <summary>
+        /// 获取题目难度
+        /// </summary>
         private void GetQuestLevel()
         {
 
@@ -295,29 +372,12 @@ namespace Leaf.ViewModel
                 }
             }
 
-            //有bug的代码
-            //if (GapTypeList != null && GapTypeList.Count != 0 && GapTypeNum >= 0)
-            //{
-            //    var db = new DbGapService();
-            //    var newstr = new []{ "distinct Level",GapTypeList[GapTypeNum] };
-            //    var _gaplist = (List<GapFilling>)db.QueryObject(newstr);
-            //    for (int i = 0; i < _gaplist.Count; i++)
-            //    {
-            //        GapLevel.Add(_gaplist[i].Level.ToString());
-            //    }
-            //}
-            //if (SingleTypeList != null && SingleTypeList.Count != 0 && SingleTypeNum >= 0)
-            //{
-            //    var db = new DbSingleService();
-            //    var newstr = new[] { "distinct Level", SingleTypeList[SingleTypeNum] };
-            //    var _singlelist = (List<SingleChoice>)db.QueryObject(newstr);
-            //    for (int i = 0; i < _singlelist.Count; i++)
-            //    {
-            //        SingleLevel.Add(_singlelist[i].Level.ToString());
-            //    }
-            //}
+            
         }
-        //获取题目数量
+
+        /// <summary>
+        /// 获取题目数量
+        /// </summary>
         private void GetQuestNum()
         {
             var gdb = new DbGapService();
@@ -328,38 +388,5 @@ namespace Leaf.ViewModel
             SingleMax = (int)sdb.Query(snewstr);
         }
 
-        //插入新试卷
-        private void Insert()
-        {
-
-        }
-
-
-        //测试插入
-        //private void InsertTestData()
-        //{
-        //    var db = new DbTestService();
-        //    if (db.QueryNum() >= 10)
-        //    {
-        //        return;
-        //    }
-        //    var num = new[] { 0, 2, 1, 0, 2, 1, 1, 1, 0, 2 };
-        //    foreach (int t in num)
-        //    {
-
-        //        var singleQuestionNum = t.ToString();
-        //        var gapQuestionNum = t.ToString();
-        //        var singlenum = t;
-        //        var gapnum = t*2;
-        //        var level = 1;
-        //        var name = t.ToString();
-        //        var model = new TestPaper {Name=name, SingleQuestionNum = singleQuestionNum, GapQuestionNum = gapQuestionNum, SingleNum = singlenum, GapNum = gapnum, Level = level, BuildTime = "a" };
-        //        var i = db.Insert(model);
-        //        if (i > 0)
-        //        {
-        //            Debug.WriteLine("yooooo, 加入成功了");
-        //        }
-        //    }
-        //}
     }
 }

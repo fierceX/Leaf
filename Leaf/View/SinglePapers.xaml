@@ -24,7 +24,9 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBlock
-                Height="100"
+                Width="300"
+                Height="200"
+                TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
             <RadioButton Name="Choice1" 
                             GroupName="Single" 

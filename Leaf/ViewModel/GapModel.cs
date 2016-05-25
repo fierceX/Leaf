@@ -1,7 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using Leaf.Model;
 using Leaf.SQLite;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,17 +17,35 @@ namespace Leaf.ViewModel
     class GapModel : ViewModelBase
     {
 
-        //题目数量
+        /// <summary>
+        /// 模式
+        /// </summary>
+        public int Mode;
+
+        /// <summary>
+        /// 题目数量
+        /// </summary>
         private int max = 0;
-        //当前题目
+
+        /// <summary>
+        /// 当前题目
+        /// </summary>
         private int num = 0;
-        //题目列表
-        private List<GapFilling> GapList = new List<GapFilling>();
-        //成绩单
+
+        /// <summary>
+        /// 题目列表
+        /// </summary>
+        public List<GapFilling> GapList = new List<GapFilling>();
+
+        /// <summary>
+        /// 成绩单
+        /// </summary>
         private List<bool> Result = new List<bool>();
 
 
-        //题干
+        /// <summary>
+        /// 题干
+        /// </summary>
         private string _stem;
         public string Stem
         {
@@ -36,7 +56,9 @@ namespace Leaf.ViewModel
             }
         }
 
-        //答案
+        /// <summary>
+        /// 答案
+        /// </summary>
         private string _answer;
         public string Answer
         {
@@ -45,8 +67,11 @@ namespace Leaf.ViewModel
         }
 
 
-        //命令
-        //继续
+        /// <summary>
+        /// 命令
+        /// /////
+        /// 继续
+        /// </summary>
         public ICommand ContinueCommand { get; set; }
         private void Continue()
         {
@@ -62,23 +87,42 @@ namespace Leaf.ViewModel
             }
             else
             {
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "GapEnd");
+                if (Mode == 1)
+                {
+                    ViewModelLocator.TestResult.GapResult = Result;
+                    Result.Clear();
+                    num = 0;
+                    max = 0;
+                    var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                    navigation.NavigateTo("Gap");
+                }
+                else
+                {
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "GapEnd");
+                    Result.Clear();
+                    num = 0;
+                    max = 0;
+                }
             }
         }
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public GapModel()
         {
-            ResetTest();
+            Init();
             ContinueCommand = new RelayCommand(Continue);
-            ResetCommand = new RelayCommand(ResetTest);
-            max = GapList.Count;
         }
 
 
 
-        //初始化
-        private void Init()
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Init()
         {
+            max = GapList.Count;
             if (num >= GapList.Count)
             {
                 return;
@@ -86,61 +130,10 @@ namespace Leaf.ViewModel
             Stem = GapList[num].Stems;
         }
 
-        //测试
-        public ICommand ResetCommand { get; set; }
-        private void ResetTest()
-        {
-            max = 0;
-            num = 0;
-            Result.Clear();
-            GapList.Clear();
-            //InsertTestData();   // TODO 测试用函数
-            ReadTestData();     // TODO 测试用函数
-            max = GapList.Count;
-            Init();
-        }
-
-
         /// <summary>
-        /// 测试用读取
+        /// 获取答案
         /// </summary>
-        private void ReadTestData()
-        {
-            if (GapList == null || GapList.Count == 0)
-            {
-                var db = new DbGapService();
-                var newStr = new[] { "a", "2", "10"};
-                GapList = (List<GapFilling>)db.QueryObject(newStr);
-            }
-        }
-
-        /// <summary>
-        /// 测试用插入
-        /// </summary>
-        //private void InsertTestData()
-        //{
-        //    var db = new DbGapService();
-        //    if (db.QueryNum() > 10)
-        //    {
-        //        return;
-        //    }
-        //    var answers = new[] { 0, 2, 1, 0, 2, 1, 1, 1, 0, 2 };
-        //    foreach (int t in answers)
-        //    {
-        //        var stem = "此习题所要填的内容为（  ）（答案为 "+t+")";
-        //        var answer = t.ToString();
-        //        var level = 1;
-        //        var type = "a";
-        //        var model = new GapFilling { Answer = answer, Level = level, Stems = stem, Type = type };
-        //        var i = db.Insert(model);
-        //        if (i > 0)
-        //        {
-        //            Debug.WriteLine("yooooo, 加入成功了");
-        //        }
-        //    }
-        //}
-
-        //获取答案
+        /// <returns></returns>
         private bool GetAnswer()
         {
             if (Answer == null || Answer == "" || Answer.Trim() == "")

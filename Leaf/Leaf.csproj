@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Model\FileService.cs" />
     <Compile Include="Model\GapFilling.cs" />
+    <Compile Include="Model\QuestionView.cs" />
     <Compile Include="Model\SingleChoice.cs" />
     <Compile Include="Model\MD5.cs" />
     <Compile Include="Model\TestPaper.cs" />
@@ -115,10 +116,12 @@
     <Compile Include="ViewModel\InsertModel.cs" />
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
+    <Compile Include="ViewModel\QuestionModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />
     <Compile Include="ViewModel\SingleModel.cs" />
     <Compile Include="ViewModel\TestModel.cs" />
     <Compile Include="ViewModel\TestPaperModel.cs" />
+    <Compile Include="ViewModel\TestResultModel.cs" />
     <Compile Include="View\GapPapers.xaml.cs">
       <DependentUpon>GapPapers.xaml</DependentUpon>
     </Compile>
@@ -133,6 +136,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="View\QuestionList.xaml.cs">
+      <DependentUpon>QuestionList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\register.xaml.cs">
       <DependentUpon>register.xaml</DependentUpon>
     </Compile>
@@ -144,6 +150,9 @@
     </Compile>
     <Compile Include="View\TestPaperManage.xaml.cs">
       <DependentUpon>TestPaperManage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestResult.xaml.cs">
+      <DependentUpon>TestResult.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\QuestionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\register.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TestPaperManage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TestResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

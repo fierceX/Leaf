@@ -9,11 +9,14 @@ using Microsoft.Practices.ServiceLocation;
 using Leaf.ViewModel;
 using Leaf.View;
 using GalaSoft.MvvmLight.Views;
+using Leaf.Model;
 
 namespace Leaf
 {
     class ViewModelLocator
     {
+        private static User _user = new User();
+        public static User User { get { return _user; } set { _user = value; } }
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -25,6 +28,8 @@ namespace Leaf
             SimpleIoc.Default.Register<TestModel>();
             SimpleIoc.Default.Register<InsertModel>();
             SimpleIoc.Default.Register<TestPaperModel>();
+            SimpleIoc.Default.Register<TestResultModel>();
+            SimpleIoc.Default.Register<QuestionModel>();
 
             var navigationService = this.InitNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
@@ -41,6 +46,7 @@ namespace Leaf
             navigationService.Configure("Test", typeof(View.test));
             navigationService.Configure("Insert", typeof(InsertData));
             navigationService.Configure("TestPaper", typeof(TestPaperManage));
+            navigationService.Configure("Question", typeof(QuestionList));
             return navigationService;
         }
 
@@ -165,6 +171,28 @@ namespace Leaf
                 if (_testpaper == null)
                     _testpaper = ServiceLocator.Current.GetInstance<TestPaperModel>();
                 return _testpaper;
+            }
+        }
+
+        private static TestResultModel _testresult;
+        public static TestResultModel TestResult
+        {
+            get
+            {
+                if (_testresult == null)
+                    _testresult = ServiceLocator.Current.GetInstance<TestResultModel>();
+                return _testresult;
+            }
+        }
+
+        private static QuestionModel _qustionlist;
+        public static QuestionModel QuestionList
+        {
+            get
+            {
+                if (_qustionlist == null)
+                    _qustionlist = ServiceLocator.Current.GetInstance<QuestionModel>();
+                return _qustionlist;
             }
         }
 

@@ -45,12 +45,20 @@ namespace Leaf.ViewModel
             navigation.NavigateTo("TestPaper");
         }
 
+        public ICommand ToQuestion { get; set; }
+        private void question()
+        {
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("Question");
+        }
+
         public TestModel()
         {
             ToGap = new RelayCommand(Gap);
             ToJson = new RelayCommand(json);
             ToSingle = new RelayCommand(Single);
             ToTest = new RelayCommand(test);
+            ToQuestion = new RelayCommand(question);
         }
     }
 }

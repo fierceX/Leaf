@@ -24,7 +24,9 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBlock
+                Width="300"
                 Height="100"
+                TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
             <TextBox Text="{Binding Answer,Mode=TwoWay}" />
         </StackPanel>

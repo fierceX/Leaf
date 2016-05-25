@@ -77,6 +77,7 @@ namespace Leaf.View
             MessageDialog mag = new MessageDialog(msg as string);
             UICommand yes = new UICommand("确定", (o) =>
              {
+                 ViewModelLocator.User.Clear();
                  var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                  navigation.GoBack();
              });

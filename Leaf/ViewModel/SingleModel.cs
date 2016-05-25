@@ -9,24 +9,47 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Leaf.SQLite;
+using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Views;
 
 namespace Leaf.ViewModel
 {
     class SingleModel : ViewModelBase
     {
-        //题目数量
+        /// <summary>
+        /// 模式标志
+        /// </summary>
+        public int Mode;
+
+        /// <summary>
+        /// 题目数量
+        /// </summary>
         private int max = 0;
-        //当前题目
+
+        /// <summary>
+        /// 当前题目
+        /// </summary>
         private int num = 0;
-        //正确答案标记
+
+        /// <summary>
+        /// 正确答案标记
+        /// </summary>
         private int answernum = 0;
-        //题目列表
-        private List<SingleChoice> SingleList = new List<SingleChoice>();
-        //成绩单
+
+        /// <summary>
+        /// 题目列表
+        /// </summary>
+        public List<SingleChoice> SingleList = new List<SingleChoice>();
+
+        /// <summary>
+        /// 成绩单
+        /// </summary>
         private List<bool> Result = new List<bool>();
 
 
-        //题干
+        /// <summary>
+        /// 题干
+        /// </summary>
         private string _stem;
         public string Stem
         {
@@ -34,8 +57,9 @@ namespace Leaf.ViewModel
             set { Set(ref _stem, value); }
         }
 
-
-        //选项内容
+        /// <summary>
+        /// 选项内容
+        /// </summary>
         private string _choicetext1; 
          public string ChoiceText1
         { 
@@ -67,8 +91,9 @@ namespace Leaf.ViewModel
              set { Set(ref _choicetext4, value); } 
         }
 
-
-        //选项状态
+        /// <summary>
+        /// 选项状态
+        /// </summary>
         private bool _choice1;
         public bool Choice1
         {
@@ -94,10 +119,12 @@ namespace Leaf.ViewModel
             set { Set(ref _choice4, value); }
         }
 
- 
-        //命令
-        //继续
-         public ICommand ContinueCommand { get; set; } 
+        /// <summary>
+        /// 命令
+        /// /////////
+        /// 继续
+        /// </summary>
+        public ICommand ContinueCommand { get; set; } 
          private void Continue()
          {
              if (Result.Count <= max)
@@ -106,7 +133,7 @@ namespace Leaf.ViewModel
             }
             if (num < max)
              {
-                 Init();
+                Init();
                 Choice1 = false;
                 Choice2 = false;
                 Choice3 = false;
@@ -115,25 +142,25 @@ namespace Leaf.ViewModel
             else
             {
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "SingleEnd");
+                //if(Mode == 1)
+                //{
+                    ViewModelLocator.TestResult.SingleResult = Result;
+                Result.Clear();
+                num = 0;
+                answernum = 0;
+                max = 0;
+                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                    navigation.NavigateTo("Gap");
+               // }
             }
         }
-        public ICommand ResetCommand { get; set; }
 
-        private void ResetTest()
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Init()
         {
-            max = 0;
-            num = 0;
-            Result.Clear();
-            SingleList.Clear();
-            //InsertTestData();   // TODO 测试用函数
-            ReadTestData();     // TODO 测试用函数
             max = SingleList.Count;
-            Init();
-        }
-
-        //初始化
-        private void Init()
-        {
             if (num >= SingleList.Count)
             {
                 return;
@@ -154,57 +181,22 @@ namespace Leaf.ViewModel
 
         }
 
-        //构造函数
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public SingleModel()
         {
-            ResetTest();
-
-             ContinueCommand = new RelayCommand(Continue);
-            ResetCommand = new RelayCommand(ResetTest);
-            max = SingleList.Count;
+            Init();
+            ContinueCommand = new RelayCommand(Continue);
+            
         }
 
         /// <summary>
-        /// 测试用读取
+        /// 生成随机化数列
         /// </summary>
-        private void ReadTestData()
-        {
-            if (SingleList == null || SingleList.Count == 0)
-            {
-                var db = new DbSingleService();
-                var newStr = new[] { "a", "2","10" };
-                SingleList = (List<SingleChoice>)db.QueryObject(newStr);
-            }
-        }
-        /// <summary>
-        /// 测试用插入
-        /// </summary>
-        //private void InsertTestData()
-        //{
-        //    var db = new DbSingleService();
-        //    if (db.QueryNum() >10)
-        //    {
-        //        return;
-        //    }
-        //    var answers = new[] {0,2,1,0,2,1,1,1,0,2};
-        //    foreach (int t in answers)
-        //    {
-        //        var stem = "以下习题的正确答案是" + t;
-        //        var choices = "选项"+t+1;
-        //        var answer = t.ToString();
-        //        var level = 1;
-        //        var type = "a";
-        //        var model = new SingleChoice {Answer = answer,Choices1 = choices ,Choices2 = choices,Choices3 = choices, Level = level, Stems = stem, Type = type};
-        //        var i = db.Insert(model);
-        //        if (i>0)
-        //        {
-        //            Debug.WriteLine("yooooo, 加入成功了");
-        //        }
-        //    }
-        //}
-
-        //生成随机化数列
-        private  int[] GetRandom(int total)
+        /// <param name="total"></param>
+        /// <returns></returns>
+        private int[] GetRandom(int total)
         {
             int[] array = new int[total];
             for (int i = 0; i < total; i++)
@@ -223,7 +215,11 @@ namespace Leaf.ViewModel
             return array;
         }
 
-        //获取答案
+        /// <summary>
+        /// 获取答案
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         private bool GetAnswer(int num)
         {
             bool[] choicebool = new bool[4];

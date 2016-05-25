@@ -25,5 +25,13 @@ namespace Leaf.Model
         //管理员标识
         [NotNull]
         public int Admin { get; set; }
+
+        public void Clear()
+        {
+            Id = 0;
+            Username = "";
+            Password = "";
+            Admin = -1;
+        }
     }
 }

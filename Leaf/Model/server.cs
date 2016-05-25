@@ -18,7 +18,10 @@ namespace Leaf.Model
             if (q == null)
                 return false;
             if (q.Password == mobelpassword)
+            {
+                ViewModelLocator.User = q;
                 return true;
+            }
             return false;
         }
     }

@@ -6,8 +6,54 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+    <Page.DataContext>
+        <Binding Path="TestResult" Source="{StaticResource Locator}"></Binding>
+    </Page.DataContext>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <StackPanel Height="50" Orientation="Horizontal" >
+                <StackPanel Orientation="Vertical" Width="150">
+                    <TextBlock Text="选择题成绩" />
+                    <ProgressBar Value="{Binding SingleValue,Mode=TwoWay}"/>
+                    <Grid>
+                        <TextBlock Text="{Binding SingleRight,Mode=TwoWay}" HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding SingleWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
+                    </Grid>
+                </StackPanel>
+                <TextBlock Text="{Binding SingleResult,Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Height="50" Orientation="Horizontal" >
+                <StackPanel Orientation="Vertical" Width="150">
+                    <TextBlock Text="填空题成绩" />
+                    <ProgressBar Value="{Binding GapValue,Mode=TwoWay}"/>
+                    <Grid>
+                        <TextBlock Text="{Binding GapRight,Mode=TwoWay}" HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding GapWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
+                    </Grid>
+                </StackPanel>
+                <TextBlock Text="{Binding GapResult,Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Height="50" Orientation="Horizontal" >
+                <StackPanel Orientation="Vertical" Width="150">
+                    <TextBlock Text="总成绩" />
+                    <ProgressBar Value="{Binding AllValue,Mode=TwoWay}"/>
+                    <Grid>
+                        <TextBlock Text="{Binding AllRight,Mode=TwoWay}" HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding AllWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
+                    </Grid>
+                </StackPanel>
+                <TextBlock Text="{Binding AllResult,Mode=TwoWay}" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

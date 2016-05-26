@@ -29,6 +29,7 @@
                 TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
             <TextBox Text="{Binding Answer,Mode=TwoWay}" />
+            <TextBlock Text="{Binding RightAnswer,Mode=TwoWay}" />
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
         <Button Content="确定"   Margin="20,20,20,0" Command="{Binding ContinueCommand}" />

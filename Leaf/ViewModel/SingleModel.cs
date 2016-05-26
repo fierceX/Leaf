@@ -20,7 +20,17 @@ namespace Leaf.ViewModel
         /// 模式标志
         /// </summary>
         public int Mode;
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool ContinueBool = true;
 
+        private string _answer;
+        public string Answer
+        {
+            get { return _answer; }
+            set { Set(ref _answer, value); }
+        }
         /// <summary>
         /// 题目数量
         /// </summary>
@@ -129,8 +139,20 @@ namespace Leaf.ViewModel
          {
              if (Result.Count <= max)
              {
-                Result.Add(GetAnswer(answernum));
-            }
+                if (ContinueBool && Mode == 0)
+                {
+                    Answer="正确答案是："+ SingleList[num].Answer;
+                    ContinueBool = false;
+                    return;
+                }
+                else
+                {
+                    num++;
+                    Result.Add(GetAnswer(answernum));
+                    ContinueBool = true;
+                    Answer = "";
+                }
+             }
             if (num < max)
              {
                 Init();
@@ -141,17 +163,24 @@ namespace Leaf.ViewModel
              }
             else
             {
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "SingleEnd");
-                //if(Mode == 1)
-                //{
-                    ViewModelLocator.TestResult.SingleResult = Result;
+                
+                if (Mode == 1)
+                {
+                    foreach (var result in Result)
+                    {
+                        ViewModelLocator.TestResult.SingleResult.Add(result);
+                    }
+                }
+                else
+                { 
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "SingleEnd");
+                }
+                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                navigation.NavigateTo("Gap");
                 Result.Clear();
                 num = 0;
                 answernum = 0;
                 max = 0;
-                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                    navigation.NavigateTo("Gap");
-               // }
             }
         }
 
@@ -177,7 +206,6 @@ namespace Leaf.ViewModel
             ChoiceText4 = choicearray[3];
             Stem = SingleList[num].Stems;
             answernum = array[0];
-            num++;
 
         }
 

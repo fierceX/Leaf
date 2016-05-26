@@ -193,24 +193,33 @@ namespace Leaf.ViewModel
         public ICommand RunCommand { get; set; }
         private void run()
         {
-            var sdb = new DbSingleService();
-            string _singlequest = TestList[Test].SingleQuestionNum;
-            string _gapquest = TestList[Test].GapQuestionNum;
-            string _singlesql = " where Id in (" + _singlequest.Substring(1, _singlequest.Length - 2) + ")";
-            List<SingleChoice> _SingleList = (List<SingleChoice>)sdb.Querysql("*", _singlesql);
+            if (Test < 0 || TestList.Count == 0)
+            {
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("请先选择试卷", "RunNo");
+                return;
+            }
+            else
+            {
+                var sdb = new DbSingleService();
+                string _singlequest = TestList[Test].SingleQuestionNum;
+                string _gapquest = TestList[Test].GapQuestionNum;
+                string _singlesql = " where Id in (" + _singlequest.Substring(1, _singlequest.Length - 2) + ")";
+                List<SingleChoice> _SingleList = (List<SingleChoice>)sdb.Querysql("*", _singlesql);
 
-            var gdb = new DbGapService();
-            string _gapsql = " where Id in (" + _gapquest.Substring(1, _gapquest.Length - 2) + ")";
-            List<GapFilling> _GapList = (List<GapFilling>)gdb.QuerySql("*", _gapsql);
+                var gdb = new DbGapService();
+                string _gapsql = " where Id in (" + _gapquest.Substring(1, _gapquest.Length - 2) + ")";
+                List<GapFilling> _GapList = (List<GapFilling>)gdb.QuerySql("*", _gapsql);
 
-            ViewModelLocator.SinglePaper.SingleList = _SingleList;
-            ViewModelLocator.SinglePaper.Mode = 1;
-            ViewModelLocator.SinglePaper.Init();
-            ViewModelLocator.GapPaper.GapList = _GapList;
-            ViewModelLocator.GapPaper.Mode = 1;
-            ViewModelLocator.GapPaper.Init();
-            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-            navigation.NavigateTo("Single");
+                ViewModelLocator.SinglePaper.SingleList = _SingleList;
+                ViewModelLocator.SinglePaper.Mode = 1;
+                //ViewModelLocator.SinglePaper.Init();
+                ViewModelLocator.GapPaper.GapList = _GapList;
+                ViewModelLocator.GapPaper.Mode = 1;
+                //ViewModelLocator.GapPaper.Init();
+                ViewModelLocator.TestResult.TestPaperModel = TestList[Test];
+                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                navigation.NavigateTo("Single");
+            }
         }
 
         /// <summary>
@@ -228,14 +237,14 @@ namespace Leaf.ViewModel
         public ICommand AddCommand { get; set; }
         private void Add()
         {
-            if(GapLevelNum >=0 && SingleLevelNum >=0 && GapTypeNum >=0 && SingleTypeNum >=0)
+            if(GapLevelNum >0 && SingleLevelNum >0 && GapTypeNum >=0 && SingleTypeNum >0)
             {
                 GetQuestNum();
-                if(GapNum>=GapMax)
+                if(GapNum>GapMax)
                 {
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("该类型和难度下填空题没有足够数量题目，只有"+GapMax.ToString(), "AddNo");
                 }
-                else if(SingleNum>=SingleMax)
+                else if(SingleNum>SingleMax)
                 {
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("该类型和难度下选择题没有足够数量题目，只有" + SingleMax.ToString(), "AddNo");
                 }

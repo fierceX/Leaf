@@ -28,6 +28,7 @@ namespace Leaf.View
             this.InitializeComponent();
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "AddNo", MessageBox);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "AddYes", MessageBox);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "RunYes", MessageBox);
         }
 
         private async void MessageBox(string msg)

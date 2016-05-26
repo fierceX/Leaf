@@ -28,6 +28,7 @@
                 Height="200"
                 TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
+            <TextBlock TextWrapping="Wrap" Text="{Binding Answer,Mode=TwoWay}"/>
             <RadioButton Name="Choice1" 
                             GroupName="Single" 
                             Content="{Binding ChoiceText1,Mode=TwoWay}" 

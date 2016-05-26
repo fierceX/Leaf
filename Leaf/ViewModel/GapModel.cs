@@ -17,6 +17,8 @@ namespace Leaf.ViewModel
     class GapModel : ViewModelBase
     {
 
+        private bool ContinueBool = true;
+
         /// <summary>
         /// 模式
         /// </summary>
@@ -66,7 +68,12 @@ namespace Leaf.ViewModel
             set { Set(ref _answer, value); }
         }
 
-
+        private string _answerright;
+        public string RightAnswer
+        {
+            get { return _answerright; }
+            set { Set(ref _answerright, value); }
+        }
         /// <summary>
         /// 命令
         /// /////
@@ -77,8 +84,20 @@ namespace Leaf.ViewModel
         {
             if (Result.Count <= max)
             {
-                Result.Add(GetAnswer());
-                num++;
+                
+                if (ContinueBool && Mode == 0)
+                {
+                    RightAnswer = "正确答案是：" + GapList[num].Answer;
+                    ContinueBool = false;
+                    return;
+                }
+                else
+                {
+                    Result.Add(GetAnswer());
+                    num++;
+                    ContinueBool = true;
+                    RightAnswer = "";
+                }
             }
             if (num < max)
             {
@@ -87,18 +106,24 @@ namespace Leaf.ViewModel
             }
             else
             {
+                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                 if (Mode == 1)
                 {
-                    ViewModelLocator.TestResult.GapResult = Result;
+                    foreach (var result in Result)
+                    {
+                        ViewModelLocator.TestResult.GapResult.Add(result);
+                    }
+                    ViewModelLocator.TestResult.Init();
                     Result.Clear();
                     num = 0;
                     max = 0;
-                    var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                    navigation.NavigateTo("Gap");
+                    
+                    navigation.NavigateTo("Result");
                 }
                 else
                 {
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "GapEnd");
+                    navigation.NavigateTo("Question");
                     Result.Clear();
                     num = 0;
                     max = 0;

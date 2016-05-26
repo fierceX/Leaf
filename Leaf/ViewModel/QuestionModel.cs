@@ -50,8 +50,8 @@ namespace Leaf.ViewModel
             ViewModelLocator.GapPaper.GapList = (List<GapFilling>)gdb.QueryObject(newstr);
             ViewModelLocator.SinglePaper.Mode = 0;
             ViewModelLocator.GapPaper.Mode = 0;
-            ViewModelLocator.GapPaper.Init();
-            ViewModelLocator.SinglePaper.Init();
+            //ViewModelLocator.GapPaper.Init();
+            //ViewModelLocator.SinglePaper.Init();
             var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
             navigation.NavigateTo("Single");
         }

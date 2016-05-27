@@ -43,8 +43,10 @@ namespace Leaf.SQLite
                 sqlstring = sqlstring + " where Type=\"" + value[1] + "\"";
             if (value.Length >= 3)
                 sqlstring = sqlstring + " and Level=" + value[2];
-            if (value.Length == 4)
-                sqlstring = sqlstring + " ORDER BY RANDOM() limit " + value[3];
+            if (value.Length >= 4)
+                sqlstring = sqlstring + " and Subject=\"" + value[3] + "\"";
+            if(value.Length == 5)
+                sqlstring = sqlstring + " ORDER BY RANDOM() limit " + value[4];
             List<GapFilling> Gaplist = new List<GapFilling>();
             using (var db = DB.GetDbConnection())
             {
@@ -89,8 +91,10 @@ namespace Leaf.SQLite
             string sqlString = "select count(*) from GapFilling";
             if (value.Length >= 1)
                 sqlString = sqlString + " where Type=\"" + value[0] + "\"";
-            if (value.Length == 2)
+            if (value.Length >= 2)
                 sqlString = sqlString + " and Level=" + value[1];
+            if (value.Length == 3)
+                sqlString = sqlString + " and Subject=\"" + value[2] + "\"";
             using (var db = DB.GetDbConnection())
             {
                 result = db.ExecuteScalar<int>(sqlString);

@@ -44,6 +44,7 @@ namespace Leaf.ViewModel
                 model.Choices3 = token["choices"][2].ToString();
                 model.Level = Convert.ToInt32(token["Level"].ToString());
                 model.Type = token["Type"].ToString();
+                model.Subject = token["Subject"].ToString();
                 int i = db.Insert(model);
                 if (i > 0)
                     singlenum += i;
@@ -58,6 +59,7 @@ namespace Leaf.ViewModel
                 model.Stems = token["Stems"].ToString();
                 model.Level = Convert.ToInt32(token["Level"].ToString());
                 model.Type = token["Type"].ToString();
+                model.Subject = token["Subject"].ToString();
                 int i = db.Insert(model);
                 if (i > 0)
                     gapnum += i;

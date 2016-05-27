@@ -41,5 +41,8 @@ namespace Leaf.Model
         //类型，不为空
         [NotNull]
         public string Type { get; set; }
+
+        [NotNull]
+        public string Subject { get; set; }
     }
 }

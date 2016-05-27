@@ -13,9 +13,12 @@
     <Page.Resources>
         <DataTemplate x:Key="QuestionListDataTemplate" x:DataType="data:QuestionView" >
             <StackPanel Orientation="Vertical" Background="{Binding Color}" Margin="5,5,5,5" Height="100" Width="100">
-                <TextBlock Text="{x:Bind Type}" Margin="0,10,0,10" HorizontalAlignment="Center" FontSize="18" />
-                <TextBlock Text="{x:Bind Level}"  HorizontalAlignment="Center" FontSize="16" />
-                <Grid >
+                <TextBlock Text="{x:Bind Subject}" Margin="0,10,0,10" HorizontalAlignment="Center" FontSize="18" />
+                <Grid>
+                    <TextBlock Text="{x:Bind Type}" Margin="10,0,10,0" HorizontalAlignment="Left" FontSize="14" />
+                    <TextBlock Text="{x:Bind Level}" Margin="10,0,10,0"  HorizontalAlignment="Right" FontSize="14" />
+                </Grid>
+                <Grid Margin="0,10,0,0" >
                     <TextBlock Text="{x:Bind SingleNum}" Margin="10,0,10,0" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind GapNum}" Margin="10,0,10,0" HorizontalAlignment="Right" FontSize="10" />
                 </Grid>

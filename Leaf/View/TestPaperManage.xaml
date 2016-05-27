@@ -30,42 +30,39 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="1">
+        <StackPanel Grid.Row="0">
             <TextBlock Text="试卷管理" HorizontalAlignment="Center"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1">
-            <ListView Height="300"
-                      Width="200"
-                      SelectionMode="Single" 
-                      SelectedIndex="{Binding Test,Mode=TwoWay}"
-                      ItemTemplate="{StaticResource TestListDataTemplate}"
-                      ItemsSource="{Binding TestList,Mode=TwoWay}">
-            </ListView>
-            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="开始" Command="{Binding RunCommand}" />
-            <Button IsEnabled="{Binding IsEnabled,Mode=TwoWay}" Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="添加" Command="{Binding OpenCommand}" />
-        </StackPanel>
-        <SplitView Grid.Column="0" 
+       
+        <SplitView 
                    Grid.Row="1" 
                    DisplayMode="Overlay"  
-                   OpenPaneLength="100"
+                   OpenPaneLength="200"
                    IsPaneOpen="{Binding PaneOpen,Mode=TwoWay}" >
             <SplitView.Pane>
                 <StackPanel>
-                    <ComboBox Margin="0,0,0,10" Header="选择题类型" ItemsSource="{Binding SingleTypeList,Mode=TwoWay}" SelectedIndex="{Binding SingleTypeNum,Mode=TwoWay}"/>
-                    <ComboBox Margin="0,0,0,10" Header="选择题难度" ItemsSource="{Binding SingleLevel,Mode=TwoWay}" SelectedIndex="{Binding SingleLevelNum,Mode=TwoWay}" />
+                    <ComboBox Margin="0,0,0,10" Header="习题包" ItemsSource="{Binding SubjectList,Mode=TwoWay}" SelectedIndex="{Binding SubjectIndex,Mode=TwoWay}"/>
+                    <ComboBox Margin="0,0,0,10" Header="难度" ItemsSource="{Binding LevelList,Mode=TwoWay}" SelectedIndex="{Binding LevelIndex,Mode=TwoWay}" />
+                    <ComboBox Margin="0,0,0,10" Header="类型" ItemsSource="{Binding TypeList,Mode=TwoWay}" SelectedIndex="{Binding TypeIndex,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="选择题数量" Text="{Binding SingleNum,Mode=TwoWay}" />
-                    <ComboBox Margin="0,0,0,10" Header="填空题类型" ItemsSource="{Binding GapTypeList,Mode=TwoWay}" SelectedIndex="{Binding GapTypeNum,Mode=TwoWay}" />
-                    <ComboBox Margin="0,0,0,10" Header="填空题难度" ItemsSource="{Binding GapLevel,Mode=TwoWay}" SelectedIndex="{Binding GapLevelNum,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="填空题数量" Text="{Binding GapNum,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="试卷名称" Text="{Binding TestName,Mode=TwoWay}" />
                     <Button Margin="0,0,0,10" Content="生成" Command="{Binding AddCommand}" />
                 </StackPanel>
             </SplitView.Pane>
+            <SplitView.Content>
+                <StackPanel>
+                    <ListView Height="300"
+                      Width="200"
+                      SelectionMode="Single" 
+                      SelectedIndex="{Binding Test,Mode=TwoWay}"
+                      ItemTemplate="{StaticResource TestListDataTemplate}"
+                      ItemsSource="{Binding TestList,Mode=TwoWay}">
+                    </ListView>
+                    <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="开始" Command="{Binding RunCommand}" />
+                    <Button IsEnabled="{Binding IsEnabled,Mode=TwoWay}" Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="添加" Command="{Binding OpenCommand}" />
+                </StackPanel>
+            </SplitView.Content>
         </SplitView>
     </Grid>
 </Page>

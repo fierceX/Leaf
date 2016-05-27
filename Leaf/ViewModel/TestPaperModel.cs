@@ -51,30 +51,37 @@ namespace Leaf.ViewModel
             set { Set(ref _testname, value); }
         }
 
-        /// <summary>
-        /// 选择题类型
-        /// </summary>
-        private List<string> _singleTypeList = new List<string>();
-        public List<string> SingleTypeList
+        private List<string> _subjectList = new List<string>();
+        public List<string> SubjectList
         {
-            get { return _singleTypeList; }
-            set { Set(ref _singleTypeList, value); }
+            get { return _subjectList; }
+            set { Set(ref _subjectList, value); }
         }
 
         /// <summary>
-        /// 选择题难度
+        /// 类型
         /// </summary>
-        private List<string> _singleLevel = new List<string>();
-        public List<string> SingleLevel
+        private List<string> _typeList = new List<string>();
+        public List<string> TypeList
         {
-            get { return _singleLevel; }
-            set { Set(ref _singleLevel, value); }
+            get { return _typeList; }
+            set { Set(ref _typeList, value); }
+        }
+
+        /// <summary>
+        /// 难度
+        /// </summary>
+        private List<string> _levelList = new List<string>();
+        public List<string> LevelList
+        {
+            get { return _levelList; }
+            set { Set(ref _levelList, value); }
         }
 
         /// <summary>
         /// 选择题数量
         /// </summary>
-        private int _singleNum;
+        private int _singleNum=5;
         public int SingleNum
         {
             get { return _singleNum; }
@@ -82,52 +89,33 @@ namespace Leaf.ViewModel
         }
 
         /// <summary>
-        /// 选择题类型索引
+        /// 类型索引
         /// </summary>
-        private int _singleTypeNum;
-        public int SingleTypeNum
+        private int _typeIndex;
+        public int TypeIndex
         {
-            get { return _singleTypeNum; }
+            get { return _typeIndex; }
             set
             {
-                Set(ref _singleTypeNum, value);
+                Set(ref _typeIndex, value);
             }
         }
 
         /// <summary>
-        /// 选择题难度索引
+        /// 难度索引
         /// </summary>
-        private int _singleLevelNum;
-        public int SingleLevelNum
+        private int _levelIndex;
+        public int LevelIndex
         {
-            get { return _singleLevelNum; }
-            set { Set(ref _singleLevelNum, value); }
+            get { return _levelIndex; }
+            set { Set(ref _levelIndex, value); }
         }
 
-        /// <summary>
-        /// 填空题类型
-        /// </summary>
-        private List<string> _gapTypeList = new List<string>();
-        public List<string> GapTypeList
-        {
-            get { return _gapTypeList; }
-            set { Set(ref _gapTypeList, value); }
-        }
-
-        /// <summary>
-        /// 填空题难度
-        /// </summary>
-        private List<string> _gapLevel = new List<string>();
-        public List<string> GapLevel
-        {
-            get { return _gapLevel; }
-            set { Set(ref _gapLevel, value); }
-        }
 
         /// <summary>
         /// 填空题数量
         /// </summary>
-        private int _gapNum;
+        private int _gapNum=5;
         public int GapNum
         {
             get { return _gapNum; }
@@ -135,26 +123,16 @@ namespace Leaf.ViewModel
         }
 
         /// <summary>
-        /// 填空题类型索引
+        /// 题库包索引
         /// </summary>
-        private int _gapTypeNum;
-        public int GapTypeNum
+        private int _subjectIndex;
+        public int SubjectIndex
         {
-            get { return _gapTypeNum; }
+            get { return _subjectIndex; }
             set
             {
-                Set(ref _gapTypeNum, value);
+                Set(ref _subjectIndex, value);
             }
-        }
-
-        /// <summary>
-        /// 填空题难度索引
-        /// </summary>
-        private int _gapLevelNum;
-        public int GapLevelNum
-        {
-            get { return _gapLevelNum; }
-            set { Set(ref _gapLevelNum, value); }
         }
 
         /// <summary>
@@ -212,10 +190,8 @@ namespace Leaf.ViewModel
 
                 ViewModelLocator.SinglePaper.SingleList = _SingleList;
                 ViewModelLocator.SinglePaper.Mode = 1;
-                //ViewModelLocator.SinglePaper.Init();
                 ViewModelLocator.GapPaper.GapList = _GapList;
                 ViewModelLocator.GapPaper.Mode = 1;
-                //ViewModelLocator.GapPaper.Init();
                 ViewModelLocator.TestResult.TestPaperModel = TestList[Test];
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                 navigation.NavigateTo("Single");
@@ -237,7 +213,7 @@ namespace Leaf.ViewModel
         public ICommand AddCommand { get; set; }
         private void Add()
         {
-            if(GapLevelNum >0 && SingleLevelNum >0 && GapTypeNum >=0 && SingleTypeNum >0)
+            if(SubjectIndex >0 && TypeIndex >0 && LevelIndex >0)
             {
                 GetQuestNum();
                 if(GapNum>GapMax)
@@ -252,8 +228,11 @@ namespace Leaf.ViewModel
                 {
                     TestPaper model = new TestPaper();
                     var sdb = new DbSingleService();
-                    var snewstr = new[] {"Id",SingleTypeList[SingleTypeNum],SingleLevel[SingleLevelNum],SingleNum.ToString() };
+                    var gdb = new DbGapService();
+                    var snewstr = new[] {"Id",TypeList[TypeIndex],LevelList[LevelIndex],SubjectList[SubjectIndex],SingleNum.ToString() };
+                    var gnewstr = new[] { "Id", TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex], GapNum.ToString() };
                     List<SingleChoice> _singlelist = (List<SingleChoice>)sdb.QueryObject(snewstr);
+                    List<GapFilling> _gaplist = (List<GapFilling>)gdb.QueryObject(gnewstr);
                     var _newsinglenum = new List<int>();
                     for(int i=0;i<_singlelist.Count;i++)
                     {
@@ -261,10 +240,6 @@ namespace Leaf.ViewModel
                     }
                     model.SingleQuestionNum= JsonConvert.SerializeObject(_newsinglenum);
                     model.SingleNum = SingleNum;
-
-                    var gdb = new DbGapService();
-                    var gnewstr = new[] { "Id", GapTypeList[GapTypeNum], GapLevel[GapLevelNum], GapNum.ToString() };
-                    List<GapFilling> _gaplist = (List<GapFilling>)gdb.QueryObject(gnewstr);
                     var _newgapnum = new List<int>();
                     for (int i = 0; i < _gaplist.Count; i++)
                     {
@@ -272,7 +247,7 @@ namespace Leaf.ViewModel
                     }
                     model.GapQuestionNum = JsonConvert.SerializeObject(_newgapnum);
                     model.GapNum = GapNum;
-                    model.Level = (GapNum * Convert.ToInt32(GapLevel[GapLevelNum]) + SingleNum * Convert.ToInt32(SingleLevel[SingleLevelNum])) / (SingleNum + GapNum);
+                    model.Level = Convert.ToInt32(LevelList[LevelIndex]);
                     model.Name = TestName;
                     model.BuildTime = DateTime.Now.ToString();
                     var db = new DbTestService();
@@ -302,6 +277,7 @@ namespace Leaf.ViewModel
             ReadData();
             GetQuestType();
             GetQuestLevel();
+            GetQuestSubjec();
         }
 
         /// <summary>
@@ -326,32 +302,22 @@ namespace Leaf.ViewModel
         }
 
         /// <summary>
-        /// 获取题目类型
+        /// 获取题目类型难度等
         /// </summary>
         private void GetQuestType()
         {
-            if (GapTypeList == null || GapTypeList.Count == 0)
+            if(TypeList == null || TypeList.Count == 0)
             {
-                var db = new DbGapService();
-                var _gaplist = (List<GapFilling>)db.QueryObject("distinct Type");
-                GapTypeList.Add("   ");
-                for (int i = 0; i < _gaplist.Count;i++)
+                TypeList.Add(" ");
+                var gdb = new DbGapService();
+                var sdb = new DbSingleService();
+                var newstr = new[] { "distinct singlechoice.type", ",GapFilling" };
+                List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
+                foreach (var _model in _modellist)
                 {
-                    GapTypeList.Add(_gaplist[i].Type);
+                    TypeList.Add(_model.Type);
                 }
             }
-            if (SingleTypeList == null || SingleTypeList.Count == 0)
-            {
-                var db = new DbSingleService();
-                var _singlelist = (List<SingleChoice>)db.QueryObject("distinct Type");
-                SingleTypeList.Add("  ");
-                for (int i = 0; i < _singlelist.Count; i++)
-                {
-                    SingleTypeList.Add(_singlelist[i].Type);
-                }
-            }
-
-
         }
 
         /// <summary>
@@ -360,28 +326,36 @@ namespace Leaf.ViewModel
         private void GetQuestLevel()
         {
 
-            if (GapLevel == null || GapLevel.Count == 0)
+            if (LevelList == null || LevelList.Count == 0)
             {
-                var db = new DbGapService();
-                var _gaplist = (List<GapFilling>)db.QueryObject("distinct Level");
-                GapLevel.Add("  ");
-                for (int i = 0; i < _gaplist.Count; i++)
+                LevelList.Add(" ");
+                var gdb = new DbGapService();
+                var sdb = new DbSingleService();
+                var newstr = new[] { "distinct singlechoice.level", ",GapFilling" };
+                List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
+                foreach (var _model in _modellist)
                 {
-                    GapLevel.Add(_gaplist[i].Level.ToString());
+                    LevelList.Add(_model.Level.ToString());
                 }
             }
-            if (SingleLevel == null || SingleLevel.Count == 0)
+        }
+        /// <summary>
+        /// 获取题目主题
+        /// </summary>
+        private void GetQuestSubjec()
+        {
+            if(SubjectList==null || SubjectList.Count==0)
             {
-                var db = new DbSingleService();
-                var _singlelist = (List<SingleChoice>)db.QueryObject("distinct Level");
-                SingleLevel.Add("  ");
-                for (int i = 0; i < _singlelist.Count; i++)
+                SubjectList.Add(" ");
+                var gdb = new DbGapService();
+                var sdb = new DbSingleService();
+                var newstr = new[] { "distinct singlechoice.Subject", ",GapFilling" };
+                List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
+                foreach (var _model in _modellist)
                 {
-                    SingleLevel.Add(_singlelist[i].Level.ToString());
+                    SubjectList.Add(_model.Subject);
                 }
             }
-
-            
         }
 
         /// <summary>
@@ -390,11 +364,10 @@ namespace Leaf.ViewModel
         private void GetQuestNum()
         {
             var gdb = new DbGapService();
-            var gnewstr = new[] {GapTypeList[GapTypeNum], GapLevel[GapLevelNum] };
-            GapMax = (int)gdb.Query(gnewstr);
             var sdb = new DbSingleService();
-            var snewstr = new[] {SingleTypeList[SingleTypeNum], SingleLevel[SingleLevelNum] };
-            SingleMax = (int)sdb.Query(snewstr);
+            var newstr = new[] { TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex] };
+            GapMax = (int)gdb.Query(newstr);
+            SingleMax = (int)sdb.Query(newstr);
         }
 
     }

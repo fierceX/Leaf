@@ -18,5 +18,6 @@ namespace Leaf.Model
         public int GapNum { get; set; }
         //难度
         public int Level { get; set; }
+        public string Subject { get; set; }
     }
 }

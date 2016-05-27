@@ -45,13 +45,11 @@ namespace Leaf.ViewModel
         {
             var gdb =new DbGapService();
             var sdb =new DbSingleService();
-            var newstr = new[] {"*",QuestionList[QuestionIndex].Type,QuestionList[QuestionIndex].Level.ToString(),"5" };
+            var newstr = new[] {"*",QuestionList[QuestionIndex].Type,QuestionList[QuestionIndex].Level.ToString(),QuestionList[QuestionIndex].Subject,"5" };
             ViewModelLocator.SinglePaper.SingleList =(List<SingleChoice>)sdb.QueryObject(newstr);
             ViewModelLocator.GapPaper.GapList = (List<GapFilling>)gdb.QueryObject(newstr);
             ViewModelLocator.SinglePaper.Mode = 0;
             ViewModelLocator.GapPaper.Mode = 0;
-            //ViewModelLocator.GapPaper.Init();
-            //ViewModelLocator.SinglePaper.Init();
             var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
             navigation.NavigateTo("Single");
         }
@@ -80,14 +78,15 @@ namespace Leaf.ViewModel
         {
             var gdb = new DbGapService();
             var sdb = new DbSingleService();
-            var newstr =new[] { "distinct singlechoice.type,singlechoice.Level", ",GapFilling" };
+            var newstr =new[] { "distinct singlechoice.type,singlechoice.Level,singlechoice.Subject", ",GapFilling" };
             List<SingleChoice> _typelist = (List<SingleChoice>)sdb.Querysql(newstr);
             for(int i=0;i<_typelist.Count;i++)
             {
                 QuestionView model = new QuestionView();
                 model.Level = _typelist[i].Level;
                 model.Type = _typelist[i].Type;
-                var sql = new[] { _typelist[i].Type, _typelist[i].Level.ToString() };
+                model.Subject = _typelist[i].Subject;
+                var sql = new[] { _typelist[i].Type, _typelist[i].Level.ToString(),_typelist[i].Subject };
                 model.GapNum = (int)gdb.Query(sql);
                 model.SingleNum = (int)sdb.Query(sql);
                 switch(_typelist[i].Level)

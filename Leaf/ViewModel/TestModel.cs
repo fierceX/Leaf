@@ -37,11 +37,19 @@ namespace Leaf.ViewModel
             navigation.NavigateTo("Question");
         }
 
+        public ICommand ToStore { get; set; }
+        private void store()
+        {
+            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigation.NavigateTo("QuestionStore");
+        }
+
         public TestModel()
         {
             ToJson = new RelayCommand(json);
             ToTest = new RelayCommand(test);
             ToQuestion = new RelayCommand(question);
+            ToStore = new RelayCommand(store);
         }
     }
 }

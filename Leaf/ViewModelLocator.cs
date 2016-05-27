@@ -30,6 +30,7 @@ namespace Leaf
             SimpleIoc.Default.Register<TestPaperModel>();
             SimpleIoc.Default.Register<TestResultModel>();
             SimpleIoc.Default.Register<QuestionModel>();
+            SimpleIoc.Default.Register<QuestionStoreModel>();
 
             var navigationService = this.InitNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
@@ -48,6 +49,7 @@ namespace Leaf
             navigationService.Configure("TestPaper", typeof(TestPaperManage));
             navigationService.Configure("Question", typeof(QuestionList));
             navigationService.Configure("Result", typeof(TestResult));
+            navigationService.Configure("QuestionStore", typeof(QuestionStore));
             return navigationService;
         }
 
@@ -199,5 +201,15 @@ namespace Leaf
             }
         }
 
+        private static QuestionStoreModel _qustionstore;
+        public static QuestionStoreModel QuestionStore
+        {
+            get
+            {
+                if (_qustionstore == null)
+                    _qustionstore = ServiceLocator.Current.GetInstance<QuestionStoreModel>();
+                return _qustionstore;
+            }
+        }
     }
 }

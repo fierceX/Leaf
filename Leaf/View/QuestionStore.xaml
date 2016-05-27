@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="Leaf.View.QuestionStore"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Leaf.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:Leaf.Model"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <Binding Path="QuestionStore" Source="{StaticResource Locator}"></Binding>
+    </Page.DataContext>
+    <Page.Resources>
+        <DataTemplate x:Key="QuestionListDataTemplate" x:DataType="data:QuestionView" >
+            <StackPanel Orientation="Vertical" Background="{Binding Color}" Margin="5,5,5,5" Height="100" Width="100">
+                <TextBlock Text="{x:Bind Subject}" Margin="0,10,0,10" HorizontalAlignment="Center" FontSize="18" />
+                <Grid>
+                    <TextBlock Text="{x:Bind Type}" Margin="10,0,10,0" HorizontalAlignment="Left" FontSize="14" />
+                    <TextBlock Text="{x:Bind Level}" Margin="10,0,10,0"  HorizontalAlignment="Right" FontSize="14" />
+                </Grid>
+                <Grid Margin="0,10,0,0" >
+                    <TextBlock Text="{x:Bind SingleNum}" Margin="10,0,10,0" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="{x:Bind GapNum}" Margin="10,0,10,0" HorizontalAlignment="Right" FontSize="10" />
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <GridView Grid.Column="1" Grid.Row="1"
+            ItemTemplate="{StaticResource QuestionListDataTemplate}"
+            ItemsSource="{Binding QuestionList,Mode=TwoWay}"
+            SelectedIndex="{Binding QuestionIndex,Mode=TwoWay}" >
+        </GridView>
+        <StackPanel Grid.Column="1" Grid.Row="2" Height="100" Orientation="Horizontal">
+            <Button HorizontalAlignment="Center" Content="立即下载" Command="{Binding Download}"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -14,7 +14,7 @@ namespace Server.Models
         [Column("subject")]
         [Required]
         [StringLength(100)]
-        public string subject1 { get; set; }
+        public string subject { get; set; }
 
         public int gapnum { get; set; }
 

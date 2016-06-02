@@ -9,14 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 
 namespace Leaf.ViewModel
 {
     class TestPaperModel : ViewModelBase
     {
+
+        TimeSpan timespan;
+        private DispatcherTimer timer;
+        
         /// <summary>
         /// 选择题最大题量
         /// </summary>
@@ -57,7 +64,15 @@ namespace Leaf.ViewModel
             get { return _subjectList; }
             set { Set(ref _subjectList, value); }
         }
-
+        /// <summary>
+        /// 时间
+        /// </summary>
+        private int _time;
+        public int Time
+        {
+            get { return _time; }
+            set { Set(ref _time, value); }
+        }
         /// <summary>
         /// 类型
         /// </summary>
@@ -165,6 +180,8 @@ namespace Leaf.ViewModel
             set { Set(ref _testpapaerlist, value); }
         }
 
+        
+
         /// <summary>
         /// 开始答题
         /// </summary>
@@ -192,7 +209,11 @@ namespace Leaf.ViewModel
                 ViewModelLocator.SinglePaper.Mode = 1;
                 ViewModelLocator.GapPaper.GapList = _GapList;
                 ViewModelLocator.GapPaper.Mode = 1;
+                ViewModelLocator.TestResult.Clear();
                 ViewModelLocator.TestResult.TestPaperModel = TestList[Test];
+                ViewModelLocator.SinglePaper.Init();
+                ViewModelLocator.GapPaper.Init();
+                TestTime();
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                 navigation.NavigateTo("Single");
             }
@@ -250,6 +271,7 @@ namespace Leaf.ViewModel
                     model.Level = Convert.ToInt32(LevelList[LevelIndex]);
                     model.Name = TestName;
                     model.BuildTime = DateTime.Now.ToString();
+                    model.Time = Time;
                     var db = new DbTestService();
                     int n = db.Insert(model);
                     if(n>0)
@@ -368,6 +390,54 @@ namespace Leaf.ViewModel
             var newstr = new[] { TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex] };
             GapMax = (int)gdb.Query(newstr);
             SingleMax = (int)sdb.Query(newstr);
+        }
+
+        /// <summary>
+        /// 停止定时器
+        /// </summary>
+        public void TimerStop()
+        {
+            timer.Tick -= TimeChick;
+            timer.Stop();
+        }
+        
+        /// <summary>
+        /// 设置定时器
+        /// </summary>
+        private void TestTime()
+        {
+            if (timer != null)
+            {
+                timer.Stop();
+            }
+                
+            timer = new DispatcherTimer();
+            timespan = new TimeSpan(0, TestList[Test].Time, 0);
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += TimeChick;
+            timer.Start();
+        }
+        
+        /// <summary>
+        /// 定时器回调函数
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="e"></param>
+        private void TimeChick(object state,object e)
+        {
+            string str =timespan.Minutes.ToString() + ":" + timespan.Seconds.ToString();
+            ViewModelLocator.SinglePaper.Time = str;
+            ViewModelLocator.GapPaper.Time = str;
+            timespan = timespan.Subtract(new TimeSpan(0, 0, 1));
+            if(timespan.TotalSeconds == 0.0)
+            {
+                timer.Tick -= TimeChick;
+                timer.Stop();
+                ViewModelLocator.TestResult.Init();
+                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                navigation.NavigateTo("Result");
+                return;
+            }
         }
 
     }

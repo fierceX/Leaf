@@ -26,19 +26,6 @@ namespace Leaf.View
         public GapPapers()
         {
             this.InitializeComponent();
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<List<bool>>(this, "GapEnd", MessageBox);
-        }
-
-
-        private async void MessageBox(List<bool> result)
-        {
-            var newStr = string.Join("||", result.ToArray());
-            await new MessageDialog(newStr).ShowAsync();
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<List<bool>>(this, "GapEnd", MessageBox);
         }
     }
 }

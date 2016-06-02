@@ -16,6 +16,7 @@
                     <TextBlock Text="{x:Bind SingleNum}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind GapNum}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind Level}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
+                    <TextBlock Text="{x:Bind Time}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind BuildTime}"  Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                 </StackPanel>
             </StackPanel>
@@ -46,6 +47,7 @@
                     <ComboBox Margin="0,0,0,10" Header="类型" ItemsSource="{Binding TypeList,Mode=TwoWay}" SelectedIndex="{Binding TypeIndex,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="选择题数量" Text="{Binding SingleNum,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="填空题数量" Text="{Binding GapNum,Mode=TwoWay}" />
+                    <TextBox Margin="0,0,0,10" Header="测试时间(分钟)" Text="{Binding Time,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="试卷名称" Text="{Binding TestName,Mode=TwoWay}" />
                     <Button Margin="0,0,0,10" Content="生成" Command="{Binding AddCommand}" />
                 </StackPanel>

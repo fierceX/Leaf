@@ -128,7 +128,6 @@ namespace Leaf
             {
                 if (_singlepaper == null)
                     _singlepaper = ServiceLocator.Current.GetInstance<SingleModel>();
-                _singlepaper.Init();
                 return _singlepaper;
             }
         }
@@ -140,7 +139,6 @@ namespace Leaf
             {
                 if (_gappaper == null)
                     _gappaper = ServiceLocator.Current.GetInstance<GapModel>();
-                _gappaper.Init();
                 return _gappaper;
             }
         }

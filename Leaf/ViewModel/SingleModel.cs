@@ -25,6 +25,15 @@ namespace Leaf.ViewModel
         /// </summary>
         private bool ContinueBool = true;
 
+        /// <summary>
+        /// 剩余时间
+        /// </summary>
+        private string _time;
+        public string Time
+        {
+            get { return _time; }
+            set { Set(ref _time, value); }
+        }
         private string _answer;
         public string Answer
         {
@@ -50,12 +59,6 @@ namespace Leaf.ViewModel
         /// 题目列表
         /// </summary>
         public List<SingleChoice> SingleList = new List<SingleChoice>();
-
-        /// <summary>
-        /// 成绩单
-        /// </summary>
-        private List<bool> Result = new List<bool>();
-
 
         /// <summary>
         /// 题干
@@ -137,8 +140,6 @@ namespace Leaf.ViewModel
         public ICommand ContinueCommand { get; set; } 
          private void Continue()
          {
-             if (Result.Count <= max)
-             {
                 if (ContinueBool && Mode == 0)
                 {
                     Answer="正确答案是："+ SingleList[num].Answer;
@@ -148,36 +149,22 @@ namespace Leaf.ViewModel
                 else
                 {
                     num++;
-                    Result.Add(GetAnswer(answernum));
                     ContinueBool = true;
                     Answer = "";
                 }
-             }
+                if(Mode == 1)
+                {
+                    ViewModelLocator.TestResult.SingleResult.Add(GetAnswer(answernum));
+                }
             if (num < max)
              {
-                Init();
-                Choice1 = false;
-                Choice2 = false;
-                Choice3 = false;
-                Choice4 = false;
+                LoadQuestion();
              }
             else
             {
-                
-                if (Mode == 1)
-                {
-                    foreach (var result in Result)
-                    {
-                        ViewModelLocator.TestResult.SingleResult.Add(result);
-                    }
-                }
-                else
-                { 
-                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "SingleEnd");
-                }
+               
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                 navigation.NavigateTo("Gap");
-                Result.Clear();
                 num = 0;
                 answernum = 0;
                 max = 0;
@@ -189,11 +176,20 @@ namespace Leaf.ViewModel
         /// </summary>
         public void Init()
         {
+            if (Mode != 1)
+                Time = "";
             max = SingleList.Count;
-            if (num >= SingleList.Count)
-            {
+            num = 0;
+            LoadQuestion();
+        }
+
+        /// <summary>
+        /// 载入试题
+        /// </summary>
+        private void LoadQuestion()
+        {
+            if (num >= max)
                 return;
-            }
             int[] array = GetRandom(4);
             string[] choicearray = new string[4];
             choicearray[array[0]] = SingleList[num].Answer;
@@ -205,10 +201,12 @@ namespace Leaf.ViewModel
             ChoiceText3 = choicearray[2];
             ChoiceText4 = choicearray[3];
             Stem = SingleList[num].Stems;
+            Choice1 = false;
+            Choice2 = false;
+            Choice3 = false;
+            Choice4 = false;
             answernum = array[0];
-
         }
-
         /// <summary>
         /// 构造函数
         /// </summary>

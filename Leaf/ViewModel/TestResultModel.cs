@@ -116,5 +116,14 @@ namespace Leaf.ViewModel
             GapRight = "正确：" + gapright.ToString();
             AllRight = "正确：" + (singright + gapright).ToString();
         }
+
+        public void Clear()
+        {
+            //SingleValue = 0;
+            //GapValue = 0;
+            GapResult.Clear();
+            SingleResult.Clear();
+            TestPaperModel = null;
+        }
     }
 }

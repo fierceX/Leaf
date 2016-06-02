@@ -39,11 +39,16 @@ namespace Leaf.ViewModel
         /// </summary>
         public List<GapFilling> GapList = new List<GapFilling>();
 
-        /// <summary>
-        /// 成绩单
-        /// </summary>
-        private List<bool> Result = new List<bool>();
 
+        /// <summary>
+        /// 剩余时间
+        /// </summary>
+        private string _time;
+        public string Time
+        {
+            get { return _time; }
+            set { Set(ref _time, value); }
+        }
 
         /// <summary>
         /// 题干
@@ -82,26 +87,23 @@ namespace Leaf.ViewModel
         public ICommand ContinueCommand { get; set; }
         private void Continue()
         {
-            if (Result.Count <= max)
+            if (ContinueBool && Mode == 0)
             {
-                
-                if (ContinueBool && Mode == 0)
-                {
-                    RightAnswer = "正确答案是：" + GapList[num].Answer;
-                    ContinueBool = false;
-                    return;
-                }
-                else
-                {
-                    Result.Add(GetAnswer());
-                    num++;
-                    ContinueBool = true;
-                    RightAnswer = "";
-                }
+                RightAnswer = "正确答案是：" + GapList[num].Answer;
+                ContinueBool = false;
+                return;
             }
-            if (num < max)
+            else
             {
-                Init();
+                num++;
+                ContinueBool = true;
+                RightAnswer = "";
+            }
+            if (Mode == 1)
+                ViewModelLocator.TestResult.GapResult.Add(GetAnswer());
+            if (num<max)
+            {
+                Stem = GapList[num].Stems;
                 Answer = "";
             }
             else
@@ -109,22 +111,15 @@ namespace Leaf.ViewModel
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                 if (Mode == 1)
                 {
-                    foreach (var result in Result)
-                    {
-                        ViewModelLocator.TestResult.GapResult.Add(result);
-                    }
                     ViewModelLocator.TestResult.Init();
-                    Result.Clear();
                     num = 0;
                     max = 0;
-                    
+                    ViewModelLocator.TestPaper.TimerStop();
                     navigation.NavigateTo("Result");
                 }
                 else
                 {
-                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<List<bool>>(Result, "GapEnd");
                     navigation.NavigateTo("Question");
-                    Result.Clear();
                     num = 0;
                     max = 0;
                 }
@@ -148,12 +143,16 @@ namespace Leaf.ViewModel
         public void Init()
         {
             max = GapList.Count;
-            if (num >= GapList.Count)
-            {
+            num = 0;
+            if (Mode != 1)
+                Time = "";
+            if (num >= max)
                 return;
-            }
             Stem = GapList[num].Stems;
+            Answer = "";
         }
+
+        
 
         /// <summary>
         /// 获取答案
@@ -163,7 +162,7 @@ namespace Leaf.ViewModel
         {
             if (Answer == null || Answer == "" || Answer.Trim() == "")
                 return false;
-            if (Answer.ToUpper().Trim() == GapList[num].Answer.ToUpper())
+            if (Answer.ToUpper().Trim() == GapList[num-1].Answer.ToUpper())
                 return true;
             return false;
         }

@@ -54,5 +54,9 @@ namespace Leaf.Model
         //不为空
         [NotNull]
         public int Score { get; set; }
+
+        //时间
+        //不为空
+        public int Time { get; set; }
     }
 }

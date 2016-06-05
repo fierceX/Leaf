@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,6 +100,11 @@ namespace Leaf.ViewModel
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = await httpClient.GetAsync(new Uri("http://localhost:2832/api/Subjects"));
+            if (response.StatusCode != HttpStatusCode.Ok)
+            {
+                Debug.WriteLine("失败了");
+                return;
+            }
             response.EnsureSuccessStatusCode();
             string result = await response.Content.ReadAsStringAsync();
 

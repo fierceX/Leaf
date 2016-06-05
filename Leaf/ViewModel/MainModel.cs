@@ -44,6 +44,7 @@ namespace Leaf.ViewModel
                 new NavLink() { Icon = Symbol.Phone,Text="Phone" },
                 new NavLink() { Icon = Symbol.Message, Text="Message"},
                 new NavLink() { Icon = Symbol.Mail,Text="Mail"},
+                new NavLink() { Icon = Symbol.GoToStart,Text="Logout"}
             };
 
         public ObservableCollection<NavLink> MenuItems

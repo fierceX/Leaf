@@ -7,6 +7,7 @@ using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +34,11 @@ namespace Leaf.View
         {
             this.InitializeComponent();
             this.InitData();
+            // 注册左上角回退按钮
+            MainFrame.Navigated += OnNavigated;
+           SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(MainFrame);
+           SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
+
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<object>(this, true, LogoffMessage);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string[]>(this, "NavigateTo", NavigateTo);
         }
@@ -58,6 +64,7 @@ namespace Leaf.View
             FrameDictionary = new Dictionary<string, Frame>
             {
                  {"MainFrame", MainFrame},
+                 {"RootFtame", Window.Current.Content as Frame}
             };
         }
 
@@ -72,6 +79,8 @@ namespace Leaf.View
         {
             FrameDictionary[frameName].Navigate(PageDictionary[pageName]);
         }
+
+
         public async void LogoffMessage(object msg)
         {
             MessageDialog mag = new MessageDialog(msg as string);
@@ -93,15 +102,35 @@ namespace Leaf.View
             }
         }
 
-        private void MainListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnNavigated(object sender, NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus((Frame)sender);
+        }
+
+        private AppViewBackButtonVisibility getVisibilityStatus(Frame sender)
+        {
+            return sender.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed; ;
+        }
+
+        private void OnBackRequseted(object sender, BackRequestedEventArgs e)
+        {
+//            var rootFrame = Window.Current.Content as Frame;
+            if (MainFrame != null && MainFrame.CanGoBack)
+            {
+                e.Handled = true;
+                MainFrame.GoBack();
+            }
+        }
+
+        private async void MainListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Debug.WriteLine("yahouooooooooooooooooooooo");
             var listView = (ListView)sender;
             switch (listView.SelectedIndex)
             {
                 case 0:
-                {
-                       NavigateTo("MainFrame","login");
+                    {
+                        NavigateTo("MainFrame", "login");
                         break;
                     }
                 case 1:
@@ -117,6 +146,26 @@ namespace Leaf.View
                 case 3:
                     {
                         NavigateTo("MainFrame", "login");
+                        break;
+                    }
+                case 4:
+                    {
+                        MessageDialog mag = new MessageDialog("你确定要登出吗");
+                        UICommand yes = new UICommand("确定", (o) =>
+                        {
+                            ViewModelLocator.User.Clear();
+                            NavigateTo("RootFtame", "login");
+                        });
+                        UICommand no = new UICommand("返回", (o) =>
+                        {
+                        });
+                        mag.Commands.Add(yes);
+                        mag.Commands.Add(no);
+                        var re = await mag.ShowAsync();
+                        if (re == yes)
+                        {
+                            GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<object>(this, LogoffMessage);
+                        }
                         break;
                     }
 

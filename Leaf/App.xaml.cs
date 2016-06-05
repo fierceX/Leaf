@@ -83,9 +83,9 @@ namespace Leaf
                     rootFrame.Navigate(typeof(Login), e.Arguments);
 
                     // 注册标题栏返回按钮
-                    rootFrame.Navigated += OnNavigated;
-                    SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(rootFrame);
+//                    rootFrame.Navigated += OnNavigated;
+//                    SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
+//                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(rootFrame);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();

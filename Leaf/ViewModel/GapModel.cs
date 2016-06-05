@@ -115,11 +115,13 @@ namespace Leaf.ViewModel
                     num = 0;
                     max = 0;
                     ViewModelLocator.TestPaper.TimerStop();
-                    navigation.NavigateTo("Result");
+                    navigation.NavigateTo("Main");
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Result" }, "NavigateTo");
                 }
                 else
                 {
-                    navigation.NavigateTo("Question");
+                     navigation.NavigateTo("Main");
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Question" }, "NavigateTo");
                     num = 0;
                     max = 0;
                 }

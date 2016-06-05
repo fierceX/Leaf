@@ -52,8 +52,9 @@ namespace Leaf.ViewModel
             ViewModelLocator.GapPaper.Mode = 0;
             ViewModelLocator.SinglePaper.Init();
             ViewModelLocator.GapPaper.Init();
-            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-            navigation.NavigateTo("Single");
+            //var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            //navigation.NavigateTo("Single");
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "RootFrame", "Single" }, "NavigateTo");
         }
 
         /// <summary>

@@ -162,9 +162,10 @@ namespace Leaf.ViewModel
              }
             else
             {
-               
-                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                navigation.NavigateTo("Gap");
+
+                // var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                //navigation.NavigateTo("Gap");
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "RootFrame", "Gap" }, "NavigateTo");
                 num = 0;
                 answernum = 0;
                 max = 0;

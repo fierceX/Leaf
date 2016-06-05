@@ -77,8 +77,10 @@ namespace Leaf.ViewModel
         public ICommand ToTest { get; set; }
         private void test()
         {
-            var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-            navigation.NavigateTo("Test");
+            //var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+            //navigation.NavigateTo("Test");
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Test" }, "NavigateTo");
+
         }
 
 

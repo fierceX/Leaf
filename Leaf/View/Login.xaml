@@ -33,9 +33,6 @@
                 <Button  Margin="0,10,0,0" HorizontalAlignment="Stretch" Content="登陆" Command="{Binding LoginCommand}"/>
                 <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="注册" Command="{Binding ToRegister}" />
             </StackPanel>
-            <StackPanel Name="ButtonStackPanel2" Orientation="Vertical">
-                <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="测试页面" Command="{Binding ToTest}" />
-            </StackPanel>
         </StackPanel>
 
         <VisualStateManager.VisualStateGroups>
@@ -51,9 +48,7 @@
                         <Setter Target="ButtonStackPanel.(Grid.Row)" Value="1" />
                         <Setter Target="ButtonStackPanel.(Grid.RowSpan)" Value="4" />
                         <Setter Target="ButtonStackPanel.Margin" Value="20,25,0,0" />
-
                         <Setter Target="ButtonStackPanel1.Margin" Value="20,0,0,0" />
-                        <Setter Target="ButtonStackPanel2.Margin" Value="20,0,0,0" />
                     </VisualState.Setters>
                     
                 </VisualState>

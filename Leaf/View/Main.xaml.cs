@@ -51,20 +51,22 @@ namespace Leaf.View
             Debug.WriteLine("进行了初始化,之后需要单独拿出", "information");
             PageDictionary = new Dictionary<string, Type>
             {
-                {"login", typeof (Login)},
+                {"Login", typeof (Login)},
                 {"Main", typeof (Main)},
                 {"Register", typeof (register)},
                 {"Single", typeof (SinglePapers)},
                 {"Gap", typeof (GapPapers)},
-                {"Test", typeof (View.test)},
                 {"Insert", typeof (InsertData)},
-                {"TestPaper", typeof (TestPaperManage)}
+                {"TestPaper", typeof (TestPaperManage)},
+                {"Question", typeof (QuestionList)},
+                {"QuestionStore", typeof (QuestionStore)},
+                {"Result", typeof (TestResult)}
             };
 
             FrameDictionary = new Dictionary<string, Frame>
             {
                  {"MainFrame", MainFrame},
-                 {"RootFtame", Window.Current.Content as Frame}
+                 {"RootFrame", Window.Current.Content as Frame}
             };
         }
 
@@ -87,8 +89,7 @@ namespace Leaf.View
             UICommand yes = new UICommand("确定", (o) =>
              {
                  ViewModelLocator.User.Clear();
-                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                 navigation.GoBack();
+                 NavigateTo("RootFrame", "Login");
              });
             UICommand no = new UICommand("返回", (o) =>
              {
@@ -130,22 +131,22 @@ namespace Leaf.View
             {
                 case 0:
                     {
-                        NavigateTo("MainFrame", "login");
+                        NavigateTo("MainFrame", "Question");
                         break;
                     }
                 case 1:
                     {
-                        NavigateTo("MainFrame", "Register");
+                        NavigateTo("MainFrame", "TestPaper");
                         break;
                     }
                 case 2:
                     {
-                        NavigateTo("MainFrame", "Test");
+                        NavigateTo("MainFrame", "Insert");
                         break;
                     }
                 case 3:
                     {
-                        NavigateTo("MainFrame", "login");
+                        NavigateTo("MainFrame", "QuestionStore");
                         break;
                     }
                 case 4:
@@ -154,7 +155,7 @@ namespace Leaf.View
                         UICommand yes = new UICommand("确定", (o) =>
                         {
                             ViewModelLocator.User.Clear();
-                            NavigateTo("RootFtame", "login");
+                            NavigateTo("RootFrame", "Login");
                         });
                         UICommand no = new UICommand("返回", (o) =>
                         {

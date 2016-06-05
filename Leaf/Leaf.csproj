@@ -120,7 +120,6 @@
     <Compile Include="ViewModel\QuestionStoreModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />
     <Compile Include="ViewModel\SingleModel.cs" />
-    <Compile Include="ViewModel\TestModel.cs" />
     <Compile Include="ViewModel\TestPaperModel.cs" />
     <Compile Include="ViewModel\TestResultModel.cs" />
     <Compile Include="View\GapPapers.xaml.cs">
@@ -148,9 +147,6 @@
     </Compile>
     <Compile Include="View\SinglePapers.xaml.cs">
       <DependentUpon>SinglePapers.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\test.xaml.cs">
-      <DependentUpon>test.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TestPaperManage.xaml.cs">
       <DependentUpon>TestPaperManage.xaml</DependentUpon>
@@ -210,10 +206,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SinglePapers.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

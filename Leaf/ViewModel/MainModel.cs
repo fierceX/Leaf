@@ -40,11 +40,11 @@ namespace Leaf.ViewModel
 
         private ObservableCollection<NavLink> _menuItems = new ObservableCollection<NavLink>()
             {
-                new NavLink() { Icon = Symbol.People, Text="People"},
-                new NavLink() { Icon = Symbol.Phone,Text="Phone" },
-                new NavLink() { Icon = Symbol.Message, Text="Message"},
-                new NavLink() { Icon = Symbol.Mail,Text="Mail"},
-                new NavLink() { Icon = Symbol.GoToStart,Text="Logout"}
+                new NavLink() { Icon = Symbol.Library, Text="题库列表"},
+                new NavLink() { Icon = Symbol.AllApps,Text="试卷列表" },
+                new NavLink() { Icon = Symbol.ImportAll, Text="本地插入"},
+                new NavLink() { Icon = Symbol.Download,Text="在线下载"},
+                new NavLink() { Icon = Symbol.GoToStart,Text="登出"}
             };
 
         public ObservableCollection<NavLink> MenuItems

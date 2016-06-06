@@ -29,46 +29,53 @@ namespace Leaf.ViewModel
         public ICommand InsertCommand { get; set; }
         private void Insert()
         {
-            if (Json == null)
-                return;
-            JObject _jsonobject = JObject.Parse(Json);
-            JArray _singlearray = JArray.Parse(_jsonobject["Single"].ToString());
-            foreach(var token in _singlearray)
+            try
             {
-                var db = new DbSingleService();
-                SingleChoice model = new SingleChoice();
-                model.Answer = token["Answer"].ToString();
-                model.Stems = token["Stems"].ToString();
-                model.Choices1 = token["choices"][0].ToString();
-                model.Choices2 = token["choices"][1].ToString();
-                model.Choices3 = token["choices"][2].ToString();
-                model.Level = Convert.ToInt32(token["Level"].ToString());
-                model.Type = token["Type"].ToString();
-                model.Subject = token["Subject"].ToString();
-                int i = db.Insert(model);
-                if (i > 0)
-                    singlenum += i;
-                
-            }
-            JArray _gaplist = JArray.Parse(_jsonobject["Gap"].ToString());
-            foreach(var token in _gaplist)
-            {
-                var db = new DbGapService();
-                GapFilling model = new GapFilling();
-                model.Answer = token["Answer"].ToString();
-                model.Stems = token["Stems"].ToString();
-                model.Level = Convert.ToInt32(token["Level"].ToString());
-                model.Type = token["Type"].ToString();
-                model.Subject = token["Subject"].ToString();
-                int i = db.Insert(model);
-                if (i > 0)
-                    gapnum += i;
-            }
-            int[] num = new int[2] { singlenum, gapnum };
-            singlenum = 0;
-            gapnum = 0;
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<int[]>(num, "InsertYes");
+                if (Json == null)
+                    return;
+                JObject _jsonobject = JObject.Parse(Json);
+                JArray _singlearray = JArray.Parse(_jsonobject["Single"].ToString());
+                foreach (var token in _singlearray)
+                {
+                    var db = new DbSingleService();
+                    SingleChoice model = new SingleChoice();
+                    model.Answer = token["Answer"].ToString();
+                    model.Stems = token["Stems"].ToString();
+                    model.Choices1 = token["choices"][0].ToString();
+                    model.Choices2 = token["choices"][1].ToString();
+                    model.Choices3 = token["choices"][2].ToString();
+                    model.Level = Convert.ToInt32(token["Level"].ToString());
+                    model.Type = token["Type"].ToString();
+                    model.Subject = token["Subject"].ToString();
+                    int i = db.Insert(model);
+                    if (i > 0)
+                        singlenum += i;
 
+                }
+                JArray _gaplist = JArray.Parse(_jsonobject["Gap"].ToString());
+                foreach (var token in _gaplist)
+                {
+                    var db = new DbGapService();
+                    GapFilling model = new GapFilling();
+                    model.Answer = token["Answer"].ToString();
+                    model.Stems = token["Stems"].ToString();
+                    model.Level = Convert.ToInt32(token["Level"].ToString());
+                    model.Type = token["Type"].ToString();
+                    model.Subject = token["Subject"].ToString();
+                    int i = db.Insert(model);
+                    if (i > 0)
+                        gapnum += i;
+                }
+                int[] num = new int[2] { singlenum, gapnum };
+                singlenum = 0;
+                gapnum = 0;
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<int[]>(num, "InsertYes");
+            }
+            catch(Exception e)
+            {
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "Exception");
+                //throw e;
+            }
         }
 
         public ICommand OpenCommand { get; set; }
@@ -89,7 +96,7 @@ namespace Leaf.ViewModel
             }
             catch(Exception e)
             {
-                throw e;
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "Exception");
             }
             
         }

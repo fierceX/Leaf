@@ -120,7 +120,7 @@ namespace Leaf.ViewModel
                 }
                 else
                 {
-                     navigation.NavigateTo("Main");
+                    navigation.NavigateTo("Main");
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Question" }, "NavigateTo");
                     num = 0;
                     max = 0;

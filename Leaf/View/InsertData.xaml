@@ -12,9 +12,9 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <TextBox Height="300" TextWrapping="Wrap"  Text="{Binding Json,Mode=TwoWay}" />
-            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="打开文件" Command="{Binding OpenCommand}" />
-            <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="插入" Command="{Binding InsertCommand}" />
+            <TextBox Margin="20,10,20,10" Height="300" TextWrapping="Wrap"  Text="{Binding Json,Mode=TwoWay}" />
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Center" Content="打开文件" Command="{Binding OpenCommand}" />
+            <Button Margin="0,10,0,0"  HorizontalAlignment="Center" Content="插入" Command="{Binding InsertCommand}" />
         </StackPanel>
     </Grid>
 </Page>

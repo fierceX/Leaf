@@ -9,7 +9,7 @@
     <Page.DataContext>
         <Binding Path="Login" Source="{StaticResource Locator}"></Binding>
     </Page.DataContext>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource SystemAccentColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
@@ -30,7 +30,7 @@
         <PasswordBox Grid.Row="2" Grid.Column="1"  Header="密码" Password="{Binding Password,Mode=TwoWay}" />
         <StackPanel Name="ButtonStackPanel" Grid.Row="3" Grid.Column="1" Margin="0,10,0,0" Orientation="Vertical">
             <StackPanel Name="ButtonStackPanel1" Orientation="Vertical">
-                <Button  Margin="0,10,0,0" HorizontalAlignment="Stretch" Content="登陆" Command="{Binding LoginCommand}"/>
+                <Button  Margin="0,10,0,0" HorizontalAlignment="Stretch" Content="登陆" Command="{Binding LoginCommand}" />
                 <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="注册" Command="{Binding ToRegister}" />
             </StackPanel>
         </StackPanel>

@@ -52,7 +52,6 @@
         
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
             <Button Content="确定"   Margin="20,20,20,0" Command="{Binding ContinueCommand}" />
-            <Button Content="Reset" Margin="20,20,20,0" Command="{Binding ResetCommand}" />
         </StackPanel>
      
     </Grid>

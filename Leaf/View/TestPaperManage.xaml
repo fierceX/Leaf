@@ -10,16 +10,20 @@
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="TestListDataTemplate" x:DataType="data:TestPaper">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{x:Bind Name}" Margin="10,10,10,10" HorizontalAlignment="Center" FontSize="16" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Grid HorizontalAlignment="Stretch" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{x:Bind Name}" Margin="10,10,10,10" HorizontalAlignment="Center" FontSize="16" />
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="{x:Bind SingleNum}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind GapNum}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind Level}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind Time}" Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind BuildTime}"  Margin="10,10,10,10" HorizontalAlignment="Left" FontSize="10" />
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </DataTemplate>
     </Page.Resources>
     <Page.DataContext>
@@ -29,7 +33,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Text="试卷管理" HorizontalAlignment="Center"/>
@@ -38,32 +41,43 @@
         <SplitView 
                    Grid.Row="1" 
                    DisplayMode="Overlay"  
-                   OpenPaneLength="200"
+                   OpenPaneLength="150"
                    IsPaneOpen="{Binding PaneOpen,Mode=TwoWay}" >
             <SplitView.Pane>
-                <StackPanel>
-                    <ComboBox Margin="0,0,0,10" Header="习题包" ItemsSource="{Binding SubjectList,Mode=TwoWay}" SelectedIndex="{Binding SubjectIndex,Mode=TwoWay}"/>
-                    <ComboBox Margin="0,0,0,10" Header="难度" ItemsSource="{Binding LevelList,Mode=TwoWay}" SelectedIndex="{Binding LevelIndex,Mode=TwoWay}" />
-                    <ComboBox Margin="0,0,0,10" Header="类型" ItemsSource="{Binding TypeList,Mode=TwoWay}" SelectedIndex="{Binding TypeIndex,Mode=TwoWay}" />
-                    <TextBox Margin="0,0,0,10" Header="选择题数量" Text="{Binding SingleNum,Mode=TwoWay}" />
-                    <TextBox Margin="0,0,0,10" Header="填空题数量" Text="{Binding GapNum,Mode=TwoWay}" />
-                    <TextBox Margin="0,0,0,10" Header="测试时间(分钟)" Text="{Binding Time,Mode=TwoWay}" />
+                <StackPanel Margin="10,10,10,10" Width="100" >
+                    <ComboBox  Header="习题包" ItemsSource="{Binding SubjectList,Mode=TwoWay}" SelectedIndex="{Binding SubjectIndex,Mode=TwoWay}"/>
+                    <ComboBox  Header="难度" ItemsSource="{Binding LevelList,Mode=TwoWay}" SelectedIndex="{Binding LevelIndex,Mode=TwoWay}" />
+                    <ComboBox  Header="类型" ItemsSource="{Binding TypeList,Mode=TwoWay}" SelectedIndex="{Binding TypeIndex,Mode=TwoWay}" />
+                    <TextBox  Header="选择题数量" Text="{Binding SingleNum,Mode=TwoWay}" />
+                    <TextBox  Header="填空题数量" Text="{Binding GapNum,Mode=TwoWay}" />
+                    <TextBox  Header="测试时间(分钟)" Text="{Binding Time,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="试卷名称" Text="{Binding TestName,Mode=TwoWay}" />
-                    <Button Margin="0,0,0,10" Content="生成" Command="{Binding AddCommand}" />
+                    <Button  Content="生成" Command="{Binding AddCommand}" />
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <StackPanel>
-                    <ListView Height="300"
-                      Width="200"
+                <Grid Margin="10,10,10,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ListView 
+                      Grid.Row="0"
                       SelectionMode="Single" 
                       SelectedIndex="{Binding Test,Mode=TwoWay}"
                       ItemTemplate="{StaticResource TestListDataTemplate}"
                       ItemsSource="{Binding TestList,Mode=TwoWay}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                     </ListView>
-                    <Button Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="开始" Command="{Binding RunCommand}" />
-                    <Button IsEnabled="{Binding IsEnabled,Mode=TwoWay}" Margin="0,10,0,0"  HorizontalAlignment="Stretch" Content="添加" Command="{Binding OpenCommand}" />
-                </StackPanel>
+                    <StackPanel Grid.Row="1" >
+                        <Button Margin="0,10,0,0"  HorizontalAlignment="Center" Content="开始" Command="{Binding RunCommand}" />
+                        <Button IsEnabled="{Binding IsEnabled,Mode=TwoWay}" Margin="0,10,0,0"  HorizontalAlignment="Center" Content="添加" Command="{Binding OpenCommand}" />
+                    </StackPanel>
+                </Grid>
             </SplitView.Content>
         </SplitView>
     </Grid>

@@ -10,6 +10,13 @@ namespace Leaf.ViewModel
 {
     class TestResultModel : ViewModelBase
     {
+
+        private string _message;
+        public string Message
+        {
+            get { return _message; }
+            set { Set(ref _message, value); }
+        }
         /// <summary>
         /// 选择题成绩值
         /// </summary>
@@ -113,8 +120,26 @@ namespace Leaf.ViewModel
             GapValue = gapright*100 / TestPaperModel.GapNum;
             AllValue = (SingleValue + GapValue) / 2;
             SingleRight = "正确：" + singright.ToString();
+            SingleWrong = "错误：" + (TestPaperModel.SingleNum - singright).ToString();
+            GapWrong = "错误：" + (TestPaperModel.GapNum - gapright).ToString();
             GapRight = "正确：" + gapright.ToString();
             AllRight = "正确：" + (singright + gapright).ToString();
+            AllWrong = "错误：" + (TestPaperModel.GapNum + TestPaperModel.SingleNum - singright - gapright).ToString();
+            if(AllValue>=90.0)
+            {
+                Message = "非常棒！！！";
+            }
+            else if(AllValue>=75.0)
+            {
+                Message = "成绩不错，继续加油！！！";
+            }else if(AllValue>=60.0)
+            {
+                Message = "革命尚未成功，同志仍需努力！！！";
+            }
+            else
+            {
+                Message = "还没及格，今天好好学习！！！";
+            }
         }
 
         public void Clear()

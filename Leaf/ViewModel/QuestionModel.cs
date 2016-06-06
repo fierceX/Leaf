@@ -43,6 +43,10 @@ namespace Leaf.ViewModel
         public ICommand ToTest { get; set; }
         private void test()
         {
+            if(QuestionList==null || QuestionList.Count==0 || QuestionIndex < 0)
+            {
+                return;
+            }
             var gdb =new DbGapService();
             var sdb =new DbSingleService();
             var newstr = new[] {"*",QuestionList[QuestionIndex].Type,QuestionList[QuestionIndex].Level.ToString(),QuestionList[QuestionIndex].Subject,"5" };
@@ -63,15 +67,15 @@ namespace Leaf.ViewModel
         public QuestionModel()
         {
             Init();
+            ToTest = new RelayCommand(test);
         }
 
         /// <summary>
         /// 初始化
         /// </summary>
-        private void Init()
+        public void Init()
         {
             ReadData();
-            ToTest = new RelayCommand(test);
         }
 
         /// <summary>

@@ -12,48 +12,41 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <StackPanel Height="50" Orientation="Horizontal" >
-                <StackPanel Orientation="Vertical" Width="150">
-                    <TextBlock Text="选择题成绩" />
-                    <ProgressBar Value="{Binding SingleValue,Mode=TwoWay}"/>
-                    <Grid>
-                        <TextBlock Text="{Binding SingleRight,Mode=TwoWay}" HorizontalAlignment="Left" />
-                        <TextBlock Text="{Binding SingleWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
-                    </Grid>
-                </StackPanel>
-                <TextBlock Text="{Binding SingleResult,Mode=TwoWay}" />
+        <TextBlock Margin="0,10,0,10" Grid.Row="0" Text="成绩" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="20,10,20,10">
+            <StackPanel Orientation="Vertical" Margin="10,10,10,10" >
+                <TextBlock Text="选择题成绩" Margin="0,0,0,5" />
+                <ProgressBar Value="{Binding SingleValue,Mode=TwoWay}" Margin="0,0,0,5"/>
+                <Grid>
+                    <TextBlock Text="{Binding SingleRight,Mode=TwoWay}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding SingleWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
+                </Grid>
             </StackPanel>
-            <StackPanel Height="50" Orientation="Horizontal" >
-                <StackPanel Orientation="Vertical" Width="150">
-                    <TextBlock Text="填空题成绩" />
-                    <ProgressBar Value="{Binding GapValue,Mode=TwoWay}"/>
+            <StackPanel Orientation="Vertical"  Margin="10,10,10,10">
+                <TextBlock Text="填空题成绩" Margin="0,0,0,5" />
+                <ProgressBar Value="{Binding GapValue,Mode=TwoWay}" Margin="0,0,0,5"/>
                     <Grid>
                         <TextBlock Text="{Binding GapRight,Mode=TwoWay}" HorizontalAlignment="Left" />
                         <TextBlock Text="{Binding GapWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
                     </Grid>
-                </StackPanel>
-                <TextBlock Text="{Binding GapResult,Mode=TwoWay}" />
             </StackPanel>
-            <StackPanel Height="50" Orientation="Horizontal" >
-                <StackPanel Orientation="Vertical" Width="150">
-                    <TextBlock Text="总成绩" />
-                    <ProgressBar Value="{Binding AllValue,Mode=TwoWay}"/>
-                    <Grid>
-                        <TextBlock Text="{Binding AllRight,Mode=TwoWay}" HorizontalAlignment="Left" />
-                        <TextBlock Text="{Binding AllWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
-                    </Grid>
-                </StackPanel>
-                <TextBlock Text="{Binding AllResult,Mode=TwoWay}" />
+            <StackPanel Orientation="Vertical"  Margin="10,10,10,10">
+                <TextBlock Text="总成绩" Margin="0,0,0,5" />
+                <ProgressBar Value="{Binding AllValue,Mode=TwoWay}" Margin="0,0,0,5"/>
+                <Grid>
+                    <TextBlock Text="{Binding AllRight,Mode=TwoWay}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding AllWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
+                </Grid>
             </StackPanel>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Margin="0,0,0,30">
+            <TextBlock Text="{Binding Message,Mode=TwoWay}" FontSize="26" />
         </StackPanel>
     </Grid>
 </Page>

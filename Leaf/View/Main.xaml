@@ -22,31 +22,32 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <TextBlock>
-                <Run Text="欢迎你" />
-                <Run Text="{Binding Username,Mode=TwoWay}" />
-            </TextBlock>
-        </StackPanel>
-        <Button Content="注销" HorizontalAlignment="Stretch" Command="{Binding LogoffCommand}" />
-
-        <SplitView x:Name="MainSplitView" OpenPaneLength="150" CompactPaneLength="45" PaneBackground="LightGray" DisplayMode="CompactOverlay" IsPaneOpen="{Binding IsPaneOpen,Mode=TwoWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="HamburgButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="24" Command="{Binding HamburgCommand}" />
+            <StackPanel Grid.Column="1" Background="{ThemeResource SystemAccentColor}">
+                <TextBlock VerticalAlignment="Center" FontSize="24">
+                            <Run Text="UWP掌上题库" />
+                            <Run Text="{Binding Username,Mode=TwoWay}" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+        <SplitView Grid.Row="1" x:Name="MainSplitView" OpenPaneLength="150" CompactPaneLength="45" PaneBackground="LightGray" DisplayMode="CompactOverlay" IsPaneOpen="{Binding IsPaneOpen,Mode=TwoWay}">
             <SplitView.Pane>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition  Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="HamburgButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="24" Command="{Binding HamburgCommand}" />
-                        <TextBlock Margin="10,10,0,0" Text="{Binding HamburgTitle}" />
-                    </StackPanel>
-                    <ListView  Grid.Row="1" x:Name="MainListView" ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemDataTemplate}" SelectionChanged="MainListView_OnSelectionChanged"/>
-                </Grid>
+                <ListView x:Name="MainListView" ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemDataTemplate}" SelectionChanged="MainListView_OnSelectionChanged"/>
             </SplitView.Pane>
-            <Frame Name="MainFrame" x:FieldModifier="public">
+            <SplitView.Content>
+                <Frame Name="MainFrame" x:FieldModifier="public">
 
-            </Frame>
+                </Frame>
+            </SplitView.Content>
         </SplitView>
     </Grid>
 </Page>

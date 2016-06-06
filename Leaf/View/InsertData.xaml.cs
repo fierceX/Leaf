@@ -27,11 +27,17 @@ namespace Leaf.View
         {
             this.InitializeComponent();
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<int[]>(this, "InsertYes", MessageBox);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "Exception", ExceptionMessageBox);
         }
 
         private async void MessageBox(int[] msg)
         {
             await new MessageDialog("成功插入\n"+msg[0].ToString()+" 道选择题\n"+msg[1].ToString()+" 道填空题").ShowAsync();
+        }
+
+        private async void ExceptionMessageBox(string msg)
+        {
+            await new MessageDialog("引发异常："+msg).ShowAsync();
         }
     }
 }

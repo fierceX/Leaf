@@ -435,7 +435,8 @@ namespace Leaf.ViewModel
                 timer.Stop();
                 ViewModelLocator.TestResult.Init();
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                navigation.NavigateTo("Result");
+                navigation.NavigateTo("Main");
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Result" }, "NavigateTo");
                 return;
             }
         }

@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Leaf.Model;
 using GalaSoft.MvvmLight;
-
+using Newtonsoft.Json;
+using Leaf.SQLite;
 namespace Leaf.ViewModel
 {
     class TestResultModel : ViewModelBase
     {
 
+        private List<Score> score;
         private string _message;
         public string Message
         {
@@ -125,6 +127,7 @@ namespace Leaf.ViewModel
             GapRight = "正确：" + gapright.ToString();
             AllRight = "正确：" + (singright + gapright).ToString();
             AllWrong = "错误：" + (TestPaperModel.GapNum + TestPaperModel.SingleNum - singright - gapright).ToString();
+
             if(AllValue>=90.0)
             {
                 Message = "非常棒！！！";
@@ -140,6 +143,8 @@ namespace Leaf.ViewModel
             {
                 Message = "还没及格，今天好好学习！！！";
             }
+            WriteScore();
+
         }
 
         public void Clear()
@@ -150,5 +155,41 @@ namespace Leaf.ViewModel
             SingleResult.Clear();
             TestPaperModel = null;
         }
+
+
+        private void WriteScore()
+        {
+            Score _score = new Score();
+            _score.Paper = TestPaperModel.Id;
+            _score.score = AllValue;
+            _score.time = DateTime.Now.ToString();
+            if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
+            {
+                score = new List<Score>();  
+            }
+            else
+            {
+                score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
+            }
+            score.Add(_score);
+            string json = JsonConvert.SerializeObject(score);
+            ViewModelLocator.User.Score = json;
+            var db = new DbUserService();
+            if(db.Update(ViewModelLocator.User)>0)
+            {
+                var username = ViewModelLocator.User.Username;
+                ViewModelLocator.User = (User)db.QueryObject(username);
+                ViewModelLocator.UserInfo.Init();
+            }
+        }
+
+
+        struct Score
+        {
+            public int Paper { get; set; }
+            public double score { get; set; }
+            public string time { get; set; }
+        }
+
     }
 }

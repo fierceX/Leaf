@@ -8,6 +8,7 @@ using Windows.Security.Cryptography.Core;
 using System.Text;
 using SQLite;
 using Leaf.SQLite;
+using System;
 
 namespace Leaf.ViewModel
 {
@@ -51,6 +52,7 @@ namespace Leaf.ViewModel
             var md5 = new Md5();
             model.Username = Username;
             model.Password = md5.ToMd5(Password);
+            model.BuildTime = DateTime.Now.ToString();
             var db = new DbUserService();
             if ((int)db.Query() == 0)
                 model.Admin = 1;

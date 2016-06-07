@@ -35,7 +35,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock Text="试卷管理" HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,10,0,10" Grid.Row="0" Text="试卷列表" HorizontalAlignment="Center"/>
         </StackPanel>
        
         <SplitView 

@@ -70,5 +70,15 @@ namespace Leaf.SQLite
             }
             return result;
         }
+
+        public int Update(User user)
+        {
+            var result = 0;
+            using (var db = DB.GetDbConnection())
+            {
+                result = db.Update(user);
+            }
+            return result;
+        }
     }
 }

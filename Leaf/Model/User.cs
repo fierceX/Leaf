@@ -22,9 +22,16 @@ namespace Leaf.Model
         [NotNull]
         public string Password { get; set; }
 
+        //成绩列表
+        public string Score { get; set; }
+
         //管理员标识
         [NotNull]
         public int Admin { get; set; }
+
+        //注册时间
+        [NotNull]
+        public string BuildTime { get; set; }
 
         public void Clear()
         {

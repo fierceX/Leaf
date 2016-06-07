@@ -42,7 +42,7 @@
             SelectedIndex="{Binding QuestionIndex,Mode=TwoWay}" >
         </GridView>
         <StackPanel Grid.Column="0" Grid.Row="2" Height="100" Orientation="Vertical">
-            <Button Margin="0,0,00,20" HorizontalAlignment="Center" Content="立即下载" Command="{Binding Download}"/>
+            <Button IsEnabled="{Binding IsEnabled,Mode=TwoWay}" Margin="0,0,00,20" HorizontalAlignment="Center" Content="立即下载" Command="{Binding Download}"/>
             <Button HorizontalAlignment="Center" Content="刷新" Command="{Binding Refresh}"/>
         </StackPanel>
     </Grid>

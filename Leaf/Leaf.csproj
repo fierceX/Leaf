@@ -113,6 +113,7 @@
     <Compile Include="SQLite\DbTestService.cs" />
     <Compile Include="SQLite\DbUserService.cs" />
     <Compile Include="ViewModel\GapModel.cs" />
+    <Compile Include="ViewModel\HelpModel.cs" />
     <Compile Include="ViewModel\InsertModel.cs" />
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
@@ -122,8 +123,12 @@
     <Compile Include="ViewModel\SingleModel.cs" />
     <Compile Include="ViewModel\TestPaperModel.cs" />
     <Compile Include="ViewModel\TestResultModel.cs" />
+    <Compile Include="ViewModel\UserInfoModel.cs" />
     <Compile Include="View\GapPapers.xaml.cs">
       <DependentUpon>GapPapers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InsertData.xaml.cs">
       <DependentUpon>InsertData.xaml</DependentUpon>
@@ -154,6 +159,9 @@
     <Compile Include="View\TestResult.xaml.cs">
       <DependentUpon>TestResult.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserInfo.xaml.cs">
+      <DependentUpon>UserInfo.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -178,6 +186,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="View\GapPapers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Help.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TestResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

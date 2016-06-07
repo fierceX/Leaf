@@ -60,7 +60,9 @@ namespace Leaf.View
                 {"TestPaper", typeof (TestPaperManage)},
                 {"Question", typeof (QuestionList)},
                 {"QuestionStore", typeof (QuestionStore)},
-                {"Result", typeof (TestResult)}
+                {"Result", typeof (TestResult)},
+                {"UserInfo", typeof (UserInfo) },
+                {"Help", typeof (Help) }
             };
 
             FrameDictionary = new Dictionary<string, Frame>
@@ -123,7 +125,7 @@ namespace Leaf.View
             }
         }
 
-        private async void MainListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MainListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Debug.WriteLine("yahouooooooooooooooooooooo");
             var listView = (ListView)sender;
@@ -151,22 +153,12 @@ namespace Leaf.View
                     }
                 case 4:
                     {
-                        MessageDialog mag = new MessageDialog("你确定要登出吗");
-                        UICommand yes = new UICommand("确定", (o) =>
-                        {
-                            ViewModelLocator.User.Clear();
-                            NavigateTo("RootFrame", "Login");
-                        });
-                        UICommand no = new UICommand("返回", (o) =>
-                        {
-                        });
-                        mag.Commands.Add(yes);
-                        mag.Commands.Add(no);
-                        var re = await mag.ShowAsync();
-                        if (re == yes)
-                        {
-                            GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<object>(this, LogoffMessage);
-                        }
+                        NavigateTo("MainFrame", "UserInfo");
+                        break;
+                    }
+                case 5:
+                    {
+                        NavigateTo("MainFrame","Help");
                         break;
                     }
 

@@ -30,6 +30,7 @@ namespace Leaf
             SimpleIoc.Default.Register<TestResultModel>();
             SimpleIoc.Default.Register<QuestionModel>();
             SimpleIoc.Default.Register<QuestionStoreModel>();
+            SimpleIoc.Default.Register<UserInfoModel>();
 
             var navigationService = this.InitNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
@@ -194,6 +195,17 @@ namespace Leaf
                 if (_qustionstore == null)
                     _qustionstore = ServiceLocator.Current.GetInstance<QuestionStoreModel>();
                 return _qustionstore;
+            }
+        }
+
+        private static UserInfoModel _userinfo;
+        public static UserInfoModel UserInfo
+        {
+            get
+            {
+                if (_userinfo == null)
+                    _userinfo = ServiceLocator.Current.GetInstance<UserInfoModel>();
+                return _userinfo;
             }
         }
     }

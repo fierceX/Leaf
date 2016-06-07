@@ -44,7 +44,8 @@ namespace Leaf.ViewModel
                 new NavLink() { Icon = Symbol.AllApps,Text="试卷列表" },
                 new NavLink() { Icon = Symbol.ImportAll, Text="本地插入"},
                 new NavLink() { Icon = Symbol.Download,Text="在线下载"},
-                new NavLink() { Icon = Symbol.GoToStart,Text="登出"}
+                new NavLink() { Icon = Symbol.ContactInfo,Text="个人信息"},
+                new NavLink() { Icon = Symbol.Help,Text="帮助" }
             };
 
         public ObservableCollection<NavLink> MenuItems

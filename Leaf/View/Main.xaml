@@ -32,11 +32,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="HamburgButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="24" Command="{Binding HamburgCommand}" />
-            <StackPanel Grid.Column="1" Background="{ThemeResource SystemAccentColor}">
+            <StackPanel Grid.Column="1" Background="{ThemeResource SystemAccentColor}" Orientation="Horizontal" >
                 <TextBlock VerticalAlignment="Center" FontSize="24">
                             <Run Text="UWP掌上题库" />
                             <Run Text="{Binding Username,Mode=TwoWay}" />
+                    
                 </TextBlock>
+                <Button Content="注销" Command="{Binding LogoffCommand}" />
             </StackPanel>
         </Grid>
         <SplitView Grid.Row="1" x:Name="MainSplitView" OpenPaneLength="150" CompactPaneLength="45" PaneBackground="LightGray" DisplayMode="CompactOverlay" IsPaneOpen="{Binding IsPaneOpen,Mode=TwoWay}">

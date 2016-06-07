@@ -26,6 +26,20 @@ namespace Leaf.ViewModel
             set { Set(ref _json, value); }
         }
 
+        /// <summary>
+        /// 添加按钮状态
+        /// </summary>
+        public bool IsEnabled
+        {
+            get
+            {
+                if (ViewModelLocator.User.Admin == 1)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public ICommand InsertCommand { get; set; }
         private void Insert()
         {

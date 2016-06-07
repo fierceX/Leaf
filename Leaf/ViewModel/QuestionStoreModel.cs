@@ -32,6 +32,20 @@ namespace Leaf.ViewModel
         }
 
         /// <summary>
+        /// 添加按钮状态
+        /// </summary>
+        public bool IsEnabled
+        {
+            get
+            {
+                if (ViewModelLocator.User.Admin == 1)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// 选中题目索引
         /// </summary>
         private int _questionIndex;

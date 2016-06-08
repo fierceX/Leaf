@@ -50,8 +50,8 @@
                              IsChecked="{Binding Choice4,Mode=TwoWay}"/>
         </StackPanel>
         
-        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-            <Button Content="确定"   Margin="20,20,20,0" Command="{Binding ContinueCommand}" />
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
+            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE8FB;" Margin="20,20,20,0" HorizontalAlignment="Center" Command="{Binding ContinueCommand}" />
         </StackPanel>
      
     </Grid>

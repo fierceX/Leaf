@@ -161,7 +161,11 @@ namespace Leaf.View
                         NavigateTo("MainFrame","Help");
                         break;
                     }
-
+                case 6:
+                    {
+                        LogoffMessage("确定要注销吗？");
+                        break;
+                    }
                 default:
                     break;
             }

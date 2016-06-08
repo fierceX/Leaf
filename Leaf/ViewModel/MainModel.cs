@@ -43,9 +43,10 @@ namespace Leaf.ViewModel
                 new NavLink() { Icon = Symbol.Library, Text="题库列表"},
                 new NavLink() { Icon = Symbol.AllApps,Text="试卷列表" },
                 new NavLink() { Icon = Symbol.ImportAll, Text="本地插入"},
-                new NavLink() { Icon = Symbol.Download,Text="在线下载"},
+                new NavLink() { Icon = Symbol.Globe,Text="在线下载"},
                 new NavLink() { Icon = Symbol.ContactInfo,Text="个人信息"},
-                new NavLink() { Icon = Symbol.Help,Text="帮助" }
+                new NavLink() { Icon = Symbol.Help,Text="帮助" },
+                new NavLink() { Icon = Symbol.BlockContact,Text="注销" }
             };
 
         public ObservableCollection<NavLink> MenuItems
@@ -63,19 +64,21 @@ namespace Leaf.ViewModel
             get { return _username; }
             set { Set(ref _username, value); }
         }
-        private User _user;
-        public User User
-        {
-            get
-            {
-                return _user;
-            }
-            set
-            {
-                _user = value;
-                Username = value.Username;
-            }
-        }
+
+        //private User _user;
+        //public User User
+        //{
+        //    get
+        //    {
+        //        return _user;
+        //    }
+        //    set
+        //    {
+        //        _user = value;
+        //        Username = value.Username;
+        //    }
+        //}
+
         public ICommand LogoffCommand { get; set; }
         private void Logoff()
         {
@@ -83,6 +86,7 @@ namespace Leaf.ViewModel
         }
         public MainModel()
         {
+            Username = ViewModelLocator.User.Username;
             LogoffCommand = new RelayCommand(Logoff);
             HamburgCommand = new RelayCommand(HamburgButton);
         }

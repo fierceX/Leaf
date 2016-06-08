@@ -41,9 +41,13 @@
             ItemsSource="{Binding QuestionList,Mode=TwoWay}"
             SelectedIndex="{Binding QuestionIndex,Mode=TwoWay}" >
         </GridView>
-        <StackPanel Grid.Column="0" Grid.Row="2" Height="100" Orientation="Vertical">
-            <Button IsEnabled="{Binding IsEnabled,Mode=TwoWay}" Margin="0,0,00,20" HorizontalAlignment="Center" Content="立即下载" Command="{Binding Download}"/>
-            <Button HorizontalAlignment="Center" Content="刷新" Command="{Binding Refresh}"/>
-        </StackPanel>
+        <Grid Grid.Column="0" Grid.Row="2"  Margin="0,0,0,0" Background="Gray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button FontSize="24" Grid.Column="0" Margin="0,0,0,0" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Content="&#xE896;" Command="{Binding Download}" IsEnabled="{Binding IsEnabled,Mode=TwoWay}" />
+            <Button FontSize="24" Grid.Column="1" Margin="0,0,0,0" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Content="&#xE72C;" Command="{Binding Refresh}"/>
+        </Grid>
     </Grid>
 </Page>

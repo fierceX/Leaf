@@ -55,7 +55,7 @@ namespace Leaf.ViewModel
                     Password = "";
                     var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
                     navigation.NavigateTo("Main", model);
-                    ViewModelLocator.Main.User = model;
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "UserInfo" }, "NavigateTo");
                 }
                 else
                 {

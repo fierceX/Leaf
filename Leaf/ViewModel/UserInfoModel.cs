@@ -61,7 +61,10 @@ namespace Leaf.ViewModel
         {
             string point="";
             if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
+            {
+                Points = "";
                 return;
+            }
             score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
             var num = score.Count;
             for(int j=1,i= num-8>0?(num-8):0; i < num;i++,j++)

@@ -8,6 +8,71 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="0,10,0,10" Grid.Row="0" FontSize="24" Text="帮助" HorizontalAlignment="Center"/>
+        <Pivot Grid.Row="1">
+            <PivotItem Header="简介">
+                <TextBlock Margin="0,5,0,0"  TextWrapping="Wrap"  Text="本APP是一款简单的掌上题库应用，可以自定义试卷内容，自定义插入习题内容，并可以在线下载题库包。模式分为练习模式和测试模式，练习模式不计成绩，每道题后显示答案，测试模式计算成绩。" />
+            </PivotItem>
+            <PivotItem Header="账号类型">
+                <TextBlock Margin="0,5,0,0"  TextWrapping="Wrap"  Text="第一次注册的账号是管理员账号，拥有添加习题，添加试卷等功能，之后注册的账号为普通账号，只有答题功能" />
+            </PivotItem>
+            <PivotItem Header="题库列表">
+                <TextBlock Margin="0,5,0,0"  TextWrapping="Wrap"  Text="题库列表显示题库里所有习题，供练习使用，标题为题库主题，下面左边是类型，右边为难度等级，最下面左边为选择题数量，右边为填空题数量，底色根据不同难度变化" />
+            </PivotItem>
+            <PivotItem Header="试卷列表">
+                <TextBlock Margin="0,5,0,0"  TextWrapping="Wrap"  Text="试卷列表显示所有试卷，标题为试卷名称，下面一列从左到右依次为，选择题数量，填空题数量，难度，总时间，试卷生成时间" />
+            </PivotItem>
+            <PivotItem Header="本地插入">
+                <StackPanel Margin="0,0,0,0">
+                    <TextBlock Margin="0,5,0,0"  TextWrapping="Wrap"  Text="本地插入是插入本地json题库，只有管理员账号有权限插入，json题库格式为：" />
+                    <TextBlock Margin="0,5,0,0" FontSize="12" TextWrapping="Wrap" IsTextSelectionEnabled="True" Text=" {&quot;Single&quot;: [{ &quot;Stems&quot;: &quot;题干&quot;,&quot;Answer&quot;: &quot;答案&quot;,&quot;choices&quot;: [&quot;选项1&quot;,&quot;选项1&quot;,&quot;选项1&quot;],&quot;Level&quot;: 难度等级(整型),&quot;Type&quot;: &quot;类型&quot;,&quot;Subject&quot;: &quot;主题&quot;}],&quot;Gap&quot;:[{&quot;Stems&quot;: &quot;题干&quot;,&quot;Answer&quot;: &quot;答案&quot;,&quot;Level&quot;: 难度等级(整型),&quot;Type&quot;: &quot;类型&quot;,&quot;Subject&quot;: &quot;主题&quot;}]} " />
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="在线下载">
+                <TextBlock Margin="20,5,0,0"  TextWrapping="Wrap"  Text="在线下载从服务器获取题库列表并选择下载，只有管理员账号有权下载" />
+            </PivotItem>
+            <PivotItem Header="个人信息">
+                <TextBlock Margin="20,5,0,0"  TextWrapping="Wrap"  Text="个人信息显示该账户信息，包括进七次成绩曲线图" />
+            </PivotItem>
+        </Pivot>
+        <!--<StackPanel Grid.Row="1" Margin="20,0,20,0">
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock  Text="简介" />
+                <TextBlock Margin="20,5,0,0" FontSize="12" TextWrapping="Wrap"  Text="本APP是一款简单的掌上题库应用，可以自定义试卷内容，自定义插入习题内容，并可以在线下载题库包。模式分为练习模式和测试模式，练习模式不计成绩，每道题后显示答案，测试模式计算成绩。" />
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock  Text="账号类型" />
+                <TextBlock Margin="20,5,0,0" FontSize="12" TextWrapping="Wrap"  Text="第一次注册的账号是管理员账号，拥有添加习题，添加试卷等功能，之后注册的账号为普通账号，只有答题功能" />
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock  Text="题库列表" />
+                <TextBlock Margin="20,5,0,0" FontSize="12" TextWrapping="Wrap"  Text="题库列表显示题库里所有习题，供练习使用，标题为题库主题，下面左边是类型，右边为难度等级，最下面左边为选择题数量，右边为填空题数量，底色根据不同难度变化" />
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock  Text="试卷列表" />
+                <TextBlock Margin="20,5,0,0" FontSize="12" TextWrapping="Wrap"  Text="试卷列表显示所有试卷，标题为试卷名称，下面一列从左到右依次为，选择题数量，填空题数量，难度，总时间，试卷生成时间" />
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock  Text="本地插入" />
+                <TextBlock Margin="20,5,0,0" FontSize="12" TextWrapping="Wrap"  Text="本地插入是插入本地json题库，只有管理员账号有权限插入，json题库格式为：" />
+                <TextBlock Margin="20,5,0,0" FontSize="10" TextWrapping="Wrap"  Text=" {&quot;Single&quot;: [{ &quot;Stems&quot;: &quot;题干&quot;,&quot;Answer&quot;: &quot;答案&quot;,&quot;choices&quot;: [&quot;选项1&quot;,&quot;选项1&quot;,&quot;选项1&quot;],&quot;Level&quot;: 难度等级(整型),&quot;Type&quot;: &quot;类型&quot;,&quot;Subject&quot;: &quot;主题&quot;}],&quot;Gap&quot;:[{&quot;Stems&quot;: &quot;题干&quot;,&quot;Answer&quot;: &quot;答案&quot;,&quot;Level&quot;: 难度等级(整型),&quot;Type&quot;: &quot;类型&quot;,&quot;Subject&quot;: &quot;主题&quot;}]} " />
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock  Text="在线下载" />
+                <TextBlock Margin="20,5,0,0" FontSize="12" TextWrapping="Wrap"  Text="在线下载从服务器获取题库列表并选择下载，只有管理员账号有权下载" />
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock  Text="个人信息" />
+                <TextBlock Margin="20,5,0,0" FontSize="12" TextWrapping="Wrap"  Text="个人信息显示该账户信息，包括进七次成绩曲线图" />
+            </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Page>

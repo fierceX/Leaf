@@ -83,6 +83,8 @@ namespace Leaf.ViewModel
         /// </summary>
         private void ReadData()
         {
+            if (QuestionList != null || QuestionList.Count != 0)
+                QuestionList.Clear();
             var gdb = new DbGapService();
             var sdb = new DbSingleService();
             var newstr =new[] { "distinct singlechoice.type,singlechoice.Level,singlechoice.Subject", ",GapFilling" };

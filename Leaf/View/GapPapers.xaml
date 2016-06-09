@@ -12,30 +12,28 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Margin="0,20,0,0" Orientation="Vertical" Grid.Column="1">
-            <TextBlock HorizontalAlignment="Center"  Text="{Binding Time,Mode=TwoWay}" />
+        <StackPanel Margin="0,20,0,20" Orientation="Vertical" >
+            <TextBlock HorizontalAlignment="Center" FontSize="24" Foreground="Red"  Text="{Binding Time,Mode=TwoWay}" FontWeight="Bold" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Margin="20,0,20,10" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <TextBlock
-                Width="300"
-                Height="100"
                 TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
-            <TextBox Text="{Binding Answer,Mode=TwoWay}" />
-            <TextBlock Text="{Binding RightAnswer,Mode=TwoWay}" />
-        </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical" >
-            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE8FB;"   Margin="20,20,20,0" HorizontalAlignment="Center" Command="{Binding ContinueCommand}" />
+            <TextBox Grid.Row="1" Text="{Binding Answer,Mode=TwoWay}" />
+            <TextBlock Grid.Row="2" Text="{Binding RightAnswer,Mode=TwoWay}" />
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Vertical" Background="Black"  RequestedTheme="Dark" >
+            <Button FontSize="24" FontFamily="Segoe MDL2 Assets" Content="&#xE8FB;"  HorizontalAlignment="Stretch" Command="{Binding ContinueCommand}" />
         </StackPanel>
     </Grid>
 </Page>

@@ -84,6 +84,8 @@ namespace Leaf.ViewModel
                 singlenum = 0;
                 gapnum = 0;
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<int[]>(num, "InsertYes");
+                ViewModelLocator.QuestionList.Init();
+                Json = "";
             }
             catch(Exception e)
             {

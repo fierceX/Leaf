@@ -35,7 +35,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock Margin="0,10,0,10" Grid.Row="0" Text="试卷列表" HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,10,0,10" Grid.Row="0" FontSize="24" Text="试卷列表" HorizontalAlignment="Center"/>
         </StackPanel>
        
         <SplitView 
@@ -74,13 +74,13 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
-                    <Grid Grid.Row="1" Background="Gray" >
+                    <Grid Grid.Row="1" Background="Black"  RequestedTheme="Dark">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Button FontSize="24" Grid.Column="0" Margin="0,0,0,0" FontFamily="Segoe MDL2 Assets"  HorizontalAlignment="Center" Content="&#xE70F;" Command="{Binding RunCommand}" />
-                        <Button FontSize="24" Grid.Column="1" Margin="0,0,0,0" FontFamily="Segoe MDL2 Assets"  HorizontalAlignment="Center" Content="&#xE710;" Command="{Binding OpenCommand}" IsEnabled="{Binding IsEnabled,Mode=TwoWay}" />
+                        <Button FontSize="24" Grid.Column="1" Margin="0,0,0,0" FontFamily="Segoe MDL2 Assets"  VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Content="&#xE70F;" Command="{Binding RunCommand}" />
+                        <Button FontSize="24" Grid.Column="0" Margin="0,0,0,0" FontFamily="Segoe MDL2 Assets"  VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Content="&#xE710;" Command="{Binding OpenCommand}" IsEnabled="{Binding IsEnabled,Mode=TwoWay}" />
                     </Grid>
                 </Grid>
             </SplitView.Content>

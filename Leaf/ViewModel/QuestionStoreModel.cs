@@ -124,7 +124,7 @@ namespace Leaf.ViewModel
             }
             catch (Exception e)
             {
-                throw e;
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "StoreError");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Leaf.ViewModel
             }
             catch (Exception e)
             {
-                throw e;
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "StoreError");
             }
 
         }

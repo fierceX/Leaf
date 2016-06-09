@@ -58,11 +58,9 @@ namespace Leaf.ViewModel
 
 
 
-        private string _username;
         public string Username
         {
-            get { return _username; }
-            set { Set(ref _username, value); }
+            get { return ViewModelLocator.User.Username; }
         }
 
         //private User _user;
@@ -86,7 +84,6 @@ namespace Leaf.ViewModel
         }
         public MainModel()
         {
-            Username = ViewModelLocator.User.Username;
             LogoffCommand = new RelayCommand(Logoff);
             HamburgCommand = new RelayCommand(HamburgButton);
         }

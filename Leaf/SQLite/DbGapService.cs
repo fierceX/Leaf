@@ -18,17 +18,23 @@ namespace Leaf.SQLite
         public override int Insert(object item)
         {
             int result = 0;
-            using (var db = DB.GetDbConnection())
+            //using (var db = DB.GetDbConnection())
+            //{
+            //    try
+            //    {
+            //        result = db.Insert(item);
+            //    }
+            //    catch (Exception exception)
+            //    {
+            //        // 捕获重复插入异常
+            //        Debug.WriteLine(exception);
+            //    }
+            //}
+            using (var db = new MyDBContext())
             {
-                try
-                {
-                    result = db.Insert(item);
-                }
-                catch (Exception exception)
-                {
-                    // 捕获重复插入异常
-                    Debug.WriteLine(exception);
-                }
+                GapFilling Item = (GapFilling)item;
+                db.GapFillings.Add(Item);
+                db.SaveChanges();
             }
             return result;
         }

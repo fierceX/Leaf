@@ -27,17 +27,33 @@ namespace Leaf.SQLite
         public override int Insert(object item)
         {
             int result = 0;
-            using (var db = DB.GetDbConnection())
+            //using (var db = DB.GetDbConnection())
+            //{
+            //    try
+            //    {
+            //        result = db.Insert(item);
+            //    }
+            //    catch (Exception exception)
+            //    {
+            //        // 捕获重复插入异常
+            //        Debug.WriteLine(exception);
+            //    }
+            //}
+            try
             {
-                try
+                using (var db = new MyDBContext())
                 {
-                    result = db.Insert(item);
+                    User user = (User)item;
+                    if (db.Users.Where(p => p.Username == user.Username).Count() <= 0)
+                    {
+                        db.Users.Add(user);
+                        result = db.SaveChanges();
+                    }
                 }
-                catch (Exception exception)
-                {
-                    // 捕获重复插入异常
-                    Debug.WriteLine(exception);
-                }
+            }
+            catch(Exception e)
+            {
+                return -1;
             }
             return result;
         }
@@ -62,11 +78,15 @@ namespace Leaf.SQLite
         public override object Query( params string[] value)
         {
             var result = 0;
-            const string sqlString = "select count(*) from User";
-            using (var db = DB.GetDbConnection())
+            //const string sqlString = "select count(*) from User";
+            //using (var db = DB.GetDbConnection())
+            //{
+            //    var usernum = db.ExecuteScalar<int>(sqlString);
+            //    result = usernum > 0 ? 1 :  0;
+            //}
+            using (var db = new MyDBContext())
             {
-                var usernum = db.ExecuteScalar<int>(sqlString);
-                result = usernum > 0 ? 1 :  0;
+                result = db.Users.Count();
             }
             return result;
         }

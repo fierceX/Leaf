@@ -95,14 +95,21 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="App.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20170201063602_FirstMigration.cs" />
+    <Compile Include="Migrations\20170201063602_FirstMigration.designer.cs">
+      <DependentUpon>20170201063602_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\MyDBContextModelSnapshot.cs" />
     <Compile Include="Model\FileService.cs" />
     <Compile Include="Model\GapFilling.cs" />
+    <Compile Include="Model\MyDBContext.cs" />
     <Compile Include="Model\QuestionView.cs" />
     <Compile Include="Model\SingleChoice.cs" />
     <Compile Include="Model\MD5.cs" />
@@ -254,7 +261,6 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

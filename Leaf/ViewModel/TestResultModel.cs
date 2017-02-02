@@ -127,23 +127,27 @@ namespace Leaf.ViewModel
             GapRight = "正确：" + gapright.ToString();
             AllRight = "正确：" + (singright + gapright).ToString();
             AllWrong = "错误：" + (TestPaperModel.GapNum + TestPaperModel.SingleNum - singright - gapright).ToString();
-
-            if(AllValue>=90.0)
+            WriteScore();
+            if (AllValue>=90.0)
             {
                 Message = "非常棒！！！";
+                return;
             }
             else if(AllValue>=75.0)
             {
                 Message = "成绩不错，继续加油！！！";
+                return;
             }else if(AllValue>=60.0)
             {
                 Message = "革命尚未成功，同志仍需努力！！！";
+                return;
             }
             else
             {
                 Message = "还没及格，今天好好学习！！！";
+                return;
             }
-            WriteScore();
+            
 
         }
 

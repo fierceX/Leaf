@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using Leaf.View;
 using Leaf.Model;
 using Leaf.SQLite;
+using Microsoft.EntityFrameworkCore;
 
 namespace Leaf
 {
@@ -37,7 +38,11 @@ namespace Leaf
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            DB.Init();
+            using (var db = new MyDBContext())
+            {
+                db.Database.Migrate();
+            }
+            //DB.Init();
         }
 
         /// <summary>

@@ -11,18 +11,36 @@ namespace Leaf.Model
     {
         public static bool authenticate(User mobel)
         {
-            var db = new DbUserService();
+            //var db = new DbUserService();
             Md5 md5 = new Md5();
             string mobelpassword = md5.ToMd5(mobel.Password);
-            User q = (User)db.QueryObject(mobel.Username);
-            if (q == null)
-                return false;
-            if (q.Password == mobelpassword)
+            //User q = (User)db.QueryObject(mobel.Username);
+            User user = null;
+            using (var db = new MyDBContext())
             {
-                ViewModelLocator.User = q;
+                IEnumerable<User> m = db.Users.Where(p => p.Username == mobel.Username);
+                if(m.Count()>0)
+                    user = m.ToList()[0];
+            }
+            if (mobelpassword == user.Password)
+            {
+                ViewModelLocator.User = user;
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
+
+                //if (q == null)
+                //    return false;
+                //if (q.Password == mobelpassword)
+                //{
+                //    ViewModelLocator.User = q;
+                //    return true;
+                //}
+                //return false;
+                //return true;
         }
     }
 }

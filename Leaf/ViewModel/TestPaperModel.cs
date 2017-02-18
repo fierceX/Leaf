@@ -86,8 +86,8 @@ namespace Leaf.ViewModel
         /// <summary>
         /// 难度
         /// </summary>
-        private List<string> _levelList = new List<string>();
-        public List<string> LevelList
+        private List<int> _levelList = new List<int>();
+        public List<int> LevelList
         {
             get { return _levelList; }
             set { Set(ref _levelList, value); }
@@ -195,15 +195,20 @@ namespace Leaf.ViewModel
             }
             else
             {
-                var sdb = new DbSingleService();
-                string _singlequest = TestList[Test].SingleQuestionNum;
-                string _gapquest = TestList[Test].GapQuestionNum;
-                string _singlesql = " where Id in (" + _singlequest.Substring(1, _singlequest.Length - 2) + ")";
-                List<SingleChoice> _SingleList = (List<SingleChoice>)sdb.Querysql("*", _singlesql);
+                //var sdb = new DbSingleService();
+                //string _singlequest = TestList[Test].SingleQuestionNum;
+                //string _gapquest = TestList[Test].GapQuestionNum;
+                //string _singlesql = " where Id in (" + _singlequest.Substring(1, _singlequest.Length - 2) + ")";
+                //List<SingleChoice> _SingleList = (List<SingleChoice>)sdb.Querysql("*", _singlesql);
 
-                var gdb = new DbGapService();
-                string _gapsql = " where Id in (" + _gapquest.Substring(1, _gapquest.Length - 2) + ")";
-                List<GapFilling> _GapList = (List<GapFilling>)gdb.QuerySql("*", _gapsql);
+                //var gdb = new DbGapService();
+                //string _gapsql = " where Id in (" + _gapquest.Substring(1, _gapquest.Length - 2) + ")";
+                //List<GapFilling> _GapList = (List<GapFilling>)gdb.QuerySql("*", _gapsql);
+
+                List<GapFilling> _GapList = TestList[Test].gapfills.ToList();
+                List<SingleChoice> _SingleList = TestList[Test].singles.ToList();
+
+
 
                 ViewModelLocator.SinglePaper.SingleList = _SingleList;
                 ViewModelLocator.SinglePaper.Mode = 1;
@@ -237,44 +242,71 @@ namespace Leaf.ViewModel
             if(SubjectIndex >0 && TypeIndex >0 && LevelIndex >0)
             {
                 GetQuestNum();
-                if(GapNum>GapMax)
+                if (GapNum > GapMax)
                 {
-                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("该类型和难度下填空题没有足够数量题目，只有"+GapMax.ToString(), "AddNo");
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("该类型和难度下填空题没有足够数量题目，只有" + GapMax.ToString(), "AddNo");
                 }
-                else if(SingleNum>SingleMax)
+                else if (SingleNum > SingleMax)
                 {
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("该类型和难度下选择题没有足够数量题目，只有" + SingleMax.ToString(), "AddNo");
                 }
                 else
                 {
                     TestPaper model = new TestPaper();
-                    var sdb = new DbSingleService();
-                    var gdb = new DbGapService();
-                    var snewstr = new[] {"Id",TypeList[TypeIndex],LevelList[LevelIndex],SubjectList[SubjectIndex],SingleNum.ToString() };
-                    var gnewstr = new[] { "Id", TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex], GapNum.ToString() };
-                    List<SingleChoice> _singlelist = (List<SingleChoice>)sdb.QueryObject(snewstr);
-                    List<GapFilling> _gaplist = (List<GapFilling>)gdb.QueryObject(gnewstr);
-                    var _newsinglenum = new List<int>();
-                    for(int i=0;i<_singlelist.Count;i++)
+                    List<SingleChoice> _singlelist;
+                    List<GapFilling> _gaplist;
+                    using (var mydb = new MyDBContext())
                     {
-                        _newsinglenum.Add(_singlelist[i].Id);
+                        var _singles = from c in mydb.SingleChoices
+                                       where c.Type == TypeList[TypeIndex] &&
+                                       c.Level == LevelList[LevelIndex] &&
+                                       c.Subject == SubjectList[SubjectIndex]
+                                       select c;
+                        _singlelist = _singles.OrderBy(s => Guid.NewGuid()).Take(SingleNum).ToList();
+
+                        var _gapfills = from c in mydb.GapFillings
+                                        where c.Type == TypeList[TypeIndex] &&
+                                        c.Level == LevelList[LevelIndex] &&
+                                        c.Subject == SubjectList[SubjectIndex]
+                                        select c;
+                        _gaplist = _gapfills.OrderBy(s => Guid.NewGuid()).Take(GapNum).ToList();
                     }
-                    model.SingleQuestionNum= JsonConvert.SerializeObject(_newsinglenum);
-                    model.SingleNum = SingleNum;
-                    var _newgapnum = new List<int>();
-                    for (int i = 0; i < _gaplist.Count; i++)
-                    {
-                        _newgapnum.Add(_gaplist[i].Id);
-                    }
-                    model.GapQuestionNum = JsonConvert.SerializeObject(_newgapnum);
-                    model.GapNum = GapNum;
+
+
+                    //var sdb = new DbSingleService();
+                    //var gdb = new DbGapService();
+                    //var snewstr = new[] {"Id",TypeList[TypeIndex],LevelList[LevelIndex],SubjectList[SubjectIndex],SingleNum.ToString() };
+                    //var gnewstr = new[] { "Id", TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex], GapNum.ToString() };
+                    //List<SingleChoice> _singlelist = (List<SingleChoice>)sdb.QueryObject(snewstr);
+                    //List<GapFilling> _gaplist = (List<GapFilling>)gdb.QueryObject(gnewstr);
+                    //var _newsinglenum = new List<int>();
+                    //for(int i=0;i<_singlelist.Count;i++)
+                    //{
+                    //    _newsinglenum.Add(_singlelist[i].Id);
+                    //}
+                    //model.SingleQuestionNum= JsonConvert.SerializeObject(_newsinglenum);
+                    //model.SingleNum = SingleNum;
+                    //var _newgapnum = new List<int>();
+                    //for (int i = 0; i < _gaplist.Count; i++)
+                    //{
+                    //    _newgapnum.Add(_gaplist[i].Id);
+                    //}
+                    //model.GapQuestionNum = JsonConvert.SerializeObject(_newgapnum);
+                    //model.GapNum = GapNum;
+                    model.singles = _singlelist;
+                    model.gapfills = _gaplist;
                     model.Level = Convert.ToInt32(LevelList[LevelIndex]);
                     model.Name = TestName;
                     model.BuildTime = DateTime.Now.ToString();
                     model.Time = Time;
-                    var db = new DbTestService();
-                    int n = db.Insert(model);
-                    if(n>0)
+                    //var db = new DbTestService();
+                    int n;
+                    using (var mydb = new MyDBContext())
+                    {
+                        mydb.TestPapers.Add(model);
+                        n = mydb.SaveChanges();
+                    }
+                    if(n > 0)
                     {
                         ReadData();
                         GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("试卷添加成功", "AddYes");
@@ -319,8 +351,12 @@ namespace Leaf.ViewModel
         /// </summary>
         private void ReadData()
         {
-            var db = new DbTestService();
-            TestList = (List<TestPaper>)db.QueryObject();
+            //var db = new DbTestService();
+            //TestList = (List<TestPaper>)db.QueryObject();
+            using (var mydb = new MyDBContext())
+            {
+                TestList = mydb.TestPapers.ToList();
+            }
         }
 
         /// <summary>
@@ -331,14 +367,22 @@ namespace Leaf.ViewModel
             if(TypeList == null || TypeList.Count == 0)
             {
                 TypeList.Add(" ");
-                var gdb = new DbGapService();
-                var sdb = new DbSingleService();
-                var newstr = new[] { "distinct singlechoice.type", ",GapFilling" };
-                List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
-                foreach (var _model in _modellist)
+                //var gdb = new DbGapService();
+                //var sdb = new DbSingleService();
+                //var newstr = new[] { "distinct singlechoice.type", ",GapFilling" };
+                //List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
+                using (var mydb = new MyDBContext())
                 {
-                    TypeList.Add(_model.Type);
+                    var q = from c in mydb.SingleChoices
+                            from b in mydb.GapFillings
+                            where c.Type == b.Type
+                            select c.Type;
+                    TypeList = q.ToList();
                 }
+                //foreach (var _model in _modellist)
+                //{
+                //    TypeList.Add(_model.Type);
+                //}
             }
         }
 
@@ -350,15 +394,26 @@ namespace Leaf.ViewModel
 
             if (LevelList == null || LevelList.Count == 0)
             {
-                LevelList.Add(" ");
-                var gdb = new DbGapService();
-                var sdb = new DbSingleService();
-                var newstr = new[] { "distinct singlechoice.level", ",GapFilling" };
-                List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
-                foreach (var _model in _modellist)
+                //LevelList.Add(" ");
+
+                using (var mydb = new MyDBContext())
                 {
-                    LevelList.Add(_model.Level.ToString());
+                    var q = from c in mydb.SingleChoices
+                            from b in mydb.GapFillings
+                            where c.Level == b.Level
+                            select c.Level;
+                    LevelList = q.ToList();
                 }
+
+
+                //var gdb = new DbGapService();
+                //var sdb = new DbSingleService();
+                //var newstr = new[] { "distinct singlechoice.level", ",GapFilling" };
+                //List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
+                //foreach (var _model in _modellist)
+                //{
+                //    LevelList.Add(_model.Level.ToString());
+                //}
             }
         }
         /// <summary>
@@ -368,15 +423,26 @@ namespace Leaf.ViewModel
         {
             if(SubjectList==null || SubjectList.Count==0)
             {
-                SubjectList.Add(" ");
-                var gdb = new DbGapService();
-                var sdb = new DbSingleService();
-                var newstr = new[] { "distinct singlechoice.Subject", ",GapFilling" };
-                List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
-                foreach (var _model in _modellist)
+
+                using (var mydb = new MyDBContext())
                 {
-                    SubjectList.Add(_model.Subject);
+                    var q = from c in mydb.SingleChoices
+                            from b in mydb.GapFillings
+                            where c.Subject == b.Subject
+                            select c.Subject;
+                    SubjectList = q.ToList();
                 }
+
+
+                //SubjectList.Add(" ");
+                //var gdb = new DbGapService();
+                //var sdb = new DbSingleService();
+                //var newstr = new[] { "distinct singlechoice.Subject", ",GapFilling" };
+                //List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
+                //foreach (var _model in _modellist)
+                //{
+                //    SubjectList.Add(_model.Subject);
+                //}
             }
         }
 
@@ -385,11 +451,26 @@ namespace Leaf.ViewModel
         /// </summary>
         private void GetQuestNum()
         {
-            var gdb = new DbGapService();
-            var sdb = new DbSingleService();
-            var newstr = new[] { TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex] };
-            GapMax = (int)gdb.Query(newstr);
-            SingleMax = (int)sdb.Query(newstr);
+
+            using (var mydb = new MyDBContext())
+            {
+                GapMax = (from c in mydb.GapFillings
+                          where c.Subject == SubjectList[SubjectIndex] &&
+                          c.Type == TypeList[TypeIndex] &&
+                          c.Level == LevelList[LevelIndex]
+                          select c).Count();
+                SingleMax = (from c in mydb.SingleChoices
+                          where c.Subject == SubjectList[SubjectIndex] &&
+                          c.Type == TypeList[TypeIndex] &&
+                          c.Level == LevelList[LevelIndex]
+                          select c).Count();
+            }
+
+            //var gdb = new DbGapService();
+            //var sdb = new DbSingleService();
+            //var newstr = new[] { TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex] };
+            //GapMax = (int)gdb.Query(newstr);
+            //SingleMax = (int)sdb.Query(newstr);
         }
 
         /// <summary>

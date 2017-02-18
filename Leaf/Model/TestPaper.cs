@@ -26,11 +26,13 @@ namespace Leaf.Model
         //不为空
         //[NotNull]
         public string SingleQuestionNum { get; set; }
+        public virtual ICollection<SingleChoice> singles { get; set; }
 
         //填空内容Id号
         //不为空
         //[NotNull]
         public string GapQuestionNum { get; set; }
+        public virtual ICollection<GapFilling> gapfills { get; set; }
 
         //单选数量
         //不为空

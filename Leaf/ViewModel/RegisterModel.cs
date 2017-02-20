@@ -6,9 +6,10 @@ using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Command;
 using Windows.Security.Cryptography.Core;
 using System.Text;
-using SQLite;
+//using SQLite;
 using Leaf.SQLite;
 using System;
+using System.Linq;
 
 namespace Leaf.ViewModel
 {
@@ -53,22 +54,30 @@ namespace Leaf.ViewModel
             model.Username = Username;
             model.Password = md5.ToMd5(Password);
             model.BuildTime = DateTime.Now.ToString();
-            var db = new DbUserService();
-            if ((int)db.Query() == 0)
-                model.Admin = 1;
-            var i=db.Insert(model);
-            if (i>0)
+            //var db = new DbUserService();
+            //if ((int)db.Query() == 0)
+            //  model.Admin = 1;
+            //var i=db.Insert(model);
+            int i = 0;
+            using (var mydb = new MyDBContext())
             {
-                Username = "";
-                Password = "";
-                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                navigation.NavigateTo("Login");
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("注册成功","RegisterYes");
+                if (mydb.Users.Count() <= 0)
+                    model.Admin = 1;
+                mydb.Users.Add(model);
+                i = mydb.SaveChanges();
             }
-            else
-            {
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("注册失败","RegisterNo");
-            }
+                if (i > 0)
+                {
+                    Username = "";
+                    Password = "";
+                    var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                    navigation.NavigateTo("Login");
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("注册成功", "RegisterYes");
+                }
+                else
+                {
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("注册失败", "RegisterNo");
+                }
         }
 
         public ICommand ToLogin { get; set; }

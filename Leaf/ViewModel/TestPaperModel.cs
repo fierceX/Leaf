@@ -205,8 +205,8 @@ namespace Leaf.ViewModel
                 //string _gapsql = " where Id in (" + _gapquest.Substring(1, _gapquest.Length - 2) + ")";
                 //List<GapFilling> _GapList = (List<GapFilling>)gdb.QuerySql("*", _gapsql);
 
-                List<GapFilling> _GapList = TestList[Test].gapfills.ToList();
-                List<SingleChoice> _SingleList = TestList[Test].singles.ToList();
+                List<GapFilling> _GapList = new List<GapFilling>(); //TestList[Test].gapfills.ToList();
+                List<SingleChoice> _SingleList = new List<SingleChoice>(); //TestList[Test].singles.ToList();
 
 
 
@@ -239,7 +239,7 @@ namespace Leaf.ViewModel
         public ICommand AddCommand { get; set; }
         private void Add()
         {
-            if(SubjectIndex >0 && TypeIndex >0 && LevelIndex >0)
+            if(SubjectIndex >=0 && TypeIndex >=0 && LevelIndex >=0)
             {
                 GetQuestNum();
                 if (GapNum > GapMax)
@@ -293,8 +293,23 @@ namespace Leaf.ViewModel
                     //}
                     //model.GapQuestionNum = JsonConvert.SerializeObject(_newgapnum);
                     //model.GapNum = GapNum;
-                    model.singles = _singlelist;
-                    model.gapfills = _gaplist;
+
+                    //foreach (var s in _singlelist)
+                    //{
+                    //    SingleTest sm = new SingleTest();
+                    //    sm.single = s;
+                    //    sm.SingleId = s.Id;
+                    //    model.singles.Add(sm);
+                    //}
+                    //foreach (var s in _gaplist)
+                    //{
+                    //    GapTest gm = new GapTest();
+                    //    gm.gap = s;
+                    //    gm.GapId = s.Id;
+                    //    model.gapfills.Add(gm);
+                    //}
+                    //model.singles = _singlelist;
+                    // model.gapfills = _gaplist;
                     model.Level = Convert.ToInt32(LevelList[LevelIndex]);
                     model.Name = TestName;
                     model.BuildTime = DateTime.Now.ToString();
@@ -305,8 +320,25 @@ namespace Leaf.ViewModel
                     {
                         mydb.TestPapers.Add(model);
                         n = mydb.SaveChanges();
+                        foreach (var s in _singlelist)
+                        {
+                            SingleTest sm = new SingleTest();
+                            sm.single = s;
+                            sm.SingleId = s.Id;
+                            sm.TestId = model.Id;
+                            model.singles.Add(sm);
+                        }
+                        foreach (var s in _gaplist)
+                        {
+                            GapTest gm = new GapTest();
+                            gm.gap = s;
+                            gm.GapId = s.Id;
+                            gm.TestId = model.Id;
+                            model.gapfills.Add(gm);
+                        }
+                        
                     }
-                    if(n > 0)
+                    if (n > 0)
                     {
                         ReadData();
                         GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("试卷添加成功", "AddYes");
@@ -374,10 +406,14 @@ namespace Leaf.ViewModel
                 using (var mydb = new MyDBContext())
                 {
                     var q = from c in mydb.SingleChoices
-                            from b in mydb.GapFillings
-                            where c.Type == b.Type
                             select c.Type;
-                    TypeList = q.ToList();
+                    var qq = from c in mydb.GapFillings
+                             select c.Type;
+
+                    var qqq = q.ToList();
+                    qqq.AddRange(qq.ToList());
+                    TypeList = qqq.Distinct().ToList();
+
                 }
                 //foreach (var _model in _modellist)
                 //{
@@ -399,10 +435,13 @@ namespace Leaf.ViewModel
                 using (var mydb = new MyDBContext())
                 {
                     var q = from c in mydb.SingleChoices
-                            from b in mydb.GapFillings
-                            where c.Level == b.Level
                             select c.Level;
-                    LevelList = q.ToList();
+                    var qq = from c in mydb.GapFillings
+                             select c.Level;
+
+                    var qqq = q.ToList();
+                    qqq.AddRange(qq.ToList());
+                    LevelList = qqq.Distinct().ToList();
                 }
 
 
@@ -427,10 +466,13 @@ namespace Leaf.ViewModel
                 using (var mydb = new MyDBContext())
                 {
                     var q = from c in mydb.SingleChoices
-                            from b in mydb.GapFillings
-                            where c.Subject == b.Subject
                             select c.Subject;
-                    SubjectList = q.ToList();
+                    var qq = from c in mydb.GapFillings
+                             select c.Subject;
+
+                    var qqq = q.ToList();
+                    qqq.AddRange(qq.ToList());
+                    SubjectList = qqq.Distinct().ToList();
                 }
 
 

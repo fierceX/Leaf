@@ -51,7 +51,7 @@ namespace Leaf.ViewModel
                 JArray _singlearray = JArray.Parse(_jsonobject["Single"].ToString());
                 foreach (var token in _singlearray)
                 {
-                    var db = new DbSingleService();
+                    //var db = new DbSingleService();
                     SingleChoice model = new SingleChoice();
                     model.Answer = token["Answer"].ToString();
                     model.Stems = token["Stems"].ToString();
@@ -61,7 +61,13 @@ namespace Leaf.ViewModel
                     model.Level = Convert.ToInt32(token["Level"].ToString());
                     model.Type = token["Type"].ToString();
                     model.Subject = token["Subject"].ToString();
-                    int i = db.Insert(model);
+                    //int i = db.Insert(model);
+                    int i = 0;
+                    using (var mydb = new MyDBContext())
+                    {
+                        mydb.SingleChoices.Add(model);
+                        i = mydb.SaveChanges();
+                    }
                     if (i > 0)
                         singlenum += i;
 
@@ -69,14 +75,20 @@ namespace Leaf.ViewModel
                 JArray _gaplist = JArray.Parse(_jsonobject["Gap"].ToString());
                 foreach (var token in _gaplist)
                 {
-                    var db = new DbGapService();
+                    //var db = new DbGapService();
                     GapFilling model = new GapFilling();
                     model.Answer = token["Answer"].ToString();
                     model.Stems = token["Stems"].ToString();
                     model.Level = Convert.ToInt32(token["Level"].ToString());
                     model.Type = token["Type"].ToString();
                     model.Subject = token["Subject"].ToString();
-                    int i = db.Insert(model);
+                    //int i = db.Insert(model);
+                    int i = 0;
+                    using (var mydb = new MyDBContext())
+                    {
+                        mydb.GapFillings.Add(model);
+                        i = mydb.SaveChanges();
+                    }
                     if (i > 0)
                         gapnum += i;
                 }
@@ -89,8 +101,8 @@ namespace Leaf.ViewModel
             }
             catch(Exception e)
             {
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "Exception");
-                //throw e;
+                //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "Exception");
+                throw e;
             }
         }
 

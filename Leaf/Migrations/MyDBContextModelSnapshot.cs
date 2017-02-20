@@ -35,6 +35,19 @@ namespace Leaf.Migrations
                     b.ToTable("GapFillings");
                 });
 
+            modelBuilder.Entity("Leaf.Model.GapTest", b =>
+                {
+                    b.Property<int>("GapId");
+
+                    b.Property<int>("TestId");
+
+                    b.HasKey("GapId", "TestId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("GapTest");
+                });
+
             modelBuilder.Entity("Leaf.Model.SingleChoice", b =>
                 {
                     b.Property<int>("Id")
@@ -61,6 +74,19 @@ namespace Leaf.Migrations
                     b.ToTable("SingleChoices");
                 });
 
+            modelBuilder.Entity("Leaf.Model.SingleTest", b =>
+                {
+                    b.Property<int>("SingleId");
+
+                    b.Property<int>("TestId");
+
+                    b.HasKey("SingleId", "TestId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("SingleTest");
+                });
+
             modelBuilder.Entity("Leaf.Model.TestPaper", b =>
                 {
                     b.Property<int>("Id")
@@ -70,8 +96,6 @@ namespace Leaf.Migrations
 
                     b.Property<int>("GapNum");
 
-                    b.Property<string>("GapQuestionNum");
-
                     b.Property<int>("Level");
 
                     b.Property<string>("Name");
@@ -79,8 +103,6 @@ namespace Leaf.Migrations
                     b.Property<int>("Score");
 
                     b.Property<int>("SingleNum");
-
-                    b.Property<string>("SingleQuestionNum");
 
                     b.Property<int>("Time");
 
@@ -107,6 +129,32 @@ namespace Leaf.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Leaf.Model.GapTest", b =>
+                {
+                    b.HasOne("Leaf.Model.GapFilling", "gap")
+                        .WithMany("testpapers")
+                        .HasForeignKey("GapId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Leaf.Model.TestPaper", "test")
+                        .WithMany("gapfills")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Leaf.Model.SingleTest", b =>
+                {
+                    b.HasOne("Leaf.Model.SingleChoice", "single")
+                        .WithMany("testpapers")
+                        .HasForeignKey("SingleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Leaf.Model.TestPaper", "test")
+                        .WithMany("singles")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

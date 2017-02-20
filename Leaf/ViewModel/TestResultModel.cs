@@ -178,13 +178,13 @@ namespace Leaf.ViewModel
             score.Add(_score);
             string json = JsonConvert.SerializeObject(score);
             ViewModelLocator.User.Score = json;
-            var db = new DbUserService();
-            if(db.Update(ViewModelLocator.User)>0)
-            {
-                var username = ViewModelLocator.User.Username;
-                ViewModelLocator.User = (User)db.QueryObject(username);
-                ViewModelLocator.UserInfo.Init();
-            }
+            //var db = new DbUserService();
+            //if(db.Update(ViewModelLocator.User)>0)
+            //{
+            //    var username = ViewModelLocator.User.Username;
+            //    ViewModelLocator.User = (User)db.QueryObject(username);
+            //    ViewModelLocator.UserInfo.Init();
+            //}
         }
 
 

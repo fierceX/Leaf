@@ -25,14 +25,14 @@ namespace Leaf.Model
         //单选内容Id号
         //不为空
         //[NotNull]
-        public string SingleQuestionNum { get; set; }
-        public virtual ICollection<SingleChoice> singles { get; set; }
+        //public string SingleQuestionNum { get; set; }
+        public virtual ICollection<SingleTest> singles { get; set; }
 
         //填空内容Id号
         //不为空
         //[NotNull]
-        public string GapQuestionNum { get; set; }
-        public virtual ICollection<GapFilling> gapfills { get; set; }
+        //public string GapQuestionNum { get; set; }
+        public virtual ICollection<GapTest> gapfills { get; set; }
 
         //单选数量
         //不为空
@@ -62,5 +62,11 @@ namespace Leaf.Model
         //时间
         //不为空
         public int Time { get; set; }
+
+        public TestPaper()
+        {
+            singles = new HashSet<SingleTest>();
+            gapfills = new HashSet<GapTest>();
+        }
     }
 }

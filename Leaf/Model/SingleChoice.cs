@@ -46,5 +46,13 @@ namespace Leaf.Model
 
         //[NotNull]
         public string Subject { get; set; }
+
+        public virtual ICollection<SingleTest> testpapers { get; set; }
+
+        public SingleChoice()
+        {
+
+            testpapers = new HashSet<SingleTest>();
+        }
     }
 }

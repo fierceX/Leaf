@@ -1,5 +1,5 @@
 ﻿using Leaf.Model;
-using SQLite;
+//using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,10 +24,10 @@ namespace Leaf.SQLite
         //        db.CreateTable<TestPaper>();
         //    }
         //}
-        public static SQLiteConnection GetDbConnection()
-        {
-            var con = new SQLiteConnection(DbFilePath);
-            return con;
-        }
+        //public static SQLiteConnection GetDbConnection()
+        //{
+        //    var con = new SQLiteConnection(DbFilePath);
+        //    return con;
+        //}
     }
 }

@@ -68,8 +68,8 @@ namespace Leaf.ViewModel
         {
             try
             {
-                var sdb = new DbSingleService();
-                var gdb = new DbGapService();
+                //var sdb = new DbSingleService();
+                //var gdb = new DbGapService();
                 HttpClient httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = await httpClient.GetAsync(new Uri("http://localhost:2832/api/SingleChoices?subject="+QuestionList[QuestionIndex].Subject));
@@ -95,9 +95,9 @@ namespace Leaf.ViewModel
                     model.Choices3 = obj.GetNamedString("Choices3");
                     model.Level = (int)obj.GetNamedNumber("level");
                     model.Type = obj.GetNamedString("type");
-                    int n = sdb.Insert(model);
-                    if (n > 0)
-                        singlenum += n;
+                    //int n = sdb.Insert(model);
+                    //if (n > 0)
+                    //    singlenum += n;
                 }
                 response = await httpClient.GetAsync(new Uri("http://localhost:2832/api/GapFillings?subject=" + QuestionList[QuestionIndex].Subject));
                 response.EnsureSuccessStatusCode();
@@ -112,9 +112,9 @@ namespace Leaf.ViewModel
                     model.Answer = obj.GetNamedString("Answer");
                     model.Level = (int)obj.GetNamedNumber("level");
                     model.Type = obj.GetNamedString("type");
-                    int n = gdb.Insert(model);
-                    if (n > 0)
-                        gapnum += n;
+                    //int n = gdb.Insert(model);
+                    //if (n > 0)
+                    //    gapnum += n;
                 }
                 int[] num = new int[2] { singlenum, gapnum };
                 singlenum = 0;

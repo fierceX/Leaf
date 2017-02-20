@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Leaf.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class MyFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,12 +53,10 @@ namespace Leaf.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     BuildTime = table.Column<string>(nullable: true),
                     GapNum = table.Column<int>(nullable: false),
-                    GapQuestionNum = table.Column<string>(nullable: true),
                     Level = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Score = table.Column<int>(nullable: false),
                     SingleNum = table.Column<int>(nullable: false),
-                    SingleQuestionNum = table.Column<string>(nullable: true),
                     Time = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -82,10 +80,77 @@ namespace Leaf.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "GapTest",
+                columns: table => new
+                {
+                    GapId = table.Column<int>(nullable: false),
+                    TestId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GapTest", x => new { x.GapId, x.TestId });
+                    table.ForeignKey(
+                        name: "FK_GapTest_GapFillings_GapId",
+                        column: x => x.GapId,
+                        principalTable: "GapFillings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GapTest_TestPapers_TestId",
+                        column: x => x.TestId,
+                        principalTable: "TestPapers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SingleTest",
+                columns: table => new
+                {
+                    SingleId = table.Column<int>(nullable: false),
+                    TestId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SingleTest", x => new { x.SingleId, x.TestId });
+                    table.ForeignKey(
+                        name: "FK_SingleTest_SingleChoices_SingleId",
+                        column: x => x.SingleId,
+                        principalTable: "SingleChoices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SingleTest_TestPapers_TestId",
+                        column: x => x.TestId,
+                        principalTable: "TestPapers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GapTest_TestId",
+                table: "GapTest",
+                column: "TestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SingleTest_TestId",
+                table: "SingleTest",
+                column: "TestId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "GapTest");
+
+            migrationBuilder.DropTable(
+                name: "SingleTest");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
             migrationBuilder.DropTable(
                 name: "GapFillings");
 
@@ -94,9 +159,6 @@ namespace Leaf.Migrations
 
             migrationBuilder.DropTable(
                 name: "TestPapers");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

@@ -35,5 +35,13 @@ namespace Leaf.Model
 
         //[NotNull]
         public string Subject { get; set; }
+
+        public virtual ICollection<GapTest> testpapers { get; set; }
+
+        public GapFilling()
+        {
+
+            testpapers = new HashSet<GapTest>();
+        }
     }
 }

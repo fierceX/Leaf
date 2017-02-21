@@ -26,13 +26,13 @@ namespace Leaf.Model
         //不为空
         //[NotNull]
         //public string SingleQuestionNum { get; set; }
-        public virtual ICollection<SingleTest> singles { get; set; }
+        public List<SingleTest> singles { get; set; }
 
         //填空内容Id号
         //不为空
         //[NotNull]
         //public string GapQuestionNum { get; set; }
-        public virtual ICollection<GapTest> gapfills { get; set; }
+        public  List<GapTest> gapfills { get; set; }
 
         //单选数量
         //不为空
@@ -65,8 +65,8 @@ namespace Leaf.Model
 
         public TestPaper()
         {
-            singles = new HashSet<SingleTest>();
-            gapfills = new HashSet<GapTest>();
+            singles = new List<SingleTest>();
+            gapfills = new List<GapTest>();
         }
     }
 }

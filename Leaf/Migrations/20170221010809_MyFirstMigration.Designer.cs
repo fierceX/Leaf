@@ -8,7 +8,7 @@ using Leaf.Model;
 namespace Leaf.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20170220090516_MyFirstMigration")]
+    [Migration("20170221010809_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

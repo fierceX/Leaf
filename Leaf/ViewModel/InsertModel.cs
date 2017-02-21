@@ -49,60 +49,53 @@ namespace Leaf.ViewModel
                     return;
                 JObject _jsonobject = JObject.Parse(Json);
                 JArray _singlearray = JArray.Parse(_jsonobject["Single"].ToString());
-                foreach (var token in _singlearray)
-                {
-                    //var db = new DbSingleService();
-                    SingleChoice model = new SingleChoice();
-                    model.Answer = token["Answer"].ToString();
-                    model.Stems = token["Stems"].ToString();
-                    model.Choices1 = token["choices"][0].ToString();
-                    model.Choices2 = token["choices"][1].ToString();
-                    model.Choices3 = token["choices"][2].ToString();
-                    model.Level = Convert.ToInt32(token["Level"].ToString());
-                    model.Type = token["Type"].ToString();
-                    model.Subject = token["Subject"].ToString();
-                    //int i = db.Insert(model);
-                    int i = 0;
-                    using (var mydb = new MyDBContext())
-                    {
-                        mydb.SingleChoices.Add(model);
-                        i = mydb.SaveChanges();
-                    }
-                    if (i > 0)
-                        singlenum += i;
-
-                }
-                JArray _gaplist = JArray.Parse(_jsonobject["Gap"].ToString());
-                foreach (var token in _gaplist)
-                {
-                    //var db = new DbGapService();
-                    GapFilling model = new GapFilling();
-                    model.Answer = token["Answer"].ToString();
-                    model.Stems = token["Stems"].ToString();
-                    model.Level = Convert.ToInt32(token["Level"].ToString());
-                    model.Type = token["Type"].ToString();
-                    model.Subject = token["Subject"].ToString();
-                    //int i = db.Insert(model);
-                    int i = 0;
-                    using (var mydb = new MyDBContext())
-                    {
-                        mydb.GapFillings.Add(model);
-                        i = mydb.SaveChanges();
-                    }
-                    if (i > 0)
-                        gapnum += i;
-                }
-                int[] num = new int[2] { singlenum, gapnum };
                 singlenum = 0;
                 gapnum = 0;
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<int[]>(num, "InsertYes");
-                ViewModelLocator.QuestionList.Init();
-                Json = "";
+                using (var mydb = new MyDBContext())
+                {
+                    foreach (var token in _singlearray)
+                    {
+                        SingleChoice model = new SingleChoice();
+                        model.Answer = token["Answer"].ToString();
+                        model.Stems = token["Stems"].ToString();
+                        model.Choices1 = token["choices"][0].ToString();
+                        model.Choices2 = token["choices"][1].ToString();
+                        model.Choices3 = token["choices"][2].ToString();
+                        model.Level = Convert.ToInt32(token["Level"].ToString());
+                        model.Type = token["Type"].ToString();
+                        model.Subject = token["Subject"].ToString();
+                        mydb.SingleChoices.Add(model);
+                        singlenum += 1;
+
+                    }
+                    JArray _gaplist = JArray.Parse(_jsonobject["Gap"].ToString());
+
+                    foreach (var token in _gaplist)
+                    {
+                        GapFilling model = new GapFilling();
+                        model.Answer = token["Answer"].ToString();
+                        model.Stems = token["Stems"].ToString();
+                         model.Level = Convert.ToInt32(token["Level"].ToString());
+                        model.Type = token["Type"].ToString();
+                        model.Subject = token["Subject"].ToString();
+                        mydb.GapFillings.Add(model);
+                        gapnum += 1;
+                    }
+
+                    mydb.SaveChanges();
+
+                    int[] num = new int[2] { singlenum, gapnum };
+                    singlenum = 0;
+                    gapnum = 0;
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<int[]>(num, "InsertYes");
+                    ViewModelLocator.QuestionList.Init();
+                    Json = "";
+                }
             }
             catch(Exception e)
             {
-                //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "Exception");
-                throw e;
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>(e.Message, "Exception");
+                //throw e;
             }
         }
 

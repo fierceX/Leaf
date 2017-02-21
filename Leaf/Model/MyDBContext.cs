@@ -13,6 +13,8 @@ namespace Leaf.Model
         public DbSet<SingleChoice> SingleChoices { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<TestPaper> TestPapers { get; set; }
+        public DbSet<SingleTest> SingleTest { get; set; }
+        public DbSet<GapTest> GapTest { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

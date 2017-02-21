@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Leaf.Model;
 using Leaf.SQLite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using System;
@@ -207,7 +208,12 @@ namespace Leaf.ViewModel
 
                 List<GapFilling> _GapList = new List<GapFilling>(); //TestList[Test].gapfills.ToList();
                 List<SingleChoice> _SingleList = new List<SingleChoice>(); //TestList[Test].singles.ToList();
-
+                var _gaplist = TestList[Test].gapfills;
+                var _singlelist = TestList[Test].singles;
+                foreach (var x in _singlelist)
+                    _SingleList.Add(x.single);
+                foreach (var x in _gaplist)
+                    _GapList.Add(x.gap);
 
 
                 ViewModelLocator.SinglePaper.SingleList = _SingleList;
@@ -314,6 +320,8 @@ namespace Leaf.ViewModel
                     model.Name = TestName;
                     model.BuildTime = DateTime.Now.ToString();
                     model.Time = Time;
+                    model.SingleNum = SingleNum;
+                    model.GapNum = GapNum;
                     //var db = new DbTestService();
                     int n;
                     using (var mydb = new MyDBContext())
@@ -323,19 +331,18 @@ namespace Leaf.ViewModel
                         foreach (var s in _singlelist)
                         {
                             SingleTest sm = new SingleTest();
-                            sm.single = s;
                             sm.SingleId = s.Id;
                             sm.TestId = model.Id;
-                            model.singles.Add(sm);
+                            mydb.SingleTest.Add(sm);
                         }
                         foreach (var s in _gaplist)
                         {
                             GapTest gm = new GapTest();
-                            gm.gap = s;
                             gm.GapId = s.Id;
                             gm.TestId = model.Id;
-                            model.gapfills.Add(gm);
+                            mydb.GapTest.Add(gm);
                         }
+                        n = mydb.SaveChanges();
                         
                     }
                     if (n > 0)
@@ -387,7 +394,10 @@ namespace Leaf.ViewModel
             //TestList = (List<TestPaper>)db.QueryObject();
             using (var mydb = new MyDBContext())
             {
-                TestList = mydb.TestPapers.ToList();
+                TestList= mydb.TestPapers.Include(p => p.gapfills)
+                    .ThenInclude(z => z.gap)
+                    .Include(p => p.singles)
+                    .ThenInclude(z => z.single).ToList();
             }
         }
 

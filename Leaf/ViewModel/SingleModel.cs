@@ -143,6 +143,7 @@ namespace Leaf.ViewModel
         public ICommand ContinueCommand { get; set; } 
          private void Continue()
          {
+            //判断模式，如果是练习模式则显示答案
                 if (ContinueBool && Mode == 0)
                 {
                     Answer="正确答案是："+ SingleList[num].Answer;
@@ -155,14 +156,17 @@ namespace Leaf.ViewModel
                     ContinueBool = true;
                     Answer = "";
                 }
+                //如果是测试模式则获取答案
                 if(Mode == 1)
                 {
                     ViewModelLocator.TestResult.SingleResult.Add(GetAnswer(answernum));
                 }
+                //如果还有习题则继续显示习题
             if (num < max)
              {
                 LoadQuestion();
              }
+            //否则跳转到填空题页面
             else
             {
 

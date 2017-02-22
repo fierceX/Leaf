@@ -9,6 +9,7 @@ namespace Leaf.ViewModel
 {
     class LoginModle:ViewModelBase
     {
+        //用户名和密码
         private string _username;
         private string _password;
         public string Username
@@ -33,9 +34,14 @@ namespace Leaf.ViewModel
                 Set(ref _password, value);
             }
         }
+
+        //登陆命令
         public ICommand LoginCommand { get; set; }
+
+        //登陆
         private void Login()
         {
+            //验证用户名和密码是否为空
             User model = new User();
             if(Username == null || Password == null || Username.Trim() == "" || Password.Trim() == "")
             {
@@ -43,6 +49,7 @@ namespace Leaf.ViewModel
             }
             else
             {
+                //验证密码是否正确
                 model.Username = Username;
                 model.Password = Password;
                 if (true == server.authenticate(model))
@@ -61,8 +68,9 @@ namespace Leaf.ViewModel
             
         }
 
-
+        //注册命令
         public ICommand ToRegister { get; set; }
+        //跳转到注册页面
         private void Register()
         {
             var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
@@ -79,7 +87,7 @@ namespace Leaf.ViewModel
 
         }
 
-
+        //初始化
         public LoginModle()
         {
             LoginCommand = new RelayCommand(Login);

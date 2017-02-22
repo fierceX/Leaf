@@ -81,6 +81,7 @@ namespace Leaf.ViewModel
         public ICommand ContinueCommand { get; set; }
         private void Continue()
         {
+            //判断是不是练习模式，如果是则显示答案
             if (ContinueBool && Mode == 0)
             {
                 RightAnswer = "正确答案是：" + GapList[num].Answer;
@@ -93,16 +94,20 @@ namespace Leaf.ViewModel
                 ContinueBool = true;
                 RightAnswer = "";
             }
+            //如果是测试模式，则获取答案
             if (Mode == 1)
                 ViewModelLocator.TestResult.GapResult.Add(GetAnswer());
+            //如果还有题目，则显示下一题并清空答案
             if (num<max)
             {
                 Stem = GapList[num].Stems;
                 Answer = "";
             }
+            //否则就跳转回去
             else
             {
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                //如果是测试模式，则跳转到成绩页面
                 if (Mode == 1)
                 {
                     ViewModelLocator.TestResult.Init();
@@ -112,6 +117,7 @@ namespace Leaf.ViewModel
                     navigation.NavigateTo("Main");
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Result" }, "NavigateTo");
                 }
+                //否则跳回主页
                 else
                 {
                     navigation.NavigateTo("Main");

@@ -7,25 +7,30 @@ namespace Leaf.ViewModel
 {
     class UserInfoModel : ViewModelBase
     {
-        //private List<Score> score;
+        /// <summary>
+        /// 折线图字符串
+        /// </summary>
         private string _points;
         public string Points
         {
             get { return _points; }
             set { Set(ref _points, value); }
         }
+        //用户名
         private string _username;
         public string Username
         {
             get { return _username; }
             set { Set(ref _username, value); }
         }
+        //是否是管理员
         private string _admin;
         public string Admain
         {
             get { return _admin; }
             set { Set(ref _admin, value); }
         }
+        //注册时间
         private string _buildtime;
         public string BuildTime
         {
@@ -33,16 +38,19 @@ namespace Leaf.ViewModel
             set { Set(ref _buildtime, value); }
         }
 
+        //初始化
         public void Init()
         {
             DrawPoint();
             ReadData();
         }
+        //构造函数
         public UserInfoModel()
         {
             Init();
         }
 
+        //读取用户信息
         private void ReadData()
         {
             Username = "用户名：" + ViewModelLocator.User.Username;
@@ -53,8 +61,10 @@ namespace Leaf.ViewModel
             BuildTime = "注册时间："+ViewModelLocator.User.BuildTime;
         }
 
+        //画成绩折线图
         private void DrawPoint()
         {
+            //获取成绩列表
             List<double> scorelist = new List<double>();
             using (var mydb = new MyDBContext())
             {
@@ -63,6 +73,7 @@ namespace Leaf.ViewModel
                         select c.Score;
                 scorelist = q.ToList();
             }
+            //如果有成绩，开始画
             if (scorelist.Count <= 0)
                 return;
             string point = "";
@@ -72,28 +83,6 @@ namespace Leaf.ViewModel
             }
             point = point.Substring(0, point.Length - 1);
             Points = point;
-            //string point="";
-            //if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
-            //{
-            //    Points = "";
-            //    return;
-            //}
-            //score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
-            //var num = score.Count;
-            //for(int j=1,i= num-8>0?(num-8):0; i < num;i++,j++)
-            //{
-            //    point = point + (j * 20).ToString() + "," + (100 - score[i].score).ToString() + ",";
-            //}
-            //point = point.Substring(0, point.Length - 1);
-            //Points = point;
         }
-
-        //struct Score
-        //{
-        //    public int Paper { get; set; }
-        //    public double score { get; set; }
-        //    public string time { get; set; }
-        //}
-
     }
 }

@@ -11,12 +11,14 @@ namespace Leaf.ViewModel
     {
         private string _hamburgTitle = "汉堡菜单";
 
+        //汉堡菜单标题
         public string HamburgTitle
         {
             get { return _hamburgTitle; }
             set { Set(ref _hamburgTitle, value); }
         }
 
+        //汉堡菜单状态
         private Boolean _isPaneOpen = false;
 
         public Boolean IsPaneOpen
@@ -32,6 +34,7 @@ namespace Leaf.ViewModel
         public ICommand HamburgCommand { get; set; }
 
 
+        //汉堡菜单内容
         private ObservableCollection<NavLink> _menuItems = new ObservableCollection<NavLink>()
             {
                 new NavLink() { Icon = Symbol.Library, Text="题库列表"},
@@ -51,31 +54,20 @@ namespace Leaf.ViewModel
 
 
 
-
+        //显示用户名
         public string Username
         {
             get { return ViewModelLocator.User.Username; }
         }
 
-        //private User _user;
-        //public User User
-        //{
-        //    get
-        //    {
-        //        return _user;
-        //    }
-        //    set
-        //    {
-        //        _user = value;
-        //        Username = value.Username;
-        //    }
-        //}
-
+        //注销登陆
         public ICommand LogoffCommand { get; set; }
         private void Logoff()
         {
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<object>("确认注销吗");
         }
+
+        //初始化
         public MainModel()
         {
             LogoffCommand = new RelayCommand(Logoff);

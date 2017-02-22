@@ -189,16 +189,6 @@ namespace Leaf.ViewModel
             }
             else
             {
-                //var sdb = new DbSingleService();
-                //string _singlequest = TestList[Test].SingleQuestionNum;
-                //string _gapquest = TestList[Test].GapQuestionNum;
-                //string _singlesql = " where Id in (" + _singlequest.Substring(1, _singlequest.Length - 2) + ")";
-                //List<SingleChoice> _SingleList = (List<SingleChoice>)sdb.Querysql("*", _singlesql);
-
-                //var gdb = new DbGapService();
-                //string _gapsql = " where Id in (" + _gapquest.Substring(1, _gapquest.Length - 2) + ")";
-                //List<GapFilling> _GapList = (List<GapFilling>)gdb.QuerySql("*", _gapsql);
-
                 List<GapFilling> _GapList = new List<GapFilling>(); //TestList[Test].gapfills.ToList();
                 List<SingleChoice> _SingleList = new List<SingleChoice>(); //TestList[Test].singles.ToList();
                 var _gaplist = TestList[Test].gapfills;
@@ -244,9 +234,12 @@ namespace Leaf.ViewModel
         public ICommand AddCommand { get; set; }
         private void Add()
         {
+            //判断相关选项是否都选中了
             if(SubjectIndex >=0 && TypeIndex >=0 && LevelIndex >=0)
             {
+                //获取相关选项下题目最大数量
                 GetQuestNum();
+                //如果填写的题目大于最大题目，发出错误提示
                 if (GapNum > GapMax)
                 {
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("该类型和难度下填空题没有足够数量题目，只有" + GapMax.ToString(), "AddNo");
@@ -260,73 +253,47 @@ namespace Leaf.ViewModel
                     TestPaper model = new TestPaper();
                     List<SingleChoice> _singlelist;
                     List<GapFilling> _gaplist;
+
+                    //检索习题
                     using (var mydb = new MyDBContext())
                     {
+                        //检索符合要求的所有单选题
                         var _singles = from c in mydb.SingleChoices
                                        where c.Type == TypeList[TypeIndex] &&
                                        c.Level == LevelList[LevelIndex] &&
                                        c.Subject == SubjectList[SubjectIndex]
                                        select c;
+                        //随机选择习题
                         _singlelist = _singles.OrderBy(s => Guid.NewGuid()).Take(SingleNum).ToList();
 
+                        //检索符合要求的所有填空题
                         var _gapfills = from c in mydb.GapFillings
                                         where c.Type == TypeList[TypeIndex] &&
                                         c.Level == LevelList[LevelIndex] &&
                                         c.Subject == SubjectList[SubjectIndex]
                                         select c;
+                        //随机选择习题
                         _gaplist = _gapfills.OrderBy(s => Guid.NewGuid()).Take(GapNum).ToList();
                     }
 
 
-                    //var sdb = new DbSingleService();
-                    //var gdb = new DbGapService();
-                    //var snewstr = new[] {"Id",TypeList[TypeIndex],LevelList[LevelIndex],SubjectList[SubjectIndex],SingleNum.ToString() };
-                    //var gnewstr = new[] { "Id", TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex], GapNum.ToString() };
-                    //List<SingleChoice> _singlelist = (List<SingleChoice>)sdb.QueryObject(snewstr);
-                    //List<GapFilling> _gaplist = (List<GapFilling>)gdb.QueryObject(gnewstr);
-                    //var _newsinglenum = new List<int>();
-                    //for(int i=0;i<_singlelist.Count;i++)
-                    //{
-                    //    _newsinglenum.Add(_singlelist[i].Id);
-                    //}
-                    //model.SingleQuestionNum= JsonConvert.SerializeObject(_newsinglenum);
-                    //model.SingleNum = SingleNum;
-                    //var _newgapnum = new List<int>();
-                    //for (int i = 0; i < _gaplist.Count; i++)
-                    //{
-                    //    _newgapnum.Add(_gaplist[i].Id);
-                    //}
-                    //model.GapQuestionNum = JsonConvert.SerializeObject(_newgapnum);
-                    //model.GapNum = GapNum;
-
-                    //foreach (var s in _singlelist)
-                    //{
-                    //    SingleTest sm = new SingleTest();
-                    //    sm.single = s;
-                    //    sm.SingleId = s.Id;
-                    //    model.singles.Add(sm);
-                    //}
-                    //foreach (var s in _gaplist)
-                    //{
-                    //    GapTest gm = new GapTest();
-                    //    gm.gap = s;
-                    //    gm.GapId = s.Id;
-                    //    model.gapfills.Add(gm);
-                    //}
-                    //model.singles = _singlelist;
-                    // model.gapfills = _gaplist;
+                    //设置试卷相关属性
                     model.Level = Convert.ToInt32(LevelList[LevelIndex]);
                     model.Name = TestName;
                     model.BuildTime = DateTime.Now.ToString();
                     model.Time = Time;
                     model.SingleNum = SingleNum;
                     model.GapNum = GapNum;
-                    //var db = new DbTestService();
+
                     int n;
+                    //添加试卷
                     using (var mydb = new MyDBContext())
                     {
+                        //添加试卷
                         mydb.TestPapers.Add(model);
                         n = mydb.SaveChanges();
+
+                        //循环添加习题
                         foreach (var s in _singlelist)
                         {
                             SingleTest sm = new SingleTest();
@@ -344,6 +311,7 @@ namespace Leaf.ViewModel
                         n = mydb.SaveChanges();
                         
                     }
+                    //如果添加成功则刷新试卷列表
                     if (n > 0)
                     {
                         ReadData();
@@ -385,14 +353,14 @@ namespace Leaf.ViewModel
 
 
         /// <summary>
-        /// 读取数据
+        /// 读取试卷列表
         /// </summary>
         private void ReadData()
         {
-            //var db = new DbTestService();
-            //TestList = (List<TestPaper>)db.QueryObject();
+
             using (var mydb = new MyDBContext())
             {
+                //读取所有试卷并贪婪加载所有习题
                 TestList= mydb.TestPapers.Include(p => p.gapfills)
                     .ThenInclude(z => z.gap)
                     .Include(p => p.singles)
@@ -408,10 +376,6 @@ namespace Leaf.ViewModel
             if(TypeList == null || TypeList.Count == 0)
             {
                 TypeList.Add(" ");
-                //var gdb = new DbGapService();
-                //var sdb = new DbSingleService();
-                //var newstr = new[] { "distinct singlechoice.type", ",GapFilling" };
-                //List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
                 using (var mydb = new MyDBContext())
                 {
                     var q = from c in mydb.SingleChoices
@@ -424,10 +388,7 @@ namespace Leaf.ViewModel
                     TypeList = qqq.Distinct().ToList();
 
                 }
-                //foreach (var _model in _modellist)
-                //{
-                //    TypeList.Add(_model.Type);
-                //}
+
             }
         }
 
@@ -439,7 +400,6 @@ namespace Leaf.ViewModel
 
             if (LevelList == null || LevelList.Count == 0)
             {
-                //LevelList.Add(" ");
 
                 using (var mydb = new MyDBContext())
                 {
@@ -453,15 +413,6 @@ namespace Leaf.ViewModel
                     LevelList = qqq.Distinct().ToList();
                 }
 
-
-                //var gdb = new DbGapService();
-                //var sdb = new DbSingleService();
-                //var newstr = new[] { "distinct singlechoice.level", ",GapFilling" };
-                //List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
-                //foreach (var _model in _modellist)
-                //{
-                //    LevelList.Add(_model.Level.ToString());
-                //}
             }
         }
         /// <summary>
@@ -484,16 +435,6 @@ namespace Leaf.ViewModel
                     SubjectList = qqq.Distinct().ToList();
                 }
 
-
-                //SubjectList.Add(" ");
-                //var gdb = new DbGapService();
-                //var sdb = new DbSingleService();
-                //var newstr = new[] { "distinct singlechoice.Subject", ",GapFilling" };
-                //List<SingleChoice> _modellist = (List<SingleChoice>)sdb.Querysql(newstr);
-                //foreach (var _model in _modellist)
-                //{
-                //    SubjectList.Add(_model.Subject);
-                //}
             }
         }
 
@@ -517,11 +458,6 @@ namespace Leaf.ViewModel
                           select c).Count();
             }
 
-            //var gdb = new DbGapService();
-            //var sdb = new DbSingleService();
-            //var newstr = new[] { TypeList[TypeIndex], LevelList[LevelIndex], SubjectList[SubjectIndex] };
-            //GapMax = (int)gdb.Query(newstr);
-            //SingleMax = (int)sdb.Query(newstr);
         }
 
         /// <summary>
@@ -542,10 +478,13 @@ namespace Leaf.ViewModel
             {
                 timer.Stop();
             }
-                
+            //新建定时器
             timer = new DispatcherTimer();
+            //设定定时器总时间
             timespan = new TimeSpan(0, TestList[Test].Time, 0);
+            //每秒触发事件
             timer.Interval = new TimeSpan(0, 0, 1);
+            //绑定事件函数
             timer.Tick += TimeChick;
             timer.Start();
         }
@@ -557,9 +496,12 @@ namespace Leaf.ViewModel
         /// <param name="e"></param>
         private void TimeChick(object state,object e)
         {
+            //构造要显示的字符串
             string str =timespan.Minutes.ToString() + ":" + timespan.Seconds.ToString();
+            //将填空题和选择题答题页面都显示时间字符串
             ViewModelLocator.SinglePaper.Time = str;
             ViewModelLocator.GapPaper.Time = str;
+            //如果时间到了，则终止定时器并自动跳转到成绩页面
             timespan = timespan.Subtract(new TimeSpan(0, 0, 1));
             if(timespan.TotalSeconds == 0.0)
             {

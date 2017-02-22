@@ -94,17 +94,25 @@ namespace Leaf.ViewModel
             get { return _allwrong; }
             set { Set(ref _allwrong, value); }
         }
+        /// <summary>
+        /// 试卷
+        /// </summary>
         public TestPaper TestPaperModel = new TestPaper();
+        //单选题答案
         public List<bool> SingleResult = new List<bool>();
+        //填空题答案
         public List<bool> GapResult = new List<bool>();
 
-
+        //正确习题数量
         private int singleright;
         private int gapright;
+
+        //初始化，也就是成绩结算
         public void Init()
         {
             singleright=0;
             gapright = 0;
+            //统计答对多少题
             foreach(var result in SingleResult)
             {
                 if (result)
@@ -115,6 +123,7 @@ namespace Leaf.ViewModel
                 if (result)
                     gapright++;
             }
+            //统计平均分
             SingleValue = singleright*100/ TestPaperModel.SingleNum;
             GapValue = gapright*100 / TestPaperModel.GapNum;
             AllValue = (SingleValue + GapValue) / 2;
@@ -124,7 +133,9 @@ namespace Leaf.ViewModel
             GapRight = "正确：" + gapright.ToString();
             AllRight = "正确：" + (singleright + gapright).ToString();
             AllWrong = "错误：" + (TestPaperModel.GapNum + TestPaperModel.SingleNum - singleright - gapright).ToString();
+            //写入数据库
             WriteScore();
+            //显示结果消息
             if (AllValue>=90.0)
             {
                 Message = "非常棒！！！";
@@ -150,16 +161,17 @@ namespace Leaf.ViewModel
 
         public void Clear()
         {
-            //SingleValue = 0;
-            //GapValue = 0;
             GapResult.Clear();
             SingleResult.Clear();
             TestPaperModel = null;
         }
 
-
+        /// <summary>
+        /// 写入数据库
+        /// </summary>
         private void WriteScore()
         {
+            //建立用户和试卷级联表并写入数据库
             UserTest usertest = new UserTest();
             usertest.UserId = ViewModelLocator.User.Id;
             usertest.TestId = TestPaperModel.Id;
@@ -172,28 +184,6 @@ namespace Leaf.ViewModel
                 mydb.UserTest.Add(usertest);
                 mydb.SaveChanges();
             }
-            //Score _score = new Score();
-            //_score.Paper = TestPaperModel.Id;
-            //_score.score = AllValue;
-            //_score.time = DateTime.Now.ToString();
-            //if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
-            //{
-            //    score = new List<Score>();  
-            //}
-            //else
-            //{
-            //    score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
-            //}
-            //score.Add(_score);
-            //string json = JsonConvert.SerializeObject(score);
-            //ViewModelLocator.User.Score = json;
-            //var db = new DbUserService();
-            //if(db.Update(ViewModelLocator.User)>0)
-            //{
-            //    var username = ViewModelLocator.User.Username;
-            //    ViewModelLocator.User = (User)db.QueryObject(username);
-            //    ViewModelLocator.UserInfo.Init();
-            //}
         }
 
     }

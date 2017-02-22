@@ -24,14 +24,16 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock
                 TextWrapping="Wrap"
                 Margin="0,0,0,10"
                 Text="{Binding Stem,Mode=TwoWay}" />
-            <TextBlock Margin="0,0,0,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Answer,Mode=TwoWay}"/>
-            <StackPanel Margin="0,0,0,10" Grid.Row="2">
+            <Image Margin="0,0,0,10" Grid.Row="1" MaxWidth="200" MaxHeight="200" Source="{Binding Img,Mode=TwoWay}" />
+            <TextBlock Margin="0,0,0,10" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Answer,Mode=TwoWay}"/>
+            <StackPanel Margin="0,0,0,10" Grid.Row="3">
                 <RadioButton Name="Choice1" 
                             GroupName="Single" 
                             Content="{Binding ChoiceText1,Mode=TwoWay}" 

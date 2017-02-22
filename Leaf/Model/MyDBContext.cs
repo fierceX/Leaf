@@ -15,6 +15,7 @@ namespace Leaf.Model
         public DbSet<TestPaper> TestPapers { get; set; }
         public DbSet<SingleTest> SingleTest { get; set; }
         public DbSet<GapTest> GapTest { get; set; }
+        public DbSet<UserTest> UserTest { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,14 @@ namespace Leaf.Model
                 .WithMany(p => p.gapfills)
                 .HasForeignKey(pt => pt.TestId);
 
+            modelBuilder.Entity<UserTest>().HasKey(t => new { t.UserId, t.TestId });
+            modelBuilder.Entity<UserTest>()
+                .HasOne(pt => pt.testpaper)
+                .WithMany(p => p.users).HasForeignKey(pt => pt.UserId);
+            modelBuilder.Entity<UserTest>()
+                .HasOne(pt => pt.user)
+                .WithMany(p => p.TestPapers)
+                .HasForeignKey(pt => pt.TestId);
 
             base.OnModelCreating(modelBuilder);
 

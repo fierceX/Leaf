@@ -63,10 +63,12 @@ namespace Leaf.Model
         //不为空
         public int Time { get; set; }
 
+        public List<UserTest> users { get; set; }
         public TestPaper()
         {
             singles = new List<SingleTest>();
             gapfills = new List<GapTest>();
+            users = new List<UserTest>();
         }
     }
 }

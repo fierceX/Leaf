@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Leaf.Model
 {
-    public class User
+     class User
     {
         //Id，主键，自增
         //[PrimaryKey]
@@ -34,6 +34,13 @@ namespace Leaf.Model
         //注册时间
         //[NotNull]
         public string BuildTime { get; set; }
+
+        public List<UserTest> TestPapers { get; set; }
+
+        public User()
+        {
+            TestPapers = new List<UserTest>();
+        }
 
         public void Clear()
         {

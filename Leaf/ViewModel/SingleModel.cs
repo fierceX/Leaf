@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Leaf.SQLite;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Views;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Leaf.ViewModel
 {
@@ -70,6 +71,15 @@ namespace Leaf.ViewModel
             set { Set(ref _stem, value); }
         }
 
+        /// <summary>
+        /// 题目配图
+        /// </summary>
+        private BitmapImage _img;
+        public BitmapImage Img
+        {
+            get { return _img; }
+            set { Set(ref _img, value); }
+        }
         /// <summary>
         /// 选项内容
         /// </summary>

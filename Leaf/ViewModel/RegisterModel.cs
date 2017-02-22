@@ -4,10 +4,7 @@ using Leaf.Model;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Command;
-using Windows.Security.Cryptography.Core;
-using System.Text;
 //using SQLite;
-using Leaf.SQLite;
 using System;
 using System.Linq;
 

@@ -2,14 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Leaf.Model;
-using Leaf.SQLite;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Practices.ServiceLocation;
-using GalaSoft.MvvmLight.Views;
 
 namespace Leaf.ViewModel
 {

@@ -1,15 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Leaf.Model;
 using Windows.Web.Http.Headers;
 using Windows.Data.Json;
 using Windows.Web.Http;
-using Leaf.SQLite;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;

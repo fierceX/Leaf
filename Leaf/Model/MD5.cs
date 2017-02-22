@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Security.Cryptography;
+﻿using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
 
 namespace Leaf.Model
 {
+    /// <summary>
+    /// md5加密类，用于md5加密
+    /// </summary>
     public class Md5
     {
         private readonly string _strAlgName = HashAlgorithmNames.Md5;

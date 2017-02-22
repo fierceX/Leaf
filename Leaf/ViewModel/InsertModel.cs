@@ -1,15 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Newtonsoft.Json;
 using Leaf.Model;
 using Newtonsoft.Json.Linq;
 using GalaSoft.MvvmLight.Command;
-using Leaf.SQLite;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 

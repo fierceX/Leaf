@@ -2,18 +2,11 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Leaf.Model;
-using Leaf.SQLite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Practices.ServiceLocation;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 
@@ -237,6 +230,12 @@ namespace Leaf.ViewModel
         private void Open()
         {
             PaneOpen = !PaneOpen;
+            if (PaneOpen)
+            {
+                GetQuestType();
+                GetQuestLevel();
+                GetQuestSubjec();
+            }
         }
 
         /// <summary>

@@ -2,14 +2,8 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Leaf.Model;
-using Leaf.SQLite;
 using Microsoft.Practices.ServiceLocation;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Leaf.ViewModel

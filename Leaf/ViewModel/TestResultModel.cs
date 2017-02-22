@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Leaf.Model;
 using GalaSoft.MvvmLight;
-using Newtonsoft.Json;
-using Leaf.SQLite;
 namespace Leaf.ViewModel
 {
     class TestResultModel : ViewModelBase
     {
 
-        private List<Score> score;
         private string _message;
         public string Message
         {
@@ -104,29 +98,32 @@ namespace Leaf.ViewModel
         public List<bool> SingleResult = new List<bool>();
         public List<bool> GapResult = new List<bool>();
 
+
+        private int singleright;
+        private int gapright;
         public void Init()
         {
-            int singright=0;
-            int gapright = 0;
+            singleright=0;
+            gapright = 0;
             foreach(var result in SingleResult)
             {
                 if (result)
-                    singright++;
+                    singleright++;
             }
             foreach(var result in GapResult)
             {
                 if (result)
                     gapright++;
             }
-            SingleValue = singright*100/ TestPaperModel.SingleNum;
+            SingleValue = singleright*100/ TestPaperModel.SingleNum;
             GapValue = gapright*100 / TestPaperModel.GapNum;
             AllValue = (SingleValue + GapValue) / 2;
-            SingleRight = "正确：" + singright.ToString();
-            SingleWrong = "错误：" + (TestPaperModel.SingleNum - singright).ToString();
+            SingleRight = "正确：" + singleright.ToString();
+            SingleWrong = "错误：" + (TestPaperModel.SingleNum - singleright).ToString();
             GapWrong = "错误：" + (TestPaperModel.GapNum - gapright).ToString();
             GapRight = "正确：" + gapright.ToString();
-            AllRight = "正确：" + (singright + gapright).ToString();
-            AllWrong = "错误：" + (TestPaperModel.GapNum + TestPaperModel.SingleNum - singright - gapright).ToString();
+            AllRight = "正确：" + (singleright + gapright).ToString();
+            AllWrong = "错误：" + (TestPaperModel.GapNum + TestPaperModel.SingleNum - singleright - gapright).ToString();
             WriteScore();
             if (AllValue>=90.0)
             {
@@ -163,21 +160,33 @@ namespace Leaf.ViewModel
 
         private void WriteScore()
         {
-            Score _score = new Score();
-            _score.Paper = TestPaperModel.Id;
-            _score.score = AllValue;
-            _score.time = DateTime.Now.ToString();
-            if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
+            UserTest usertest = new UserTest();
+            usertest.UserId = ViewModelLocator.User.Id;
+            usertest.TestId = TestPaperModel.Id;
+            usertest.singnum = singleright;
+            usertest.gapnum = gapright;
+            usertest.Time = DateTime.Now.ToString();
+            usertest.Score = AllValue;
+            using (var mydb = new MyDBContext())
             {
-                score = new List<Score>();  
+                mydb.UserTest.Add(usertest);
+                mydb.SaveChanges();
             }
-            else
-            {
-                score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
-            }
-            score.Add(_score);
-            string json = JsonConvert.SerializeObject(score);
-            ViewModelLocator.User.Score = json;
+            //Score _score = new Score();
+            //_score.Paper = TestPaperModel.Id;
+            //_score.score = AllValue;
+            //_score.time = DateTime.Now.ToString();
+            //if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
+            //{
+            //    score = new List<Score>();  
+            //}
+            //else
+            //{
+            //    score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
+            //}
+            //score.Add(_score);
+            //string json = JsonConvert.SerializeObject(score);
+            //ViewModelLocator.User.Score = json;
             //var db = new DbUserService();
             //if(db.Update(ViewModelLocator.User)>0)
             //{
@@ -185,14 +194,6 @@ namespace Leaf.ViewModel
             //    ViewModelLocator.User = (User)db.QueryObject(username);
             //    ViewModelLocator.UserInfo.Init();
             //}
-        }
-
-
-        struct Score
-        {
-            public int Paper { get; set; }
-            public double score { get; set; }
-            public string time { get; set; }
         }
 
     }

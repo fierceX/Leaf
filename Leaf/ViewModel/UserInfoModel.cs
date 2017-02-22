@@ -1,17 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
-using Newtonsoft.Json;
-using System;
+using Leaf.Model;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Leaf.ViewModel
 {
     class UserInfoModel : ViewModelBase
     {
-        private List<Score> score;
+        //private List<Score> score;
         private string _points;
         public string Points
         {
@@ -59,28 +55,45 @@ namespace Leaf.ViewModel
 
         private void DrawPoint()
         {
-            string point="";
-            if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
+            List<double> scorelist = new List<double>();
+            using (var mydb = new MyDBContext())
             {
-                Points = "";
-                return;
+                var q = from c in mydb.UserTest
+                        where c.UserId == ViewModelLocator.User.Id
+                        select c.Score;
+                scorelist = q.ToList();
             }
-            score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
-            var num = score.Count;
-            for(int j=1,i= num-8>0?(num-8):0; i < num;i++,j++)
+            if (scorelist.Count <= 0)
+                return;
+            string point = "";
+            for(int i = 0;i<scorelist.Count();i++)
             {
-                point = point + (j * 20).ToString() + "," + (100 - score[i].score).ToString() + ",";
+                point += (i * 20).ToString() + "," + (100 - scorelist[i]).ToString() + ",";
             }
             point = point.Substring(0, point.Length - 1);
             Points = point;
+            //string point="";
+            //if (ViewModelLocator.User.Score == null || ViewModelLocator.User.Score == "")
+            //{
+            //    Points = "";
+            //    return;
+            //}
+            //score = JsonConvert.DeserializeObject<List<Score>>(ViewModelLocator.User.Score);
+            //var num = score.Count;
+            //for(int j=1,i= num-8>0?(num-8):0; i < num;i++,j++)
+            //{
+            //    point = point + (j * 20).ToString() + "," + (100 - score[i].score).ToString() + ",";
+            //}
+            //point = point.Substring(0, point.Length - 1);
+            //Points = point;
         }
 
-        struct Score
-        {
-            public int Paper { get; set; }
-            public double score { get; set; }
-            public string time { get; set; }
-        }
+        //struct Score
+        //{
+        //    public int Paper { get; set; }
+        //    public double score { get; set; }
+        //    public string time { get; set; }
+        //}
 
     }
 }

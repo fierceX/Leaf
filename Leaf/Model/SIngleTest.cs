@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Leaf.Model
+﻿namespace Leaf.Model
 {
+    /// <summary>
+    /// 单选题和试卷级联类
+    /// </summary>
     class SingleTest
     {
+        //单选题id
         public int SingleId { get; set; }
+        //试卷id
         public int TestId { get; set; }
+        //单选题
         public virtual SingleChoice single { get; set; }
+        //试卷
         public virtual TestPaper test { get; set; }
     }
 }

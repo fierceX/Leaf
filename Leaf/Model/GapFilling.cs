@@ -1,43 +1,38 @@
 ﻿//using SQLite;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Leaf.Model
 {
+    /// <summary>
+    /// 填空题实体模型
+    /// </summary>
     class GapFilling
     {
         //Id,主键，自增
-        //[PrimaryKey]
-        //[AutoIncrement]
 
         [Key]
         public int Id { get; set; }
 
-        //题干，不为空
-        //[NotNull]
+        //题干
         public string Stems { get; set; }
 
-        //答案，不为空
-        //[NotNull]
+        //答案
         public string Answer { get; set; }
 
-        //难度，不为空
-        //[NotNull]
+        //难度
         public int Level { get; set; }
 
-        //类型，不为空
-        //[NotNull]
+        //类型
         public string Type { get; set; }
 
-        //[NotNull]
+        //主题
         public string Subject { get; set; }
 
+        //所属试卷
         public virtual ICollection<GapTest> testpapers { get; set; }
 
+        //构造函数，初始化
         public GapFilling()
         {
 

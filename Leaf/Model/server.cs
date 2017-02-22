@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Leaf.SQLite;
 
 namespace Leaf.Model
 {
+    //用户登陆验证
     class server
     {
         public static bool authenticate(User mobel)
         {
-            //var db = new DbUserService();
             Md5 md5 = new Md5();
+            //加密登陆密码
             string mobelpassword = md5.ToMd5(mobel.Password);
-            //User q = (User)db.QueryObject(mobel.Username);
             User user = null;
+            //检索相同用户名的用户
             using (var db = new MyDBContext())
             {
                 IEnumerable<User> m = db.Users.Where(p => p.Username == mobel.Username);
                 if(m.Count()>0)
                     user = m.ToList()[0];
             }
+            //对比密码是否相同
             if (mobelpassword == user.Password)
             {
                 ViewModelLocator.User = user;
@@ -32,15 +30,6 @@ namespace Leaf.Model
                 return false;
             }
 
-                //if (q == null)
-                //    return false;
-                //if (q.Password == mobelpassword)
-                //{
-                //    ViewModelLocator.User = q;
-                //    return true;
-                //}
-                //return false;
-                //return true;
         }
     }
 }

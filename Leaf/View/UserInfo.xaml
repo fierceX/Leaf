@@ -34,7 +34,7 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <TextBlock Text="最近7次成绩曲线图" HorizontalAlignment="Center" />
+            <TextBlock Text="最近成绩曲线图" HorizontalAlignment="Center" />
             <Canvas Width="240" Height="140" >
                 <Line Canvas.Top="60"
                   Canvas.Left="10"

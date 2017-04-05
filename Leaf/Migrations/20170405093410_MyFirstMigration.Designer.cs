@@ -8,7 +8,7 @@ using Leaf.Model;
 namespace Leaf.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20170405064145_MyFirstMigration")]
+    [Migration("20170405093410_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace Leaf.Migrations
 
                     b.Property<string>("Answer");
 
-                    b.Property<string>("ImgPaht");
+                    b.Property<string>("ImgPath");
 
                     b.Property<int>("Level");
 

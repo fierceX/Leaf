@@ -3,8 +3,12 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Leaf.Model;
 using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Leaf.ViewModel
 {
@@ -73,6 +77,17 @@ namespace Leaf.ViewModel
             get { return _answerright; }
             set { Set(ref _answerright, value); }
         }
+
+        /// <summary>
+        /// 题目配图
+        /// </summary>
+        private BitmapImage _img;
+        public BitmapImage Img
+        {
+            get { return _img; }
+            set { Set(ref _img, value); }
+        }
+
         /// <summary>
         /// 命令
         /// /////
@@ -100,8 +115,7 @@ namespace Leaf.ViewModel
             //如果还有题目，则显示下一题并清空答案
             if (num<max)
             {
-                Stem = GapList[num].Stems;
-                Answer = "";
+                LoadQuestionAsync();
             }
             //否则就跳转回去
             else
@@ -146,15 +160,37 @@ namespace Leaf.ViewModel
         {
             max = GapList.Count;
             num = 0;
+            if (_img == null)
+                _img = new BitmapImage();
             if (Mode != 1)
                 Time = "";
+
+            LoadQuestionAsync();
+        }
+
+        private async System.Threading.Tasks.Task LoadQuestionAsync()
+        {
             if (num >= max)
                 return;
             Stem = GapList[num].Stems;
             Answer = "";
+
+            if (GapList[num].ImgPath != "")
+            {
+                try
+                {
+                    StorageFile f = await StorageFile.GetFileFromPathAsync(GapList[num].ImgPath);
+                    IRandomAccessStream _s = await f.OpenAsync(FileAccessMode.Read);
+                    Img.SetSource(_s);
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
         }
 
-        
 
         /// <summary>
         /// 获取答案

@@ -4,6 +4,8 @@ using Leaf.Model;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Leaf.ViewModel
@@ -164,7 +166,7 @@ namespace Leaf.ViewModel
                 //如果还有习题则继续显示习题
             if (num < max)
              {
-                LoadQuestion();
+                LoadQuestionAsync();
              }
             //否则跳转到填空题页面
             else
@@ -184,17 +186,19 @@ namespace Leaf.ViewModel
         /// </summary>
         public void Init()
         {
+            if (_img == null)
+                _img = new BitmapImage();
             if (Mode != 1)
                 Time = "";
             max = SingleList.Count;
             num = 0;
-            LoadQuestion();
+            LoadQuestionAsync();
         }
 
         /// <summary>
         /// 载入试题
         /// </summary>
-        private void LoadQuestion()
+        private async System.Threading.Tasks.Task LoadQuestionAsync()
         {
             if (num >= max)
                 return;
@@ -214,6 +218,21 @@ namespace Leaf.ViewModel
             Choice3 = false;
             Choice4 = false;
             answernum = array[0];
+
+            if (SingleList[num].ImgPath != "")
+            {
+                try
+                {
+                    StorageFile f = await StorageFile.GetFileFromPathAsync(SingleList[num].ImgPath);
+                    IRandomAccessStream _s = await f.OpenAsync(FileAccessMode.Read);
+                    Img.SetSource(_s);
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+
         }
         /// <summary>
         /// 构造函数

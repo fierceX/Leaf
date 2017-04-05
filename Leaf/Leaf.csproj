@@ -102,9 +102,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20170405064145_MyFirstMigration.cs" />
-    <Compile Include="Migrations\20170405064145_MyFirstMigration.designer.cs">
-      <DependentUpon>20170405064145_MyFirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20170405093410_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20170405093410_MyFirstMigration.designer.cs">
+      <DependentUpon>20170405093410_MyFirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MyDBContextModelSnapshot.cs" />
     <Compile Include="Model\FileService.cs" />

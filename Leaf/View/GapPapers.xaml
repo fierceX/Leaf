@@ -24,13 +24,15 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock
                 TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
-            <TextBox Grid.Row="1" Text="{Binding Answer,Mode=TwoWay}" />
-            <TextBlock Grid.Row="2" Text="{Binding RightAnswer,Mode=TwoWay}" />
+            <Image Grid.Row="1" MaxWidth="200" MaxHeight="200" Source="{Binding Img,Mode=TwoWay}" />
+            <TextBox Grid.Row="2" Text="{Binding Answer,Mode=TwoWay}" />
+            <TextBlock Grid.Row="3" Text="{Binding RightAnswer,Mode=TwoWay}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Vertical" Background="Black"  RequestedTheme="Dark" >
             <Button FontSize="24" FontFamily="Segoe MDL2 Assets" Content="&#xE8FB;"  HorizontalAlignment="Stretch" Command="{Binding ContinueCommand}" />

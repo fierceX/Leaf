@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using GalaSoft.MvvmLight.Command;
 using Windows.Storage.Pickers;
 using Windows.Storage;
+using System.IO.Compression;
+using System.IO;
 
 namespace Leaf.ViewModel
 {
@@ -14,6 +16,7 @@ namespace Leaf.ViewModel
         private int singlenum = 0;
         private int gapnum = 0;
         private string _json;
+        private string _jpgname;
         public string Json
         {
             get { return _json; }
@@ -58,7 +61,7 @@ namespace Leaf.ViewModel
                         model.Level = Convert.ToInt32(token["Level"].ToString());
                         model.Type = token["Type"].ToString();
                         model.Subject = token["Subject"].ToString();
-                        model.ImgPath = token["Image"].ToString();
+                        model.ImgPath = Path.Combine(_jpgname,token["Image"].ToString()).ToString();
                         mydb.SingleChoices.Add(model);
                         singlenum += 1;
 
@@ -73,7 +76,7 @@ namespace Leaf.ViewModel
                         model.Level = Convert.ToInt32(token["Level"].ToString());
                         model.Type = token["Type"].ToString();
                         model.Subject = token["Subject"].ToString();
-                        model.ImgPaht = token["Image"].ToString();
+                        model.ImgPath = Path.Combine(_jpgname, token["Image"].ToString()).ToString();
                         mydb.GapFillings.Add(model);
                         gapnum += 1;
                     }
@@ -101,14 +104,34 @@ namespace Leaf.ViewModel
             var _openFile = new FileOpenPicker();
             _openFile.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             _openFile.ViewMode = PickerViewMode.List;
-            _openFile.FileTypeFilter.Add(".json");
-            _openFile.FileTypeFilter.Add(".txt");
+            _openFile.FileTypeFilter.Add(".zip");
             try
             {
                 StorageFile file = await _openFile.PickSingleFileAsync();
                 if (file != null)
                 {
-                    Json = await FileIO.ReadTextAsync(file);
+                    Stream stream = await file.OpenStreamForReadAsync();
+                    ZipArchive zip = new ZipArchive(stream);
+                    ZipArchiveEntry z = zip.GetEntry("tt.json");
+
+                    StorageFolder cache = ApplicationData.Current.LocalCacheFolder;
+                    z.ExtractToFile(Path.Combine(cache.Path, "tt.json"),true);
+
+                    StorageFile f = await cache.GetFileAsync("tt.json");
+
+                    StorageFolder state = ApplicationData.Current.LocalFolder;
+                    string name = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
+                    StorageFolder jpg = await state.CreateFolderAsync(name);
+                    _jpgname = jpg.Path;
+                    foreach(ZipArchiveEntry x in zip.Entries)
+                    {
+                        if(x.FullName.EndsWith(".jpg",StringComparison.OrdinalIgnoreCase)||x.FullName.EndsWith(".png",StringComparison.OrdinalIgnoreCase))
+                        {
+                            x.ExtractToFile(Path.Combine(jpg.Path, x.FullName));
+                        }
+                    }
+
+                    Json = await FileIO.ReadTextAsync(f);
                 }
             }
             catch(Exception e)

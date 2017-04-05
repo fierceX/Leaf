@@ -22,7 +22,7 @@ namespace Leaf.Migrations
 
                     b.Property<string>("Answer");
 
-                    b.Property<string>("ImgPaht");
+                    b.Property<string>("ImgPath");
 
                     b.Property<int>("Level");
 

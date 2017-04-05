@@ -125,7 +125,6 @@
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
     <Compile Include="ViewModel\QuestionModel.cs" />
-    <Compile Include="ViewModel\QuestionStoreModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />
     <Compile Include="ViewModel\SingleModel.cs" />
     <Compile Include="ViewModel\TestPaperModel.cs" />
@@ -150,9 +149,6 @@
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="View\QuestionList.xaml.cs">
       <DependentUpon>QuestionList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\QuestionStore.xaml.cs">
-      <DependentUpon>QuestionStore.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\register.xaml.cs">
       <DependentUpon>register.xaml</DependentUpon>
@@ -227,10 +223,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\QuestionList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\QuestionStore.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

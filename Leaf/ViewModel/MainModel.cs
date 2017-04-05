@@ -40,7 +40,6 @@ namespace Leaf.ViewModel
                 new NavLink() { Icon = Symbol.Library, Text="题库列表"},
                 new NavLink() { Icon = Symbol.AllApps,Text="试卷列表" },
                 new NavLink() { Icon = Symbol.ImportAll, Text="本地插入"},
-                new NavLink() { Icon = Symbol.Globe,Text="在线下载"},
                 new NavLink() { Icon = Symbol.ContactInfo,Text="个人信息"},
                 new NavLink() { Icon = Symbol.Help,Text="帮助" },
                 new NavLink() { Icon = Symbol.BlockContact,Text="注销" }

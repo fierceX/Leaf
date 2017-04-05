@@ -45,7 +45,6 @@ namespace Leaf.View
                 {"Insert", typeof (InsertData)},
                 {"TestPaper", typeof (TestPaperManage)},
                 {"Question", typeof (QuestionList)},
-                {"QuestionStore", typeof (QuestionStore)},
                 {"Result", typeof (TestResult)},
                 {"UserInfo", typeof (UserInfo) },
                 {"Help", typeof (Help) }
@@ -134,20 +133,15 @@ namespace Leaf.View
                     }
                 case 3:
                     {
-                        NavigateTo("MainFrame", "QuestionStore");
+                        NavigateTo("MainFrame", "UserInfo");
                         break;
                     }
                 case 4:
                     {
-                        NavigateTo("MainFrame", "UserInfo");
-                        break;
-                    }
-                case 5:
-                    {
                         NavigateTo("MainFrame","Help");
                         break;
                     }
-                case 6:
+                case 5:
                     {
                         LogoffMessage("确定要注销吗？");
                         break;

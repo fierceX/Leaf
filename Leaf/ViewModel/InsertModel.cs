@@ -58,6 +58,7 @@ namespace Leaf.ViewModel
                         model.Level = Convert.ToInt32(token["Level"].ToString());
                         model.Type = token["Type"].ToString();
                         model.Subject = token["Subject"].ToString();
+                        model.ImgPath = token["Image"].ToString();
                         mydb.SingleChoices.Add(model);
                         singlenum += 1;
 
@@ -69,9 +70,10 @@ namespace Leaf.ViewModel
                         GapFilling model = new GapFilling();
                         model.Answer = token["Answer"].ToString();
                         model.Stems = token["Stems"].ToString();
-                         model.Level = Convert.ToInt32(token["Level"].ToString());
+                        model.Level = Convert.ToInt32(token["Level"].ToString());
                         model.Type = token["Type"].ToString();
                         model.Subject = token["Subject"].ToString();
+                        model.ImgPaht = token["Image"].ToString();
                         mydb.GapFillings.Add(model);
                         gapnum += 1;
                     }

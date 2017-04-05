@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Leaf.Migrations
 {
@@ -13,6 +15,7 @@ namespace Leaf.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Answer = table.Column<string>(nullable: true),
+                    ImgPaht = table.Column<string>(nullable: true),
                     Level = table.Column<int>(nullable: false),
                     Stems = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),
@@ -33,6 +36,7 @@ namespace Leaf.Migrations
                     Choices1 = table.Column<string>(nullable: true),
                     Choices2 = table.Column<string>(nullable: true),
                     Choices3 = table.Column<string>(nullable: true),
+                    ImgPath = table.Column<string>(nullable: true),
                     Level = table.Column<int>(nullable: false),
                     Stems = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),

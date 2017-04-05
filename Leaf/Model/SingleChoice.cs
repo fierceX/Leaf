@@ -25,6 +25,8 @@ namespace Leaf.Model
         //答案
         public string Answer { get; set; }
 
+        public string ImgPath { get; set; }
+
         //难度
         public int Level { get; set; }
 

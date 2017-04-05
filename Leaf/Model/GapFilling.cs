@@ -23,6 +23,9 @@ namespace Leaf.Model
         //难度
         public int Level { get; set; }
 
+        //配图
+        public string ImgPaht { get; set; }
+
         //类型
         public string Type { get; set; }
 

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Leaf.Model;
 
 namespace Leaf.Migrations
@@ -11,7 +13,7 @@ namespace Leaf.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
+                .HasAnnotation("ProductVersion", "1.1.1");
 
             modelBuilder.Entity("Leaf.Model.GapFilling", b =>
                 {
@@ -19,6 +21,8 @@ namespace Leaf.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Answer");
+
+                    b.Property<string>("ImgPaht");
 
                     b.Property<int>("Level");
 
@@ -58,6 +62,8 @@ namespace Leaf.Migrations
                     b.Property<string>("Choices2");
 
                     b.Property<string>("Choices3");
+
+                    b.Property<string>("ImgPath");
 
                     b.Property<int>("Level");
 

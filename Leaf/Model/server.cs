@@ -20,15 +20,20 @@ namespace Leaf.Model
                     user = m.ToList()[0];
             }
             //对比密码是否相同
-            if (mobelpassword == user.Password)
+            if (user != null)
             {
-                ViewModelLocator.User = user;
-                return true;
+                if (mobelpassword == user.Password)
+                {
+                    ViewModelLocator.User = user;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
-            {
                 return false;
-            }
 
         }
     }

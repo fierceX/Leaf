@@ -112,12 +112,12 @@ namespace Leaf.ViewModel
                 {
                     Stream stream = await file.OpenStreamForReadAsync();
                     ZipArchive zip = new ZipArchive(stream);
-                    ZipArchiveEntry z = zip.GetEntry("tt.json");
+                    ZipArchiveEntry z = zip.GetEntry("data.json");
 
                     StorageFolder cache = ApplicationData.Current.LocalCacheFolder;
-                    z.ExtractToFile(Path.Combine(cache.Path, "tt.json"),true);
+                    z.ExtractToFile(Path.Combine(cache.Path, "data.json"),true);
 
-                    StorageFile f = await cache.GetFileAsync("tt.json");
+                    StorageFile f = await cache.GetFileAsync("data.json");
 
                     StorageFolder state = ApplicationData.Current.LocalFolder;
                     string name = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");

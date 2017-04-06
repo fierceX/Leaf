@@ -30,7 +30,7 @@
             <TextBlock
                 TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
-            <Image Grid.Row="1" MaxWidth="200" MaxHeight="200" Source="{Binding Img,Mode=TwoWay}" />
+            <Image Margin="0,0,0,10" Grid.Row="1" MaxWidth="200" MaxHeight="200" Source="{Binding Img,Mode=TwoWay}" />
             <TextBox Grid.Row="2" Text="{Binding Answer,Mode=TwoWay}" />
             <TextBlock Grid.Row="3" Text="{Binding RightAnswer,Mode=TwoWay}" />
         </Grid>

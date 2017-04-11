@@ -148,15 +148,15 @@ namespace Leaf.Migrations
                 {
                     table.PrimaryKey("PK_UserTest", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserTest_Users_TestId",
+                        name: "FK_UserTest_TestPapers_TestId",
                         column: x => x.TestId,
-                        principalTable: "Users",
+                        principalTable: "TestPapers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserTest_TestPapers_UserId",
+                        name: "FK_UserTest_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "TestPapers",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -200,10 +200,10 @@ namespace Leaf.Migrations
                 name: "SingleChoices");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "TestPapers");
 
             migrationBuilder.DropTable(
-                name: "TestPapers");
+                name: "Users");
         }
     }
 }

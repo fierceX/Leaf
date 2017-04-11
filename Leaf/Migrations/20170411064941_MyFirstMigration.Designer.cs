@@ -8,7 +8,7 @@ using Leaf.Model;
 namespace Leaf.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20170405093410_MyFirstMigration")]
+    [Migration("20170411064941_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -190,13 +190,13 @@ namespace Leaf.Migrations
 
             modelBuilder.Entity("Leaf.Model.UserTest", b =>
                 {
-                    b.HasOne("Leaf.Model.User", "user")
-                        .WithMany("TestPapers")
+                    b.HasOne("Leaf.Model.TestPaper", "testpaper")
+                        .WithMany("users")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Leaf.Model.TestPaper", "testpaper")
-                        .WithMany("users")
+                    b.HasOne("Leaf.Model.User", "user")
+                        .WithMany("TestPapers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

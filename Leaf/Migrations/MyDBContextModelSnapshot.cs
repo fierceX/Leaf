@@ -189,13 +189,13 @@ namespace Leaf.Migrations
 
             modelBuilder.Entity("Leaf.Model.UserTest", b =>
                 {
-                    b.HasOne("Leaf.Model.User", "user")
-                        .WithMany("TestPapers")
+                    b.HasOne("Leaf.Model.TestPaper", "testpaper")
+                        .WithMany("users")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Leaf.Model.TestPaper", "testpaper")
-                        .WithMany("users")
+                    b.HasOne("Leaf.Model.User", "user")
+                        .WithMany("TestPapers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

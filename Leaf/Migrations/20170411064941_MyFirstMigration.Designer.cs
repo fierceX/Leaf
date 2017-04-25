@@ -8,13 +8,13 @@ using Leaf.Model;
 namespace Leaf.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20170222085859_MyFirstMigration")]
+    [Migration("20170411064941_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
+                .HasAnnotation("ProductVersion", "1.1.1");
 
             modelBuilder.Entity("Leaf.Model.GapFilling", b =>
                 {
@@ -22,6 +22,8 @@ namespace Leaf.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Answer");
+
+                    b.Property<string>("ImgPath");
 
                     b.Property<int>("Level");
 
@@ -61,6 +63,8 @@ namespace Leaf.Migrations
                     b.Property<string>("Choices2");
 
                     b.Property<string>("Choices3");
+
+                    b.Property<string>("ImgPath");
 
                     b.Property<int>("Level");
 
@@ -186,13 +190,13 @@ namespace Leaf.Migrations
 
             modelBuilder.Entity("Leaf.Model.UserTest", b =>
                 {
-                    b.HasOne("Leaf.Model.User", "user")
-                        .WithMany("TestPapers")
+                    b.HasOne("Leaf.Model.TestPaper", "testpaper")
+                        .WithMany("users")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Leaf.Model.TestPaper", "testpaper")
-                        .WithMany("users")
+                    b.HasOne("Leaf.Model.User", "user")
+                        .WithMany("TestPapers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

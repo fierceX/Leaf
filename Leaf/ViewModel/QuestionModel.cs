@@ -1,20 +1,20 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Leaf.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Leaf.Model;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 
 namespace Leaf.ViewModel
 {
-    class QuestionModel : ViewModelBase
+    internal class QuestionModel : ViewModelBase
     {
-
         /// <summary>
         /// 题目列表
         /// </summary>
         private List<QuestionView> _questionlist = new List<QuestionView>();
+
         public List<QuestionView> QuestionList
         {
             get { return _questionlist; }
@@ -25,6 +25,7 @@ namespace Leaf.ViewModel
         /// 选中题目索引
         /// </summary>
         private int _questionIndex;
+
         public int QuestionIndex
         {
             get { return _questionIndex; }
@@ -36,10 +37,11 @@ namespace Leaf.ViewModel
         /// 开始练习
         /// </summary>
         public ICommand ToTest { get; set; }
+
         private void test()
         {
             //判断习题列表是否为空
-            if(QuestionList==null || QuestionList.Count==0 || QuestionIndex < 0)
+            if (QuestionList == null || QuestionList.Count == 0 || QuestionIndex < 0)
             {
                 return;
             }
@@ -49,19 +51,19 @@ namespace Leaf.ViewModel
             {
                 //检索所有符合条件的单选题
                 var _singles = from c in mydb.SingleChoices
-                        where c.Type == QuestionList[QuestionIndex].Type &&
-                        c.Level == QuestionList[QuestionIndex].Level &&
-                        c.Subject == QuestionList[QuestionIndex].Subject
-                        select c;
+                               where c.Type == QuestionList[QuestionIndex].Type &&
+                               c.Level == QuestionList[QuestionIndex].Level &&
+                               c.Subject == QuestionList[QuestionIndex].Subject
+                               select c;
                 //随机选择5个
                 ViewModelLocator.SinglePaper.SingleList = _singles.OrderBy(s => Guid.NewGuid()).Take(5).ToList();
-                
+
                 //检索所有符合条件的填空题
                 var _gapfills = from c in mydb.GapFillings
-                        where c.Type == QuestionList[QuestionIndex].Type &&
-                        c.Level == QuestionList[QuestionIndex].Level &&
-                        c.Subject == QuestionList[QuestionIndex].Subject
-                        select c;
+                                where c.Type == QuestionList[QuestionIndex].Type &&
+                                c.Level == QuestionList[QuestionIndex].Level &&
+                                c.Subject == QuestionList[QuestionIndex].Subject
+                                select c;
                 //随机选择5个
                 ViewModelLocator.GapPaper.GapList = _gapfills.OrderBy(s => Guid.NewGuid()).Take(5).ToList();
             }
@@ -99,7 +101,7 @@ namespace Leaf.ViewModel
             //查询当前习题列表是否为空，不为空则清空
             if (QuestionList != null || QuestionList.Count != 0)
                 QuestionList.Clear();
-            
+
             //检索习题
             using (var mydb = new MyDBContext())
             {
@@ -158,16 +160,19 @@ namespace Leaf.ViewModel
                                 model.Color = "#00FF00";
                             }
                             break;
+
                         case 2:
                             {
                                 model.Color = "#008B00";
                             }
                             break;
+
                         case 3:
                             {
                                 model.Color = "#CDCD00";
                             }
                             break;
+
                         default: break;
                     }
                     QuestionList.Add(model);

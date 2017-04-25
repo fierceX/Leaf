@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Leaf.Model;
+using Leaf.View;
+using Microsoft.EntityFrameworkCore;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Leaf.View;
-using Leaf.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace Leaf
 {
@@ -40,12 +40,12 @@ namespace Leaf
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-//#if DEBUG
-//            if (System.Diagnostics.Debugger.IsAttached)
-//            {
-//                this.DebugSettings.EnableFrameRateCounter = true;
-//            }
-//#endif
+            //#if DEBUG
+            //            if (System.Diagnostics.Debugger.IsAttached)
+            //            {
+            //                this.DebugSettings.EnableFrameRateCounter = true;
+            //            }
+            //#endif
             Frame rootFrame = Window.Current.Content as Frame;
 
             // 不要在窗口已包含内容时重复应用程序初始化，
@@ -76,19 +76,18 @@ namespace Leaf
                     rootFrame.Navigate(typeof(Login), e.Arguments);
 
                     // 注册标题栏返回按钮
-//                    rootFrame.Navigated += OnNavigated;
-//                    SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
-//                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(rootFrame);
+                    //                    rootFrame.Navigated += OnNavigated;
+                    //                    SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
+                    //                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(rootFrame);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
             }
         }
 
-
         private AppViewBackButtonVisibility getVisibilityStatus(Frame sender)
         {
-            return sender.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;;
+            return sender.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed; ;
         }
 
         /// <summary>
@@ -116,13 +115,12 @@ namespace Leaf
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus((Frame)sender);
         }
 
-
         /// <summary>
         /// 导航到特定页失败时调用
         /// </summary>
         ///<param name="sender">导航失败的框架</param>
         ///<param name="e">有关导航失败的详细信息</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
@@ -140,6 +138,5 @@ namespace Leaf
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
         }
-
     }
 }

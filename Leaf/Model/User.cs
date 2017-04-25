@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 //using SQLite;
 
 namespace Leaf.Model
 {
-    class User
+    internal class User
     {
         //Id，主键，
         [Key]

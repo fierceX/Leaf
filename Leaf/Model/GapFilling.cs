@@ -7,7 +7,7 @@ namespace Leaf.Model
     /// <summary>
     /// 填空题实体模型
     /// </summary>
-    class GapFilling
+    internal class GapFilling
     {
         //Id,主键，自增
 
@@ -23,6 +23,9 @@ namespace Leaf.Model
         //难度
         public int Level { get; set; }
 
+        //配图
+        public string ImgPath { get; set; }
+
         //类型
         public string Type { get; set; }
 
@@ -35,7 +38,6 @@ namespace Leaf.Model
         //构造函数，初始化
         public GapFilling()
         {
-
             testpapers = new HashSet<GapTest>();
         }
     }

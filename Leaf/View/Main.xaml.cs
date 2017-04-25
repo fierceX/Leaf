@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Popups;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -22,8 +22,8 @@ namespace Leaf.View
             this.InitData();
             // 注册左上角回退按钮
             MainFrame.Navigated += OnNavigated;
-           SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(MainFrame);
-           SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = getVisibilityStatus(MainFrame);
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequseted;
 
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<object>(this, true, LogoffMessage);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string[]>(this, "NavigateTo", NavigateTo);
@@ -31,6 +31,7 @@ namespace Leaf.View
 
         public Dictionary<string, Frame> FrameDictionary;
         public Dictionary<string, Type> PageDictionary;
+
         public void InitData()
         {
             if (PageDictionary != null) return;
@@ -45,7 +46,6 @@ namespace Leaf.View
                 {"Insert", typeof (InsertData)},
                 {"TestPaper", typeof (TestPaperManage)},
                 {"Question", typeof (QuestionList)},
-                {"QuestionStore", typeof (QuestionStore)},
                 {"Result", typeof (TestResult)},
                 {"UserInfo", typeof (UserInfo) },
                 {"Help", typeof (Help) }
@@ -70,7 +70,6 @@ namespace Leaf.View
             FrameDictionary[frameName].Navigate(PageDictionary[pageName]);
         }
 
-
         public async void LogoffMessage(object msg)
         {
             MessageDialog mag = new MessageDialog(msg as string);
@@ -85,7 +84,7 @@ namespace Leaf.View
             mag.Commands.Add(yes);
             mag.Commands.Add(no);
             var re = await mag.ShowAsync();
-            if(re == yes)
+            if (re == yes)
             {
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Unregister<object>(this, LogoffMessage);
             }
@@ -103,7 +102,7 @@ namespace Leaf.View
 
         private void OnBackRequseted(object sender, BackRequestedEventArgs e)
         {
-//            var rootFrame = Window.Current.Content as Frame;
+            //            var rootFrame = Window.Current.Content as Frame;
             if (MainFrame != null && MainFrame.CanGoBack)
             {
                 e.Handled = true;
@@ -134,20 +133,15 @@ namespace Leaf.View
                     }
                 case 3:
                     {
-                        NavigateTo("MainFrame", "QuestionStore");
+                        NavigateTo("MainFrame", "UserInfo");
                         break;
                     }
                 case 4:
                     {
-                        NavigateTo("MainFrame", "UserInfo");
+                        NavigateTo("MainFrame", "Help");
                         break;
                     }
                 case 5:
-                    {
-                        NavigateTo("MainFrame","Help");
-                        break;
-                    }
-                case 6:
                     {
                         LogoffMessage("确定要注销吗？");
                         break;

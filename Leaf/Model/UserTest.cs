@@ -1,6 +1,6 @@
 ﻿namespace Leaf.Model
 {
-    class UserTest
+    internal class UserTest
     {
         public int Id { get; set; }
         public int UserId { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Leaf.Model
 {
-    class TestPaper
+    internal class TestPaper
     {
         //试卷Id
         //主键
@@ -19,7 +19,7 @@ namespace Leaf.Model
         public List<SingleTest> singles { get; set; }
 
         //填空题列表
-        public  List<GapTest> gapfills { get; set; }
+        public List<GapTest> gapfills { get; set; }
 
         //单选数量
         public int SingleNum { get; set; }
@@ -42,6 +42,7 @@ namespace Leaf.Model
 
         //用户列表
         public List<UserTest> users { get; set; }
+
         public TestPaper()
         {
             singles = new List<SingleTest>();

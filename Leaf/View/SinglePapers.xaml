@@ -12,50 +12,49 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Margin="0,20,0,20" Orientation="Vertical" >
-            <TextBlock HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="Red" Text="{Binding Time,Mode=TwoWay}"  />
+        <StackPanel Margin="0,20,0,20" Orientation="Vertical">
+            <TextBlock HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="Red" Text="{Binding Time,Mode=TwoWay}" />
         </StackPanel>
-        <Grid Grid.Row="1" Margin="20,0,20,0" >
+        <Grid Grid.Row="1" Margin="20,0,20,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock
                 TextWrapping="Wrap"
                 Margin="0,0,0,10"
                 Text="{Binding Stem,Mode=TwoWay}" />
             <Image Margin="0,0,0,10" Grid.Row="1" MaxWidth="200" MaxHeight="200" Source="{Binding Img,Mode=TwoWay}" />
-            <TextBlock Margin="0,0,0,10" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Answer,Mode=TwoWay}"/>
+            <TextBlock Margin="0,0,0,10" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Answer,Mode=TwoWay}" />
             <StackPanel Margin="0,0,0,10" Grid.Row="3">
-                <RadioButton Name="Choice1" 
-                            GroupName="Single" 
-                            Content="{Binding ChoiceText1,Mode=TwoWay}" 
-                            IsChecked="{Binding Choice1,Mode=TwoWay}"/>
-                <RadioButton Name="Choice2" 
-                            GroupName="Single" 
-                            Content="{Binding ChoiceText2,Mode=TwoWay}" 
-                             IsChecked="{Binding Choice2,Mode=TwoWay}"/>
-                <RadioButton Name="Choice3" 
-                            GroupName="Single" 
-                            Content="{Binding ChoiceText3,Mode=TwoWay}" 
-                             IsChecked="{Binding Choice3,Mode=TwoWay}"/>
-                <RadioButton Name="Choice4" 
-                            GroupName="Single" 
-                            Content="{Binding ChoiceText4,Mode=TwoWay}" 
-                             IsChecked="{Binding Choice4,Mode=TwoWay}"/>
+                <RadioButton Name="Choice1"
+                            GroupName="Single"
+                            Content="{Binding ChoiceText1,Mode=TwoWay}"
+                            IsChecked="{Binding Choice1,Mode=TwoWay}" />
+                <RadioButton Name="Choice2"
+                            GroupName="Single"
+                            Content="{Binding ChoiceText2,Mode=TwoWay}"
+                             IsChecked="{Binding Choice2,Mode=TwoWay}" />
+                <RadioButton Name="Choice3"
+                            GroupName="Single"
+                            Content="{Binding ChoiceText3,Mode=TwoWay}"
+                             IsChecked="{Binding Choice3,Mode=TwoWay}" />
+                <RadioButton Name="Choice4"
+                            GroupName="Single"
+                            Content="{Binding ChoiceText4,Mode=TwoWay}"
+                             IsChecked="{Binding Choice4,Mode=TwoWay}" />
             </StackPanel>
         </Grid>
 
         <StackPanel  Grid.Row="2" Orientation="Vertical" Background="Black"  RequestedTheme="Dark">
             <Button  FontSize="24" FontFamily="Segoe MDL2 Assets" Content="&#xE8FB;" HorizontalAlignment="Stretch" Command="{Binding ContinueCommand}" />
         </StackPanel>
-     
     </Grid>
 </Page>

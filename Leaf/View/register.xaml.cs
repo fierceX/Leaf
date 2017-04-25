@@ -17,7 +17,7 @@ namespace Leaf.View
         public register()
         {
             this.InitializeComponent();
-           
+
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "RegisterNo", MessageBox);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "RegisterYes", ToLogin);
         }
@@ -26,6 +26,7 @@ namespace Leaf.View
         {
             await new MessageDialog(msg).ShowAsync();
         }
+
         private async void ToLogin(string msg)
         {
             var ret = await new MessageDialog(msg).ShowAsync();

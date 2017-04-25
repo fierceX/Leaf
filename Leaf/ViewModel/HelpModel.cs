@@ -1,6 +1,6 @@
 ﻿namespace Leaf.ViewModel
 {
-    class HelpModel
+    internal class HelpModel
     {
     }
 }

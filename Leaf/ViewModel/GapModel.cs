@@ -3,14 +3,17 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Leaf.Model;
 using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Leaf.ViewModel
 {
-    class GapModel : ViewModelBase
+    internal class GapModel : ViewModelBase
     {
-
         private bool ContinueBool = true;
 
         /// <summary>
@@ -33,11 +36,11 @@ namespace Leaf.ViewModel
         /// </summary>
         public List<GapFilling> GapList = new List<GapFilling>();
 
-
         /// <summary>
         /// 剩余时间
         /// </summary>
         private string _time;
+
         public string Time
         {
             get { return _time; }
@@ -48,6 +51,7 @@ namespace Leaf.ViewModel
         /// 题干
         /// </summary>
         private string _stem;
+
         public string Stem
         {
             get { return _stem; }
@@ -61,6 +65,7 @@ namespace Leaf.ViewModel
         /// 答案
         /// </summary>
         private string _answer;
+
         public string Answer
         {
             get { return _answer; }
@@ -68,17 +73,31 @@ namespace Leaf.ViewModel
         }
 
         private string _answerright;
+
         public string RightAnswer
         {
             get { return _answerright; }
             set { Set(ref _answerright, value); }
         }
+
+        /// <summary>
+        /// 题目配图
+        /// </summary>
+        private BitmapImage _img;
+
+        public BitmapImage Img
+        {
+            get { return _img; }
+            set { Set(ref _img, value); }
+        }
+
         /// <summary>
         /// 命令
         /// /////
         /// 继续
         /// </summary>
         public ICommand ContinueCommand { get; set; }
+
         private void Continue()
         {
             //判断是不是练习模式，如果是则显示答案
@@ -98,10 +117,9 @@ namespace Leaf.ViewModel
             if (Mode == 1)
                 ViewModelLocator.TestResult.GapResult.Add(GetAnswer());
             //如果还有题目，则显示下一题并清空答案
-            if (num<max)
+            if (num < max)
             {
-                Stem = GapList[num].Stems;
-                Answer = "";
+                LoadQuestionAsync();
             }
             //否则就跳转回去
             else
@@ -137,8 +155,6 @@ namespace Leaf.ViewModel
             ContinueCommand = new RelayCommand(Continue);
         }
 
-
-
         /// <summary>
         /// 初始化
         /// </summary>
@@ -146,15 +162,34 @@ namespace Leaf.ViewModel
         {
             max = GapList.Count;
             num = 0;
+            if (_img == null)
+                _img = new BitmapImage();
             if (Mode != 1)
                 Time = "";
+
+            LoadQuestionAsync();
+        }
+
+        private async System.Threading.Tasks.Task LoadQuestionAsync()
+        {
             if (num >= max)
                 return;
             Stem = GapList[num].Stems;
             Answer = "";
-        }
 
-        
+            if (GapList[num].ImgPath != "")
+            {
+                try
+                {
+                    StorageFile f = await StorageFile.GetFileFromPathAsync(GapList[num].ImgPath);
+                    IRandomAccessStream _s = await f.OpenAsync(FileAccessMode.Read);
+                    Img.SetSource(_s);
+                }
+                catch (Exception e)
+                {
+                }
+            }
+        }
 
         /// <summary>
         /// 获取答案
@@ -164,10 +199,9 @@ namespace Leaf.ViewModel
         {
             if (Answer == null || Answer == "" || Answer.Trim() == "")
                 return false;
-            if (Answer.ToUpper().Trim() == GapList[num-1].Answer.ToUpper())
+            if (Answer.ToUpper().Trim() == GapList[num - 1].Answer.ToUpper())
                 return true;
             return false;
         }
-
     }
 }

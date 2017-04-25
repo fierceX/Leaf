@@ -12,12 +12,11 @@ using Windows.UI.Xaml;
 
 namespace Leaf.ViewModel
 {
-    class TestPaperModel : ViewModelBase
+    internal class TestPaperModel : ViewModelBase
     {
-
-        TimeSpan timespan;
+        private TimeSpan timespan;
         private DispatcherTimer timer;
-        
+
         /// <summary>
         /// 选择题最大题量
         /// </summary>
@@ -46,6 +45,7 @@ namespace Leaf.ViewModel
         /// 试卷名称
         /// </summary>
         private string _testname;
+
         public string TestName
         {
             get { return _testname; }
@@ -53,24 +53,29 @@ namespace Leaf.ViewModel
         }
 
         private List<string> _subjectList = new List<string>();
+
         public List<string> SubjectList
         {
             get { return _subjectList; }
             set { Set(ref _subjectList, value); }
         }
+
         /// <summary>
         /// 时间
         /// </summary>
         private int _time;
+
         public int Time
         {
             get { return _time; }
             set { Set(ref _time, value); }
         }
+
         /// <summary>
         /// 类型
         /// </summary>
         private List<string> _typeList = new List<string>();
+
         public List<string> TypeList
         {
             get { return _typeList; }
@@ -81,6 +86,7 @@ namespace Leaf.ViewModel
         /// 难度
         /// </summary>
         private List<int> _levelList = new List<int>();
+
         public List<int> LevelList
         {
             get { return _levelList; }
@@ -90,7 +96,8 @@ namespace Leaf.ViewModel
         /// <summary>
         /// 选择题数量
         /// </summary>
-        private int _singleNum=5;
+        private int _singleNum = 5;
+
         public int SingleNum
         {
             get { return _singleNum; }
@@ -101,6 +108,7 @@ namespace Leaf.ViewModel
         /// 类型索引
         /// </summary>
         private int _typeIndex;
+
         public int TypeIndex
         {
             get { return _typeIndex; }
@@ -114,17 +122,18 @@ namespace Leaf.ViewModel
         /// 难度索引
         /// </summary>
         private int _levelIndex;
+
         public int LevelIndex
         {
             get { return _levelIndex; }
             set { Set(ref _levelIndex, value); }
         }
 
-
         /// <summary>
         /// 填空题数量
         /// </summary>
-        private int _gapNum=5;
+        private int _gapNum = 5;
+
         public int GapNum
         {
             get { return _gapNum; }
@@ -135,6 +144,7 @@ namespace Leaf.ViewModel
         /// 题库包索引
         /// </summary>
         private int _subjectIndex;
+
         public int SubjectIndex
         {
             get { return _subjectIndex; }
@@ -148,6 +158,7 @@ namespace Leaf.ViewModel
         /// 弹出菜单状态
         /// </summary>
         private bool _paneopen;
+
         public bool PaneOpen
         {
             get { return _paneopen; }
@@ -158,6 +169,7 @@ namespace Leaf.ViewModel
         /// 试卷列表索引
         /// </summary>
         private int _test;
+
         public int Test
         {
             get { return _test; }
@@ -168,18 +180,18 @@ namespace Leaf.ViewModel
         /// 试卷列表
         /// </summary>
         private List<TestPaper> _testpapaerlist;
+
         public List<TestPaper> TestList
         {
             get { return _testpapaerlist; }
             set { Set(ref _testpapaerlist, value); }
         }
 
-        
-
         /// <summary>
         /// 开始答题
         /// </summary>
         public ICommand RunCommand { get; set; }
+
         private void run()
         {
             if (Test < 0 || TestList.Count == 0)
@@ -197,7 +209,6 @@ namespace Leaf.ViewModel
                     _SingleList.Add(x.single);
                 foreach (var x in _gaplist)
                     _GapList.Add(x.gap);
-
 
                 ViewModelLocator.SinglePaper.SingleList = _SingleList;
                 ViewModelLocator.SinglePaper.Mode = 1;
@@ -217,6 +228,7 @@ namespace Leaf.ViewModel
         /// 打开弹出菜单
         /// </summary>
         public ICommand OpenCommand { get; set; }
+
         private void Open()
         {
             PaneOpen = !PaneOpen;
@@ -232,10 +244,11 @@ namespace Leaf.ViewModel
         /// 添加新试卷
         /// </summary>
         public ICommand AddCommand { get; set; }
+
         private void Add()
         {
             //判断相关选项是否都选中了
-            if(SubjectIndex >=0 && TypeIndex >=0 && LevelIndex >=0)
+            if (SubjectIndex >= 0 && TypeIndex >= 0 && LevelIndex >= 0)
             {
                 //获取相关选项下题目最大数量
                 GetQuestNum();
@@ -276,7 +289,6 @@ namespace Leaf.ViewModel
                         _gaplist = _gapfills.OrderBy(s => Guid.NewGuid()).Take(GapNum).ToList();
                     }
 
-
                     //设置试卷相关属性
                     model.Level = Convert.ToInt32(LevelList[LevelIndex]);
                     model.Name = TestName;
@@ -309,7 +321,6 @@ namespace Leaf.ViewModel
                             mydb.GapTest.Add(gm);
                         }
                         n = mydb.SaveChanges();
-                        
                     }
                     //如果添加成功则刷新试卷列表
                     if (n > 0)
@@ -351,17 +362,15 @@ namespace Leaf.ViewModel
             AddCommand = new RelayCommand(Add);
         }
 
-
         /// <summary>
         /// 读取试卷列表
         /// </summary>
         private void ReadData()
         {
-
             using (var mydb = new MyDBContext())
             {
                 //读取所有试卷并贪婪加载所有习题
-                TestList= mydb.TestPapers.Include(p => p.gapfills)
+                TestList = mydb.TestPapers.Include(p => p.gapfills)
                     .ThenInclude(z => z.gap)
                     .Include(p => p.singles)
                     .ThenInclude(z => z.single).ToList();
@@ -373,7 +382,7 @@ namespace Leaf.ViewModel
         /// </summary>
         private void GetQuestType()
         {
-            if(TypeList == null || TypeList.Count == 0)
+            if (TypeList == null || TypeList.Count == 0)
             {
                 TypeList.Add(" ");
                 using (var mydb = new MyDBContext())
@@ -386,9 +395,7 @@ namespace Leaf.ViewModel
                     var qqq = q.ToList();
                     qqq.AddRange(qq.ToList());
                     TypeList = qqq.Distinct().ToList();
-
                 }
-
             }
         }
 
@@ -397,10 +404,8 @@ namespace Leaf.ViewModel
         /// </summary>
         private void GetQuestLevel()
         {
-
             if (LevelList == null || LevelList.Count == 0)
             {
-
                 using (var mydb = new MyDBContext())
                 {
                     var q = from c in mydb.SingleChoices
@@ -412,17 +417,16 @@ namespace Leaf.ViewModel
                     qqq.AddRange(qq.ToList());
                     LevelList = qqq.Distinct().ToList();
                 }
-
             }
         }
+
         /// <summary>
         /// 获取题目主题
         /// </summary>
         private void GetQuestSubjec()
         {
-            if(SubjectList==null || SubjectList.Count==0)
+            if (SubjectList == null || SubjectList.Count == 0)
             {
-
                 using (var mydb = new MyDBContext())
                 {
                     var q = from c in mydb.SingleChoices
@@ -434,7 +438,6 @@ namespace Leaf.ViewModel
                     qqq.AddRange(qq.ToList());
                     SubjectList = qqq.Distinct().ToList();
                 }
-
             }
         }
 
@@ -443,7 +446,6 @@ namespace Leaf.ViewModel
         /// </summary>
         private void GetQuestNum()
         {
-
             using (var mydb = new MyDBContext())
             {
                 GapMax = (from c in mydb.GapFillings
@@ -452,12 +454,11 @@ namespace Leaf.ViewModel
                           c.Level == LevelList[LevelIndex]
                           select c).Count();
                 SingleMax = (from c in mydb.SingleChoices
-                          where c.Subject == SubjectList[SubjectIndex] &&
-                          c.Type == TypeList[TypeIndex] &&
-                          c.Level == LevelList[LevelIndex]
-                          select c).Count();
+                             where c.Subject == SubjectList[SubjectIndex] &&
+                             c.Type == TypeList[TypeIndex] &&
+                             c.Level == LevelList[LevelIndex]
+                             select c).Count();
             }
-
         }
 
         /// <summary>
@@ -468,7 +469,7 @@ namespace Leaf.ViewModel
             timer.Tick -= TimeChick;
             timer.Stop();
         }
-        
+
         /// <summary>
         /// 设置定时器
         /// </summary>
@@ -488,22 +489,22 @@ namespace Leaf.ViewModel
             timer.Tick += TimeChick;
             timer.Start();
         }
-        
+
         /// <summary>
         /// 定时器回调函数
         /// </summary>
         /// <param name="state"></param>
         /// <param name="e"></param>
-        private void TimeChick(object state,object e)
+        private void TimeChick(object state, object e)
         {
             //构造要显示的字符串
-            string str =timespan.Minutes.ToString() + ":" + timespan.Seconds.ToString();
+            string str = timespan.Minutes.ToString() + ":" + timespan.Seconds.ToString();
             //将填空题和选择题答题页面都显示时间字符串
             ViewModelLocator.SinglePaper.Time = str;
             ViewModelLocator.GapPaper.Time = str;
             //如果时间到了，则终止定时器并自动跳转到成绩页面
             timespan = timespan.Subtract(new TimeSpan(0, 0, 1));
-            if(timespan.TotalSeconds == 0.0)
+            if (timespan.TotalSeconds == 0.0)
             {
                 timer.Tick -= TimeChick;
                 timer.Stop();
@@ -514,6 +515,5 @@ namespace Leaf.ViewModel
                 return;
             }
         }
-
     }
 }

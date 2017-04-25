@@ -11,14 +11,14 @@
         <Binding Path="QuestionList" Source="{StaticResource Locator}"></Binding>
     </Page.DataContext>
     <Page.Resources>
-        <DataTemplate x:Key="QuestionListDataTemplate" x:DataType="data:QuestionView" >
+        <DataTemplate x:Key="QuestionListDataTemplate" x:DataType="data:QuestionView">
             <StackPanel Orientation="Vertical" Background="{Binding Color}" Margin="5,5,5,5" Height="100" Width="100">
                 <TextBlock Text="{x:Bind Subject}" Margin="0,10,0,10" HorizontalAlignment="Center" FontSize="18" />
                 <Grid>
                     <TextBlock Text="{x:Bind Type}" Margin="10,0,10,0" HorizontalAlignment="Left" FontSize="14" />
                     <TextBlock Text="{x:Bind Level}" Margin="10,0,10,0"  HorizontalAlignment="Right" FontSize="14" />
                 </Grid>
-                <Grid Margin="0,10,0,0" >
+                <Grid Margin="0,10,0,0">
                     <TextBlock Text="{x:Bind SingleNum}" Margin="10,0,10,0" HorizontalAlignment="Left" FontSize="10" />
                     <TextBlock Text="{x:Bind GapNum}" Margin="10,0,10,0" HorizontalAlignment="Right" FontSize="10" />
                 </Grid>
@@ -34,15 +34,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="0,10,0,10" Grid.Row="0" FontSize="24" Text="题库列表" HorizontalAlignment="Center"/>
+        <TextBlock Margin="0,10,0,10" Grid.Row="0" FontSize="24" Text="题库列表" HorizontalAlignment="Center" />
         <GridView Margin="20,0,20,10" Grid.Column="0" Grid.Row="1"
             ItemTemplate="{StaticResource QuestionListDataTemplate}"
             ItemsSource="{Binding QuestionList,Mode=TwoWay}"
-            SelectedIndex="{Binding QuestionIndex,Mode=TwoWay}" >
+            SelectedIndex="{Binding QuestionIndex,Mode=TwoWay}">
         </GridView>
         <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,0,0,0" Orientation="Vertical" Background="Black"  RequestedTheme="Dark">
-            <Button FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Content="&#xE70F;" Command="{Binding ToTest}"/>
+            <Button FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Content="&#xE70F;" Command="{Binding ToTest}" />
         </StackPanel>
-
     </Grid>
 </Page>

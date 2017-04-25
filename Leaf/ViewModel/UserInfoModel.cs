@@ -5,33 +5,40 @@ using System.Linq;
 
 namespace Leaf.ViewModel
 {
-    class UserInfoModel : ViewModelBase
+    internal class UserInfoModel : ViewModelBase
     {
         /// <summary>
         /// 折线图字符串
         /// </summary>
         private string _points;
+
         public string Points
         {
             get { return _points; }
             set { Set(ref _points, value); }
         }
+
         //用户名
         private string _username;
+
         public string Username
         {
             get { return _username; }
             set { Set(ref _username, value); }
         }
+
         //是否是管理员
         private string _admin;
+
         public string Admain
         {
             get { return _admin; }
             set { Set(ref _admin, value); }
         }
+
         //注册时间
         private string _buildtime;
+
         public string BuildTime
         {
             get { return _buildtime; }
@@ -44,6 +51,7 @@ namespace Leaf.ViewModel
             DrawPoint();
             ReadData();
         }
+
         //构造函数
         public UserInfoModel()
         {
@@ -58,7 +66,7 @@ namespace Leaf.ViewModel
                 Admain = "管理员账户";
             else
                 Admain = "普通账户";
-            BuildTime = "注册时间："+ViewModelLocator.User.BuildTime;
+            BuildTime = "注册时间：" + ViewModelLocator.User.BuildTime;
         }
 
         //画成绩折线图
@@ -77,7 +85,7 @@ namespace Leaf.ViewModel
             if (scorelist.Count <= 0)
                 return;
             string point = "";
-            for(int i = 0;i<scorelist.Count();i++)
+            for (int i = 0; i < scorelist.Count(); i++)
             {
                 point += (i * 20).ToString() + "," + (100 - scorelist[i]).ToString() + ",";
             }

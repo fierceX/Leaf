@@ -77,6 +77,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -102,12 +103,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20170222085859_MyFirstMigration.cs" />
-    <Compile Include="Migrations\20170222085859_MyFirstMigration.designer.cs">
-      <DependentUpon>20170222085859_MyFirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20170411064941_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20170411064941_MyFirstMigration.designer.cs">
+      <DependentUpon>20170411064941_MyFirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MyDBContextModelSnapshot.cs" />
-    <Compile Include="Model\FileService.cs" />
     <Compile Include="Model\GapFilling.cs" />
     <Compile Include="Model\GapTest.cs" />
     <Compile Include="Model\MyDBContext.cs" />
@@ -117,15 +117,14 @@
     <Compile Include="Model\SingleTest.cs" />
     <Compile Include="Model\TestPaper.cs" />
     <Compile Include="Model\UserTest.cs" />
-    <Compile Include="Model\server.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Verification.cs" />
     <Compile Include="ViewModel\GapModel.cs" />
     <Compile Include="ViewModel\HelpModel.cs" />
     <Compile Include="ViewModel\InsertModel.cs" />
     <Compile Include="ViewModel\LoginModle.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
     <Compile Include="ViewModel\QuestionModel.cs" />
-    <Compile Include="ViewModel\QuestionStoreModel.cs" />
     <Compile Include="ViewModel\RegisterModel.cs" />
     <Compile Include="ViewModel\SingleModel.cs" />
     <Compile Include="ViewModel\TestPaperModel.cs" />
@@ -150,9 +149,6 @@
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="View\QuestionList.xaml.cs">
       <DependentUpon>QuestionList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\QuestionStore.xaml.cs">
-      <DependentUpon>QuestionStore.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\register.xaml.cs">
       <DependentUpon>register.xaml</DependentUpon>
@@ -227,10 +223,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\QuestionList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\QuestionStore.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

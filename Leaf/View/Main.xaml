@@ -26,28 +26,27 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid >
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button x:Name="HamburgButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="24" Command="{Binding HamburgCommand}" />
-            <Grid Grid.Column="1" Background="{ThemeResource SystemAccentColor}" >
+            <Grid Grid.Column="1" Background="{ThemeResource SystemAccentColor}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" FontSize="24" Text="UWP掌上题库" />
+                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" FontSize="24" Text="UWP驾考宝典" />
                 <TextBlock Margin="0,0,10,0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Username,Mode=TwoWay}" />
             </Grid>
         </Grid>
         <SplitView Grid.Row="1" x:Name="MainSplitView" OpenPaneLength="150" CompactPaneLength="45" PaneBackground="LightGray" DisplayMode="CompactOverlay" IsPaneOpen="{Binding IsPaneOpen,Mode=TwoWay}">
             <SplitView.Pane>
-                <ListView x:Name="MainListView" ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemDataTemplate}" SelectionChanged="MainListView_OnSelectionChanged"/>
+                <ListView x:Name="MainListView" ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemDataTemplate}" SelectionChanged="MainListView_OnSelectionChanged" />
             </SplitView.Pane>
             <SplitView.Content>
                 <Frame Name="MainFrame" x:FieldModifier="public">
-
                 </Frame>
             </SplitView.Content>
         </SplitView>

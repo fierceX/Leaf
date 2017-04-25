@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Leaf.Migrations
 {
@@ -13,6 +15,7 @@ namespace Leaf.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Answer = table.Column<string>(nullable: true),
+                    ImgPath = table.Column<string>(nullable: true),
                     Level = table.Column<int>(nullable: false),
                     Stems = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),
@@ -33,6 +36,7 @@ namespace Leaf.Migrations
                     Choices1 = table.Column<string>(nullable: true),
                     Choices2 = table.Column<string>(nullable: true),
                     Choices3 = table.Column<string>(nullable: true),
+                    ImgPath = table.Column<string>(nullable: true),
                     Level = table.Column<int>(nullable: false),
                     Stems = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),
@@ -144,15 +148,15 @@ namespace Leaf.Migrations
                 {
                     table.PrimaryKey("PK_UserTest", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserTest_Users_TestId",
+                        name: "FK_UserTest_TestPapers_TestId",
                         column: x => x.TestId,
-                        principalTable: "Users",
+                        principalTable: "TestPapers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserTest_TestPapers_UserId",
+                        name: "FK_UserTest_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "TestPapers",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -196,10 +200,10 @@ namespace Leaf.Migrations
                 name: "SingleChoices");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "TestPapers");
 
             migrationBuilder.DropTable(
-                name: "TestPapers");
+                name: "Users");
         }
     }
 }

@@ -14,10 +14,24 @@ namespace Leaf.ViewModel
 {
     internal class InsertModel : ViewModelBase
     {
+        /// <summary>
+        /// 待插入的选择题集合
+        /// </summary>
         private List<SingleChoice> _singlelist;
+
+        /// <summary>
+        /// 待插入的填空题的集合
+        /// </summary>
         private List<GapFilling> _gaplist;
+
+        /// <summary>
+        /// 待插入的图片压缩集合
+        /// </summary>
         private List<ZipArchiveEntry> _ziplist;
 
+        /// <summary>
+        /// 单选题数量
+        /// </summary>
         private int _singlenum;
 
         public int SingleNum
@@ -26,6 +40,9 @@ namespace Leaf.ViewModel
             set { Set(ref _singlenum, value); }
         }
 
+        /// <summary>
+        /// 填空题数量
+        /// </summary>
         private int _gapnum;
 
         public int GapNum
@@ -34,6 +51,9 @@ namespace Leaf.ViewModel
             set { Set(ref _gapnum, value); }
         }
 
+        /// <summary>
+        /// 图片数量
+        /// </summary>
         private int _imagenum;
 
         public int ImageNum
@@ -42,6 +62,9 @@ namespace Leaf.ViewModel
             set { Set(ref _imagenum, value); }
         }
 
+        /// <summary>
+        /// 图片占用大小
+        /// </summary>
         private string _storagesize;
 
         public string StorageSize
@@ -66,19 +89,28 @@ namespace Leaf.ViewModel
 
         public ICommand InsertCommand { get; set; }
 
+        /// <summary>
+        /// 插入习题和图片
+        /// </summary>
         private async void InsertAsync()
         {
             try
             {
+                // 找到程序自己的数据文件夹
                 StorageFolder state = ApplicationData.Current.LocalFolder;
+                // 定义一个不重复的文件夹名，按照时间来不会重复
                 string name = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
+                // 创建文件夹用来存放图片
                 StorageFolder jpg = await state.CreateFolderAsync(name);
+                // 循环遍历图片压缩包，解压到指定文件夹
                 foreach (var x in _ziplist)
                 {
                     x.ExtractToFile(Path.Combine(jpg.Path, x.FullName));
                 }
+                // 插入习题
                 using (var mydb = new MyDBContext())
                 {
+                    // 循环遍历单选题和填空题，设置图片路径
                     if (_singlelist != null && _singlelist.Count > 0)
                     {
                         foreach (var x in _singlelist)
@@ -95,6 +127,7 @@ namespace Leaf.ViewModel
                             mydb.GapFillings.Add(x);
                         }
                     }
+                    // 保存至数据库并且清空暂存数据
                     if (mydb.SaveChanges() > 0)
                     {
                         string[] num = new string[4] { SingleNum.ToString(), GapNum.ToString(), ImageNum.ToString(), StorageSize };
@@ -118,8 +151,12 @@ namespace Leaf.ViewModel
 
         public ICommand OpenCommand { get; set; }
 
+        /// <summary>
+        /// 打开待插入题库
+        /// </summary>
         private async void openfile()
         {
+            // 创建一个文件拾取器
             var _openFile = new FileOpenPicker();
             _openFile.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             _openFile.ViewMode = PickerViewMode.List;
@@ -145,17 +182,26 @@ namespace Leaf.ViewModel
                 _ziplist.Clear();
             try
             {
+                // 读取选取的文件
                 StorageFile file = await _openFile.PickSingleFileAsync();
                 if (file != null)
                 {
+                    // 读取压缩包
                     Stream stream = await file.OpenStreamForReadAsync();
                     ZipArchive zip = new ZipArchive(stream);
+
+                    // 读取压缩包里的data.json文件，也就是题库内容文件
                     ZipArchiveEntry z = zip.GetEntry("data.json");
-
+                    // 获取程序临时文件存放路径
                     StorageFolder cache = ApplicationData.Current.LocalCacheFolder;
+                    // 解压缩data.json
                     z.ExtractToFile(Path.Combine(cache.Path, "data.json"), true);
+                    // 读取data.json
                     StorageFile f = await cache.GetFileAsync("data.json");
+                    // 解析json里的内容
+                    Resolving(await FileIO.ReadTextAsync(f));
 
+                    //遍历压缩包里的内容，统计图片大小和数量，并保存至带解压图片集合里
                     foreach (ZipArchiveEntry x in zip.Entries)
                     {
                         if (x.FullName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || x.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
@@ -165,9 +211,8 @@ namespace Leaf.ViewModel
                             _ziplist.Add(x);
                         }
                     }
+                    // 计算待解压图片大小
                     StorageSize = (Math.Ceiling(size / 1024 * 100) / 100).ToString() + " Mb";
-                    string _json = await FileIO.ReadTextAsync(f);
-                    Resolving(_json);
                 }
             }
             catch (Exception e)
@@ -176,6 +221,10 @@ namespace Leaf.ViewModel
             }
         }
 
+        /// <summary>
+        /// 分析题库内容
+        /// </summary>
+        /// <param name="_json">json字符串</param>
         private void Resolving(string _json)
         {
             try
@@ -192,11 +241,14 @@ namespace Leaf.ViewModel
                 else
                     this._gaplist.Clear();
 
+                // 创建json读取对象
                 JObject _jsonobject = JObject.Parse(_json);
+                // 读取选择题
                 JArray _singlearray = JArray.Parse(_jsonobject["Single"].ToString());
                 SingleNum = 0;
                 GapNum = 0;
 
+                // 遍历读取选择题
                 foreach (var token in _singlearray)
                 {
                     SingleChoice model = new SingleChoice();
@@ -212,8 +264,9 @@ namespace Leaf.ViewModel
                     _singlelist.Add(model);
                     SingleNum += 1;
                 }
+                // 读取填空题
                 JArray _gaparray = JArray.Parse(_jsonobject["Gap"].ToString());
-
+                // 遍历读取填空题
                 foreach (var token in _gaparray)
                 {
                     GapFilling model = new GapFilling();

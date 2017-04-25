@@ -37,7 +37,7 @@
                 <TextBlock Margin="10,0,0,0" Text="{Binding ImageNum,Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="0,0,0,10" Text="存储大小：" />
+                <TextBlock Margin="0,0,0,10" Text="图片大小：" />
                 <TextBlock Margin="10,0,0,0" Text="{Binding StorageSize,Mode=TwoWay}" />
             </StackPanel>
         </StackPanel>

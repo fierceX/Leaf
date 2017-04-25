@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="TestListDataTemplate" x:DataType="data:TestPaper">
-            <Grid HorizontalAlignment="Stretch" >
+            <Grid HorizontalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -35,17 +35,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock Margin="0,10,0,10" Grid.Row="0" FontSize="24" Text="试卷列表" HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,10,0,10" Grid.Row="0" FontSize="24" Text="试卷列表" HorizontalAlignment="Center" />
         </StackPanel>
-       
-        <SplitView 
-                   Grid.Row="1" 
-                   DisplayMode="Overlay"  
+
+        <SplitView
+                   Grid.Row="1"
+                   DisplayMode="Overlay"
                    OpenPaneLength="150"
-                   IsPaneOpen="{Binding PaneOpen,Mode=TwoWay}" >
+                   IsPaneOpen="{Binding PaneOpen,Mode=TwoWay}">
             <SplitView.Pane>
-                <StackPanel Margin="10,10,10,10" Width="100" >
-                    <ComboBox  Header="习题包" ItemsSource="{Binding SubjectList,Mode=TwoWay}" SelectedIndex="{Binding SubjectIndex,Mode=TwoWay}"/>
+                <StackPanel Margin="10,10,10,10" Width="100">
+                    <ComboBox  Header="习题包" ItemsSource="{Binding SubjectList,Mode=TwoWay}" SelectedIndex="{Binding SubjectIndex,Mode=TwoWay}" />
                     <ComboBox  Header="难度" ItemsSource="{Binding LevelList,Mode=TwoWay}" SelectedIndex="{Binding LevelIndex,Mode=TwoWay}" />
                     <ComboBox  Header="类型" ItemsSource="{Binding TypeList,Mode=TwoWay}" SelectedIndex="{Binding TypeIndex,Mode=TwoWay}" />
                     <TextBox  Header="选择题数量" Text="{Binding SingleNum,Mode=TwoWay}" />
@@ -61,10 +61,10 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ListView 
+                    <ListView
                       Margin="10,0,10,0"
                       Grid.Row="0"
-                      SelectionMode="Single" 
+                      SelectionMode="Single"
                       SelectedIndex="{Binding Test,Mode=TwoWay}"
                       ItemTemplate="{StaticResource TestListDataTemplate}"
                       ItemsSource="{Binding TestList,Mode=TwoWay}">

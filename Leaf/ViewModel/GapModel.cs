@@ -12,9 +12,8 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Leaf.ViewModel
 {
-    class GapModel : ViewModelBase
+    internal class GapModel : ViewModelBase
     {
-
         private bool ContinueBool = true;
 
         /// <summary>
@@ -37,11 +36,11 @@ namespace Leaf.ViewModel
         /// </summary>
         public List<GapFilling> GapList = new List<GapFilling>();
 
-
         /// <summary>
         /// 剩余时间
         /// </summary>
         private string _time;
+
         public string Time
         {
             get { return _time; }
@@ -52,6 +51,7 @@ namespace Leaf.ViewModel
         /// 题干
         /// </summary>
         private string _stem;
+
         public string Stem
         {
             get { return _stem; }
@@ -65,6 +65,7 @@ namespace Leaf.ViewModel
         /// 答案
         /// </summary>
         private string _answer;
+
         public string Answer
         {
             get { return _answer; }
@@ -72,6 +73,7 @@ namespace Leaf.ViewModel
         }
 
         private string _answerright;
+
         public string RightAnswer
         {
             get { return _answerright; }
@@ -82,6 +84,7 @@ namespace Leaf.ViewModel
         /// 题目配图
         /// </summary>
         private BitmapImage _img;
+
         public BitmapImage Img
         {
             get { return _img; }
@@ -94,6 +97,7 @@ namespace Leaf.ViewModel
         /// 继续
         /// </summary>
         public ICommand ContinueCommand { get; set; }
+
         private void Continue()
         {
             //判断是不是练习模式，如果是则显示答案
@@ -113,7 +117,7 @@ namespace Leaf.ViewModel
             if (Mode == 1)
                 ViewModelLocator.TestResult.GapResult.Add(GetAnswer());
             //如果还有题目，则显示下一题并清空答案
-            if (num<max)
+            if (num < max)
             {
                 LoadQuestionAsync();
             }
@@ -151,8 +155,6 @@ namespace Leaf.ViewModel
             ContinueCommand = new RelayCommand(Continue);
         }
 
-
-
         /// <summary>
         /// 初始化
         /// </summary>
@@ -185,12 +187,9 @@ namespace Leaf.ViewModel
                 }
                 catch (Exception e)
                 {
-
                 }
             }
-
         }
-
 
         /// <summary>
         /// 获取答案
@@ -200,10 +199,9 @@ namespace Leaf.ViewModel
         {
             if (Answer == null || Answer == "" || Answer.Trim() == "")
                 return false;
-            if (Answer.ToUpper().Trim() == GapList[num-1].Answer.ToUpper())
+            if (Answer.ToUpper().Trim() == GapList[num - 1].Answer.ToUpper())
                 return true;
             return false;
         }
-
     }
 }

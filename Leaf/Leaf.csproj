@@ -108,7 +108,6 @@
       <DependentUpon>20170411064941_MyFirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MyDBContextModelSnapshot.cs" />
-    <Compile Include="Model\FileService.cs" />
     <Compile Include="Model\GapFilling.cs" />
     <Compile Include="Model\GapTest.cs" />
     <Compile Include="Model\MyDBContext.cs" />
@@ -118,8 +117,8 @@
     <Compile Include="Model\SingleTest.cs" />
     <Compile Include="Model\TestPaper.cs" />
     <Compile Include="Model\UserTest.cs" />
-    <Compile Include="Model\server.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Verification.cs" />
     <Compile Include="ViewModel\GapModel.cs" />
     <Compile Include="ViewModel\HelpModel.cs" />
     <Compile Include="ViewModel\InsertModel.cs" />

@@ -14,18 +14,18 @@ namespace Leaf.View
         public InsertData()
         {
             this.InitializeComponent();
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<int[]>(this, "InsertYes", MessageBox);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string[]>(this, "InsertYes", MessageBox);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<string>(this, "Exception", ExceptionMessageBox);
         }
 
-        private async void MessageBox(int[] msg)
+        private async void MessageBox(string[] msg)
         {
-            await new MessageDialog("成功插入\n"+msg[0].ToString()+" 道选择题\n"+msg[1].ToString()+" 道填空题").ShowAsync();
+            await new MessageDialog("成功插入\n" + msg[0] + " 道选择题\n" + msg[1] + " 道填空题\n" + msg[2] + " 图片\n" + "图片占用大小 " + msg[3]).ShowAsync();
         }
 
         private async void ExceptionMessageBox(string msg)
         {
-            await new MessageDialog("引发异常："+msg).ShowAsync();
+            await new MessageDialog("引发异常：" + msg).ShowAsync();
         }
     }
 }

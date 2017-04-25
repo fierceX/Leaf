@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Leaf.Model
 {
-    class SingleChoice
+    internal class SingleChoice
     {
         //Id，主键
         [Key]
@@ -35,14 +35,13 @@ namespace Leaf.Model
 
         //主题
         public string Subject { get; set; }
-        
+
         //所属是试卷
         public virtual ICollection<SingleTest> testpapers { get; set; }
 
         //构造函数，初始化
         public SingleChoice()
         {
-
             testpapers = new HashSet<SingleTest>();
         }
     }

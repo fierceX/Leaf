@@ -1,9 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
-using GalaSoft.MvvmLight.Command;
 
 namespace Leaf.ViewModel
 {

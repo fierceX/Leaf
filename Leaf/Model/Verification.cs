@@ -4,7 +4,7 @@ using System.Linq;
 namespace Leaf.Model
 {
     //用户登陆验证
-    class server
+    internal class Verification
     {
         public static bool authenticate(User mobel)
         {
@@ -16,7 +16,7 @@ namespace Leaf.Model
             using (var db = new MyDBContext())
             {
                 IEnumerable<User> m = db.Users.Where(p => p.Username == mobel.Username);
-                if(m.Count()>0)
+                if (m.Count() > 0)
                     user = m.ToList()[0];
             }
             //对比密码是否相同
@@ -34,7 +34,6 @@ namespace Leaf.Model
             }
             else
                 return false;
-
         }
     }
 }

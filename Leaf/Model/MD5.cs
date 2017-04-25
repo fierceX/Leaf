@@ -11,6 +11,7 @@ namespace Leaf.Model
         private readonly string _strAlgName = HashAlgorithmNames.Md5;
         private HashAlgorithmProvider _objAlgProv = null;
         private CryptographicHash _objHash = null;
+
         public string ToMd5(string value)
         {
             _objAlgProv = HashAlgorithmProvider.OpenAlgorithm(_strAlgName);

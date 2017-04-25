@@ -8,10 +8,11 @@ using Leaf.Model;
 
 namespace Leaf
 {
-    class ViewModelLocator
+    internal class ViewModelLocator
     {
         private static User _user = new User();
         public static User User { get { return _user; } set { _user = value; } }
+
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -28,8 +29,8 @@ namespace Leaf
 
             var navigationService = this.InitNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
-
         }
+
         public INavigationService InitNavigationService()
         {
             NavigationService navigationService = new NavigationService();
@@ -47,12 +48,11 @@ namespace Leaf
 
         public static void Navigate(string pageName, string frameName)
         {
-            if (pageName == null || pageName.Trim() == "" || frameName == null || frameName.Trim() =="")
+            if (pageName == null || pageName.Trim() == "" || frameName == null || frameName.Trim() == "")
             {
                 Debug.WriteLine("ViewModelLocator.Navigate err : pageName isNull or frameName isNull", "error");
                 return;
             }
-
 
             Navigate(pageName);
         }
@@ -81,18 +81,21 @@ namespace Leaf
         }
 
         private static LoginModle _login;
+
         public static LoginModle Login
         {
             get
             {
-                if(_login == null)
+                if (_login == null)
                 {
                     _login = ServiceLocator.Current.GetInstance<LoginModle>();
                 }
                 return _login;
             }
         }
+
         private static MainModel _main;
+
         public static MainModel Main
         {
             get
@@ -102,7 +105,9 @@ namespace Leaf
                 return _main;
             }
         }
+
         private static RegisterModel _register;
+
         public static RegisterModel Register
         {
             get
@@ -114,6 +119,7 @@ namespace Leaf
         }
 
         private static SingleModel _singlepaper;
+
         public static SingleModel SinglePaper
         {
             get
@@ -125,6 +131,7 @@ namespace Leaf
         }
 
         private static GapModel _gappaper;
+
         public static GapModel GapPaper
         {
             get
@@ -136,6 +143,7 @@ namespace Leaf
         }
 
         private static InsertModel _insterdata;
+
         public static InsertModel InsterData
         {
             get
@@ -146,8 +154,8 @@ namespace Leaf
             }
         }
 
-
         private static TestPaperModel _testpaper;
+
         public static TestPaperModel TestPaper
         {
             get
@@ -159,6 +167,7 @@ namespace Leaf
         }
 
         private static TestResultModel _testresult;
+
         public static TestResultModel TestResult
         {
             get
@@ -170,6 +179,7 @@ namespace Leaf
         }
 
         private static QuestionModel _qustionlist;
+
         public static QuestionModel QuestionList
         {
             get
@@ -180,8 +190,8 @@ namespace Leaf
             }
         }
 
-
         private static UserInfoModel _userinfo;
+
         public static UserInfoModel UserInfo
         {
             get

@@ -115,7 +115,8 @@ namespace Leaf.ViewModel
                     {
                         foreach (var x in _singlelist)
                         {
-                            x.ImgPath = Path.Combine(jpg.Path, x.ImgPath);
+                            if (x.ImgPath != null && x.ImgPath != "")
+                                x.ImgPath = Path.Combine(jpg.Path, x.ImgPath);
                             mydb.SingleChoices.Add(x);
                         }
                     }
@@ -123,7 +124,8 @@ namespace Leaf.ViewModel
                     {
                         foreach (var x in _gaplist)
                         {
-                            x.ImgPath = Path.Combine(jpg.Path, x.ImgPath);
+                            if (x.ImgPath != null && x.ImgPath != "")
+                                x.ImgPath = Path.Combine(jpg.Path, x.ImgPath);
                             mydb.GapFillings.Add(x);
                         }
                     }

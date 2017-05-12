@@ -162,38 +162,49 @@ namespace Leaf.ViewModel
 
         private void Continue()
         {
-            //判断模式，如果是练习模式则显示答案
-            if (ContinueBool && Mode == 0)
+            if (SingleList.Count > 0)
             {
-                Answer = "正确答案是：" + SingleList[num].Answer;
-                ContinueBool = false;
-                return;
+                //判断模式，如果是练习模式则显示答案
+                if (ContinueBool && Mode == 0)
+                {
+                    Answer = "正确答案是：" + SingleList[num].Answer;
+                    ContinueBool = false;
+                    return;
+                }
+                else
+                {
+                    num++;
+                    ContinueBool = true;
+                    Answer = "";
+                }
+                //如果是测试模式则获取答案
+                if (Mode == 1)
+                {
+                    ViewModelLocator.TestResult.SingleResult.Add(GetAnswer(answernum));
+                }
+                //如果还有习题则继续显示习题
+                if (num < max)
+                {
+                    LoadQuestionAsync();
+                }
+                //否则跳转到填空题页面
+                else
+                {
+                    Stem = "没有选择题，直接跳到判断题！";
+                    Choice1 = false;
+                    Choice2 = false;
+                    Choice3 = false;
+                    Choice4 = false;
+                    Img = new BitmapImage();
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "RootFrame", "Gap" }, "NavigateTo");
+                    num = 0;
+                    answernum = 0;
+                    max = 0;
+                }
             }
             else
             {
-                num++;
-                ContinueBool = true;
-                Answer = "";
-            }
-            //如果是测试模式则获取答案
-            if (Mode == 1)
-            {
-                ViewModelLocator.TestResult.SingleResult.Add(GetAnswer(answernum));
-            }
-            //如果还有习题则继续显示习题
-            if (num < max)
-            {
-                LoadQuestionAsync();
-            }
-            //否则跳转到填空题页面
-            else
-            {
-                // var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                //navigation.NavigateTo("Gap");
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "RootFrame", "Gap" }, "NavigateTo");
-                num = 0;
-                answernum = 0;
-                max = 0;
             }
         }
 
@@ -217,7 +228,19 @@ namespace Leaf.ViewModel
         private async System.Threading.Tasks.Task LoadQuestionAsync()
         {
             if (num >= max)
+            {
+                Stem = "没有选择题，直接跳到判断题！";
+                ChoiceText1 = "";
+                ChoiceText2 = "";
+                ChoiceText3 = "";
+                ChoiceText4 = "";
+                Choice1 = false;
+                Choice2 = false;
+                Choice3 = false;
+                Choice4 = false;
+                Img = new BitmapImage();
                 return;
+            }
             int[] array = GetRandom(4);
             string[] choicearray = new string[4];
             choicearray[array[0]] = SingleList[num].Answer;
@@ -234,6 +257,7 @@ namespace Leaf.ViewModel
             Choice3 = false;
             Choice4 = false;
             answernum = array[0];
+            Img = new BitmapImage();
 
             if (SingleList[num].ImgPath != "")
             {

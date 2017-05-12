@@ -108,49 +108,62 @@ namespace Leaf.ViewModel
 
         private void Continue()
         {
-            //判断是不是练习模式，如果是则显示答案
-            if (ContinueBool && Mode == 0)
+            if (GapList.Count > 0)
             {
-                RightAnswer = "正确答案是：" + GapList[num].Answer;
-                ContinueBool = false;
-                return;
+                //判断是不是练习模式，如果是则显示答案
+                if (ContinueBool && Mode == 0)
+                {
+                    RightAnswer = "正确答案是：" + GapList[num].Answer;
+                    ContinueBool = false;
+                    return;
+                }
+                else
+                {
+                    num++;
+                    ContinueBool = true;
+                    RightAnswer = "";
+                }
+                //如果是测试模式，则获取答案
+                if (Mode == 1)
+                    ViewModelLocator.TestResult.GapResult.Add(GetAnswer());
+                //如果还有题目，则显示下一题并清空答案
+                if (num < max)
+                {
+                    LoadQuestionAsync();
+                }
+                //否则就跳转回去
+                else
+                {
+                    Stem = "没有判断题，点击跳转至下一页面！";
+                    Answer = false;
+                    AnswerNo = false;
+                    Img = new BitmapImage();
+                    var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                    //如果是测试模式，则跳转到成绩页面
+                    if (Mode == 1)
+                    {
+                        ViewModelLocator.TestResult.Init();
+                        num = 0;
+                        max = 0;
+                        ViewModelLocator.TestPaper.TimerStop();
+                        navigation.NavigateTo("Main");
+                        GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Result" }, "NavigateTo");
+                    }
+                    //否则跳回主页
+                    else
+                    {
+                        navigation.NavigateTo("Main");
+                        GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Question" }, "NavigateTo");
+                        num = 0;
+                        max = 0;
+                    }
+                }
             }
-            else
-            {
-                num++;
-                ContinueBool = true;
-                RightAnswer = "";
-            }
-            //如果是测试模式，则获取答案
-            if (Mode == 1)
-                ViewModelLocator.TestResult.GapResult.Add(GetAnswer());
-            //如果还有题目，则显示下一题并清空答案
-            if (num < max)
-            {
-                LoadQuestionAsync();
-            }
-            //否则就跳转回去
             else
             {
                 var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                //如果是测试模式，则跳转到成绩页面
-                if (Mode == 1)
-                {
-                    ViewModelLocator.TestResult.Init();
-                    num = 0;
-                    max = 0;
-                    ViewModelLocator.TestPaper.TimerStop();
-                    navigation.NavigateTo("Main");
-                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Result" }, "NavigateTo");
-                }
-                //否则跳回主页
-                else
-                {
-                    navigation.NavigateTo("Main");
-                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Question" }, "NavigateTo");
-                    num = 0;
-                    max = 0;
-                }
+                navigation.NavigateTo("Main");
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Question" }, "NavigateTo");
             }
         }
 
@@ -181,10 +194,17 @@ namespace Leaf.ViewModel
         private async System.Threading.Tasks.Task LoadQuestionAsync()
         {
             if (num >= max)
+            {
+                Stem = "没有判断题，点击跳转至下一页面！";
+                Answer = false;
+                AnswerNo = false;
+                Img = new BitmapImage();
                 return;
+            }
             Stem = GapList[num].Stems;
             Answer = false;
             AnswerNo = false;
+            Img = new BitmapImage();
 
             if (GapList[num].ImgPath != "")
             {
@@ -206,12 +226,7 @@ namespace Leaf.ViewModel
         /// <returns></returns>
         private bool GetAnswer()
         {
-            //if (Answer == null || Answer == "" || Answer.Trim() == "")
-            //    return false;
-            //if (Answer.ToUpper().Trim() == GapList[num - 1].Answer.ToUpper())
-            //    return true;
             return Answer == GapList[num - 1].Answer;
-            //return false;
         }
     }
 }

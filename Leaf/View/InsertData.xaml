@@ -29,7 +29,7 @@
                 <TextBlock Margin="10,0,0,0" Text="{Binding SingleNum,Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="0,0,0,10" Text="填空数量：" />
+                <TextBlock Margin="0,0,0,10" Text="判断数量：" />
                 <TextBlock Margin="10,0,0,0" Text="{Binding GapNum,Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">

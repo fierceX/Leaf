@@ -31,7 +31,17 @@
                 TextWrapping="Wrap"
                 Text="{Binding Stem,Mode=TwoWay}" />
             <Image Margin="0,0,0,10" Grid.Row="1" MaxWidth="200" MaxHeight="200" Source="{Binding Img,Mode=TwoWay}" />
-            <TextBox Grid.Row="2" Text="{Binding Answer,Mode=TwoWay}" />
+            <!--<TextBox Grid.Row="2" Text="{Binding Answer,Mode=TwoWay}" />-->
+            <StackPanel Margin="0,10,0,10" Grid.Row="2">
+                <RadioButton Name="Choice1"
+                            GroupName="Gap"
+                            Content="对"
+                            IsChecked="{Binding Answer,Mode=TwoWay}" />
+                <RadioButton Name="Choice2"
+                            GroupName="Gap"
+                            Content="错"
+                            IsChecked="{Binding AnswerNo,Mode=TwoWay}" />
+            </StackPanel>
             <TextBlock Grid.Row="3" Text="{Binding RightAnswer,Mode=TwoWay}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Vertical" Background="Black"  RequestedTheme="Dark">

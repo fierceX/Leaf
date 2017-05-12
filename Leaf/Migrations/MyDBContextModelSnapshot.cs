@@ -20,7 +20,7 @@ namespace Leaf.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Answer");
+                    b.Property<bool>("Answer");
 
                     b.Property<string>("ImgPath");
 

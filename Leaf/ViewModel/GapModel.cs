@@ -64,12 +64,20 @@ namespace Leaf.ViewModel
         /// <summary>
         /// 答案
         /// </summary>
-        private string _answer;
+        private bool _answer;
 
-        public string Answer
+        public bool Answer
         {
             get { return _answer; }
             set { Set(ref _answer, value); }
+        }
+
+        private bool _answerno;
+
+        public bool AnswerNo
+        {
+            get { return _answerno; }
+            set { Set(ref _answerno, value); }
         }
 
         private string _answerright;
@@ -175,7 +183,8 @@ namespace Leaf.ViewModel
             if (num >= max)
                 return;
             Stem = GapList[num].Stems;
-            Answer = "";
+            Answer = false;
+            AnswerNo = false;
 
             if (GapList[num].ImgPath != "")
             {
@@ -197,11 +206,12 @@ namespace Leaf.ViewModel
         /// <returns></returns>
         private bool GetAnswer()
         {
-            if (Answer == null || Answer == "" || Answer.Trim() == "")
-                return false;
-            if (Answer.ToUpper().Trim() == GapList[num - 1].Answer.ToUpper())
-                return true;
-            return false;
+            //if (Answer == null || Answer == "" || Answer.Trim() == "")
+            //    return false;
+            //if (Answer.ToUpper().Trim() == GapList[num - 1].Answer.ToUpper())
+            //    return true;
+            return Answer == GapList[num - 1].Answer;
+            //return false;
         }
     }
 }

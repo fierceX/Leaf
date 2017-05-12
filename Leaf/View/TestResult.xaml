@@ -29,12 +29,12 @@
                 </Grid>
             </StackPanel>
             <StackPanel Orientation="Vertical"  Margin="10,10,10,10">
-                <TextBlock Text="填空题成绩" Margin="0,0,0,5" />
+                <TextBlock Text="判断题成绩" Margin="0,0,0,5" />
                 <ProgressBar Value="{Binding GapValue,Mode=TwoWay}" Margin="0,0,0,5" />
-                    <Grid>
-                        <TextBlock Text="{Binding GapRight,Mode=TwoWay}" HorizontalAlignment="Left" />
-                        <TextBlock Text="{Binding GapWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
-                    </Grid>
+                <Grid>
+                    <TextBlock Text="{Binding GapRight,Mode=TwoWay}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding GapWrong,Mode=TwoWay}"  HorizontalAlignment="Right" />
+                </Grid>
             </StackPanel>
             <StackPanel Orientation="Vertical"  Margin="10,10,10,10">
                 <TextBlock Text="总成绩" Margin="0,0,0,5" />

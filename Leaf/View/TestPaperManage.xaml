@@ -49,7 +49,7 @@
                     <ComboBox  Header="难度" ItemsSource="{Binding LevelList,Mode=TwoWay}" SelectedIndex="{Binding LevelIndex,Mode=TwoWay}" />
                     <ComboBox  Header="类型" ItemsSource="{Binding TypeList,Mode=TwoWay}" SelectedIndex="{Binding TypeIndex,Mode=TwoWay}" />
                     <TextBox  Header="选择题数量" Text="{Binding SingleNum,Mode=TwoWay}" />
-                    <TextBox  Header="填空题数量" Text="{Binding GapNum,Mode=TwoWay}" />
+                    <TextBox  Header="判断题题数量" Text="{Binding GapNum,Mode=TwoWay}" />
                     <TextBox  Header="测试时间(分钟)" Text="{Binding Time,Mode=TwoWay}" />
                     <TextBox Margin="0,0,0,10" Header="试卷名称" Text="{Binding TestName,Mode=TwoWay}" />
                     <Button  Content="生成" Command="{Binding AddCommand}" />

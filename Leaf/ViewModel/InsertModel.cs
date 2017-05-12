@@ -270,7 +270,7 @@ namespace Leaf.ViewModel
                 foreach (var token in _gaparray)
                 {
                     GapFilling model = new GapFilling();
-                    model.Answer = token["Answer"].ToString();
+                    model.Answer = (bool)token["Answer"];
                     model.Stems = token["Stems"].ToString();
                     model.Level = Convert.ToInt32(token["Level"].ToString());
                     model.Type = token["Type"].ToString();

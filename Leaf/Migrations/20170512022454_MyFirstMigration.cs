@@ -14,7 +14,7 @@ namespace Leaf.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Answer = table.Column<string>(nullable: true),
+                    Answer = table.Column<bool>(nullable: false),
                     ImgPath = table.Column<string>(nullable: true),
                     Level = table.Column<int>(nullable: false),
                     Stems = table.Column<string>(nullable: true),

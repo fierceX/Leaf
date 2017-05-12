@@ -18,7 +18,9 @@ namespace Leaf.Model
         public string Stems { get; set; }
 
         //答案
-        public string Answer { get; set; }
+        //public string Answer { get; set; }
+
+        public bool Answer { get; set; }
 
         //难度
         public int Level { get; set; }

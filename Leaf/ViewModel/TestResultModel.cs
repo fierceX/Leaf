@@ -147,9 +147,14 @@ namespace Leaf.ViewModel
                     gapright++;
             }
             //统计平均分
-            SingleValue = singleright * 100 / TestPaperModel.SingleNum;
-            GapValue = gapright * 100 / TestPaperModel.GapNum;
-            AllValue = (SingleValue + GapValue) / 2;
+            if (TestPaperModel.SingleNum != 0)
+                SingleValue = singleright * 100 / TestPaperModel.SingleNum;
+            if (TestPaperModel.GapNum != 0)
+                GapValue = gapright * 100 / TestPaperModel.GapNum;
+            if (TestPaperModel.SingleNum != 0 && TestPaperModel.GapNum != 0)
+                AllValue = (SingleValue + GapValue) / 2;
+            else
+                AllValue = TestPaperModel.SingleNum == 0 ? GapValue : SingleValue;
             SingleRight = "正确：" + singleright.ToString();
             SingleWrong = "错误：" + (TestPaperModel.SingleNum - singleright).ToString();
             GapWrong = "错误：" + (TestPaperModel.GapNum - gapright).ToString();

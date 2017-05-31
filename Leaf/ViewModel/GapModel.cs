@@ -161,16 +161,21 @@ namespace Leaf.ViewModel
             }
             else
             {
-                if(Mode==1)
+                num = 0;
+                max = 0;
+                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
+                if (Mode == 1)
                 {
                     ViewModelLocator.TestResult.Init();
-                    num = 0;
-                    max = 0;
                     ViewModelLocator.TestPaper.TimerStop();
+                    navigation.NavigateTo("Main");
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Result" }, "NavigateTo");
                 }
-                var navigation = ServiceLocator.Current.GetInstance<INavigationService>();
-                navigation.NavigateTo("Main");
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Question" }, "NavigateTo");
+                else
+                {
+                    navigation.NavigateTo("Main");
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string[]>(new[] { "MainFrame", "Question" }, "NavigateTo");
+                }
             }
         }
 
